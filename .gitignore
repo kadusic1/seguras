@@ -43,3 +43,7 @@ next-env.d.ts
 imgs
 plans
 research
+
+# agent loop state
+.opencode/loop.local.md
+.opencode/ralph-loop.local.md
