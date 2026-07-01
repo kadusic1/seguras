@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavbarCta } from "./navbar-cta";
 import { navLinks } from "./types";
 
@@ -40,12 +40,10 @@ export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const close = useCallback(() => setIsOpen(false), []);
-
   useEffect(() => {
-    close();
     void pathname;
-  }, [close, pathname]);
+    setIsOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (isOpen) {
@@ -73,7 +71,7 @@ export function MobileMenu() {
         className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
-        onClick={close}
+        onClick={() => setIsOpen(false)}
         aria-hidden="true"
       />
 
@@ -92,7 +90,7 @@ export function MobileMenu() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      onClick={close}
+                      onClick={() => setIsOpen(false)}
                       className={`block rounded-md px-4 py-3 text-lg font-bold italic transition-colors ${
                         isActive
                           ? "bg-red-600/10 text-red-500"
