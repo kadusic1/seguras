@@ -1,16 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { navLinks } from "./types";
+import { useIsActivePath } from "./use-is-active-path";
 
 export function NavbarLinks() {
-  const pathname = usePathname();
+  const isActive = useIsActivePath();
 
   return (
     <ul className="flex items-center gap-8">
       {navLinks.map((link) => {
-        const isActive = pathname === link.href;
+        const active = isActive(link.href);
 
         return (
           <li key={link.href}>
@@ -18,7 +18,7 @@ export function NavbarLinks() {
               href={link.href}
               className={`relative pb-1 text-base font-bold italic tracking-wide transition-colors
                 ${
-                  isActive
+                  active
                     ? "text-red-500 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-red-500"
                     : "text-white hover:text-red-500"
                 }`}

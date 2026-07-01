@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NavbarCta } from "./navbar-cta";
 import { navLinks } from "./types";
+import { useIsActivePath } from "./use-is-active-path";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -38,7 +38,7 @@ function MenuIcon({ open }: { open: boolean }) {
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
+  const isActive = useIsActivePath();
 
   useEffect(() => {
     if (isOpen) {
@@ -79,7 +79,7 @@ export function MobileMenu() {
           <nav>
             <ul className="flex flex-col gap-2">
               {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const active = isActive(link.href);
 
                 return (
                   <li key={link.href}>
@@ -87,7 +87,7 @@ export function MobileMenu() {
                       href={link.href}
                       onClick={() => setIsOpen(false)}
                       className={`block rounded-md px-4 py-3 text-lg font-bold italic transition-colors ${
-                        isActive
+                        active
                           ? "bg-red-600/10 text-red-500"
                           : "text-white hover:bg-zinc-900 hover:text-red-500"
                       }`}
