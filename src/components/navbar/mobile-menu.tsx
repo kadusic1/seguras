@@ -41,11 +41,6 @@ export function MobileMenu() {
   const pathname = usePathname();
 
   useEffect(() => {
-    void pathname;
-    setIsOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
