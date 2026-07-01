@@ -5,14 +5,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-3">
       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-        <Image
-          src="/logo.svg"
-          alt="Seguras"
-          width={26}
-          height={26}
-          className="h-auto w-auto"
-          priority
-        />
+        <Image src="/logo.svg" alt="Seguras" width={26} height={26} priority />
       </div>
       <div className="flex flex-col">
         <span className="text-2xl font-black italic leading-none tracking-tight text-white">
