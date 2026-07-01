@@ -18,7 +18,7 @@ export function Logo() {
         <span className="text-2xl font-black italic leading-none tracking-tight text-white">
           SEGURAS
         </span>
-        <span className="-mt-0.5 text-sm font-medium leading-none text-white/80">
+        <span className="-mt-0.5 text-sm font-bold leading-none text-white/90">
           SECURITY
         </span>
         <div className="mt-1 h-1 w-full bg-red-600" />
