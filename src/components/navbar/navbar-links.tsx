@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { navLinks } from "./types";
+import { navLinks } from "./navbar-data";
 import { useIsActivePath } from "./use-is-active-path";
 
 export function NavbarLinks() {
