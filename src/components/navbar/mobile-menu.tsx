@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NavbarCta } from "./navbar-cta";
-import { navLinks } from "./types";
+import { navLinks } from "./navbar-data";
 import { useIsActivePath } from "./use-is-active-path";
 
 function MenuIcon({ open }: { open: boolean }) {
