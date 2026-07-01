@@ -20,8 +20,8 @@ export function Navbar() {
                 priority
               />
             </div>
-            <span className="text-lg font-bold tracking-wide text-white">
-              SEGURAS
+            <span className="text-xl font-bold italic text-white">
+              SEGURAS SECURITY
             </span>
           </Link>
 

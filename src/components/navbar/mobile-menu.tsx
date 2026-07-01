@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { NavbarCta } from "./navbar-cta";
 import type { NavLink } from "./types";
 
 const links: NavLink[] = [
@@ -100,10 +101,10 @@ export function MobileMenu() {
                     <Link
                       href={link.href}
                       onClick={close}
-                      className={`block rounded-md px-4 py-3 text-base font-medium transition-colors ${
+                      className={`block rounded-md px-4 py-3 text-lg font-bold italic transition-colors ${
                         isActive
                           ? "bg-red-600/10 text-red-500"
-                          : "text-zinc-300 hover:bg-zinc-900 hover:text-white"
+                          : "text-white hover:bg-zinc-900 hover:text-red-500"
                       }`}
                     >
                       {link.label}
@@ -113,6 +114,10 @@ export function MobileMenu() {
               })}
             </ul>
           </nav>
+
+          <div className="mt-auto px-6 pb-8">
+            <NavbarCta />
+          </div>
         </div>
       </div>
     </div>

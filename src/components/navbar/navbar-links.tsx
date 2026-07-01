@@ -24,11 +24,11 @@ export function NavbarLinks() {
           <li key={link.href}>
             <Link
               href={link.href}
-              className={`relative pb-1 text-sm font-medium tracking-wide transition-colors
+              className={`relative pb-1 text-base font-bold italic tracking-wide transition-colors
                 ${
                   isActive
                     ? "text-red-500 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-red-500"
-                    : "text-zinc-300 hover:text-white"
+                    : "text-white hover:text-red-500"
                 }`}
             >
               {link.label}
