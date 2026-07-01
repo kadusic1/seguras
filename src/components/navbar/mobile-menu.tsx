@@ -4,15 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { NavbarCta } from "./navbar-cta";
-import type { NavLink } from "./types";
-
-const links: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About Us" },
-  { href: "/jobs", label: "Jobs" },
-  { href: "/news", label: "News" },
-];
+import { navLinks } from "./types";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -93,7 +85,7 @@ export function MobileMenu() {
         <div className="flex flex-col gap-6 px-6 pt-28">
           <nav>
             <ul className="flex flex-col gap-2">
-              {links.map((link) => {
+              {navLinks.map((link) => {
                 const isActive = pathname === link.href;
 
                 return (

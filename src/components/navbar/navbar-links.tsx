@@ -2,22 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { NavLink } from "./types";
-
-const links: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About Us" },
-  { href: "/jobs", label: "Jobs" },
-  { href: "/news", label: "News" },
-];
+import { navLinks } from "./types";
 
 export function NavbarLinks() {
   const pathname = usePathname();
 
   return (
     <ul className="flex items-center gap-8">
-      {links.map((link) => {
+      {navLinks.map((link) => {
         const isActive = pathname === link.href;
 
         return (
