@@ -16,12 +16,11 @@ export function NavbarLinks() {
           <li key={link.href}>
             <Link
               href={link.href}
-              className={`relative pb-1 text-base font-bold italic tracking-wide transition-colors
-                ${
-                  active
-                    ? "text-red-500 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-red-500"
-                    : "text-white hover:text-red-500"
-                }`}
+              className={`relative pb-1 text-base font-bold italic tracking-wide transition-colors after:transition-opacity after:duration-300 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-white ${
+                active
+                  ? "after:opacity-100"
+                  : "text-white after:opacity-0 hover:after:opacity-100"
+              }`}
             >
               {link.label}
             </Link>
