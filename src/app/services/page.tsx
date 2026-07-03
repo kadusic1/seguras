@@ -1,5 +1,3 @@
-import { PageShell } from "@/components/page-shell";
-
 export default function ServicesPage() {
-  return <PageShell title="Services" />;
+  return <h1>Services</h1>;
 }
