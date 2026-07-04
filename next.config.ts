@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   allowedDevOrigins: ["192.168.0.14"],
+  images: {
+    qualities: [75, 85],
+  },
 };
 
 export default nextConfig;
