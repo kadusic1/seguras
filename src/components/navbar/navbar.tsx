@@ -1,6 +1,6 @@
+import { Button } from "@/components/button";
 import { Logo } from "@/components/logo";
 import { MobileMenu } from "./mobile-menu";
-import { NavbarCta } from "./navbar-cta";
 import { NavbarLinks } from "./navbar-links";
 
 export function Navbar() {
@@ -17,7 +17,9 @@ export function Navbar() {
 
         <div className="flex items-center gap-4">
           <div className="hidden lg:block">
-            <NavbarCta />
+            <Button href="/contact" variant="a">
+              Contact
+            </Button>
           </div>
           <MobileMenu />
         </div>

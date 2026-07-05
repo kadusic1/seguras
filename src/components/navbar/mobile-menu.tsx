@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { NavbarCta } from "./navbar-cta";
+import { Button } from "@/components/button";
 import { navLinks } from "./navbar-data";
 import { useIsActivePath } from "./use-is-active-path";
 
@@ -101,7 +101,13 @@ export function MobileMenu() {
           </nav>
 
           <div className="mt-auto px-6 pb-8">
-            <NavbarCta />
+            <Button
+              href="/contact"
+              variant="a"
+              onClick={() => setIsOpen(false)}
+            >
+              Contact
+            </Button>
           </div>
         </div>
       </div>
