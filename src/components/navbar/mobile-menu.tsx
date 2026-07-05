@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/button";
 import { NavbarLinks } from "./navbar-links";
@@ -85,6 +86,7 @@ export function MobileMenu() {
               href="/contact"
               variant="a"
               onClick={() => setIsOpen(false)}
+              iconRight={<ArrowRight className="size-4" />}
             >
               Contact
             </Button>

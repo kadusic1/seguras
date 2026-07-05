@@ -1,10 +1,12 @@
 import Link from "next/link";
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 type Variant = "a" | "b";
 
 interface ButtonProps extends ComponentPropsWithoutRef<typeof Link> {
   variant?: Variant;
+  iconLeft?: ReactNode;
+  iconRight?: ReactNode;
 }
 
 const variantStyles: Record<Variant, string> = {
@@ -19,6 +21,8 @@ export function Button({
   variant = "a",
   className,
   children,
+  iconLeft,
+  iconRight,
   ...props
 }: ButtonProps) {
   return (
@@ -26,7 +30,9 @@ export function Button({
       className={`${baseClass} ${variantStyles[variant]}${className ? ` ${className}` : ""}`}
       {...props}
     >
+      {iconLeft && <span className="shrink-0">{iconLeft}</span>}
       {children}
+      {iconRight && <span className="shrink-0">{iconRight}</span>}
     </Link>
   );
 }

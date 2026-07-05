@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/button";
 import { Logo } from "@/components/logo";
 import { MobileMenu } from "./mobile-menu";
@@ -17,7 +18,11 @@ export function Navbar() {
 
         <div className="flex items-center gap-4">
           <div className="hidden lg:block">
-            <Button href="/contact" variant="a">
+            <Button
+              href="/contact"
+              variant="a"
+              iconRight={<ArrowRight className="size-4" />}
+            >
               Contact
             </Button>
           </div>
