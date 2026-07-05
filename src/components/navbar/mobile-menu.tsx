@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/button";
-import { navLinks } from "./navbar-data";
-import { useIsActivePath } from "./use-is-active-path";
+import { NavbarLinks } from "./navbar-links";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -38,7 +36,6 @@ function MenuIcon({ open }: { open: boolean }) {
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const isActive = useIsActivePath();
 
   useEffect(() => {
     if (isOpen) {
@@ -77,27 +74,10 @@ export function MobileMenu() {
       >
         <div className="flex flex-col gap-6 px-6 pt-28">
           <nav>
-            <ul className="flex flex-col gap-2">
-              {navLinks.map((link) => {
-                const active = isActive(link.href);
-
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className={`block rounded-md px-4 py-3 text-lg font-bold italic transition-colors ${
-                        active
-                          ? "bg-red-600/10 text-red-500"
-                          : "text-white hover:bg-zinc-900 hover:text-red-500"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            <NavbarLinks
+              wrapperClassName="flex flex-col gap-4"
+              onLinkClick={() => setIsOpen(false)}
+            />
           </nav>
 
           <div className="mt-auto px-6 pb-8">
