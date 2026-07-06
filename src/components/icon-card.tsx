@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import { ArrowRight, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import {
   type ColorScheme,
@@ -46,30 +46,9 @@ export function IconCard({
           className={`mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-colors ${linkColourMap[colorScheme]}`}
         >
           Learn more
-          <ArrowRightIcon />
+          <ArrowRight />
         </Link>
       )}
     </div>
-  );
-}
-
-function ArrowRightIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className="transition-transform group-hover:translate-x-0.5"
-    >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
   );
 }
