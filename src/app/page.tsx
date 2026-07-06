@@ -11,12 +11,12 @@ export default function Home() {
       <GridSection
         title="Safety Solutions for the World's Biggest Events"
         subtitle="From sold-out football stadiums to major festivals - professional crowd management and safety for every event."
-        colorScheme="red"
+        colorScheme="white"
         ctaLabel="View All Services"
         ctaHref="/services"
       >
         {services.map((s) => (
-          <IconCard key={s.title} {...s} colorScheme="red" />
+          <IconCard key={s.title} {...s} colorScheme="white" />
         ))}
       </GridSection>
     </>

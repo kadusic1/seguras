@@ -19,58 +19,59 @@ export const bgAccentColourMap: Record<ColorScheme, string> = {
 };
 
 export const cardBorderBgColourMap: Record<ColorScheme, string> = {
-  red: "border-black/10 bg-black/5",
+  red: "border-white/20 bg-white/10",
   black: "border-white/10 bg-white/5",
   white: "border-black/10 bg-black/5",
 };
 
 export const iconColourMap: Record<ColorScheme, string> = {
-  red: "text-red-500",
+  red: "text-white",
   black: "text-red-500",
-  white: "text-black",
+  white: "text-red-500",
 };
 
 export const titleColourMap: Record<ColorScheme, string> = {
-  red: "text-black",
+  red: "text-white",
   black: "text-white",
   white: "text-black",
 };
 
 export const descColourMap: Record<ColorScheme, string> = {
-  red: "text-black/60",
+  red: "text-white/80",
   black: "text-white/70",
   white: "text-black/60",
 };
 
 export const linkColourMap: Record<ColorScheme, string> = {
-  red: "text-red-500 hover:text-red-400",
+  red: "text-white/90 hover:text-white",
   black: "text-red-500 hover:text-red-400",
-  white: "text-black/70 hover:text-black",
+  white: "text-red-500 hover:text-red-400",
 };
 
 export const sectionBgColourMap: Record<ColorScheme, string> = {
-  red: "bg-white",
+  red: "bg-red-600",
   black: "bg-black",
   white: "bg-white",
 };
 
 export const sectionTextSchemeMap: Record<ColorScheme, ColorScheme> = {
-  red: "black",
+  red: "white",
   black: "white",
   white: "black",
 };
 
-export type ButtonVariant = "a" | "b" | "c" | "d";
+export type ButtonVariant = "a" | "b" | "c" | "d" | "e";
 
 export const buttonVariantStyles: Record<ButtonVariant, string> = {
   a: "bg-red-600 text-white shadow-sm hover:bg-red-700",
   b: "border border-red-600 text-red-500 hover:bg-red-600/10",
   c: "bg-black text-white shadow-sm hover:bg-gray-900",
   d: "border border-white text-white hover:bg-white/10",
+  e: "bg-white text-red-600 shadow-sm hover:bg-red-50",
 };
 
 export const schemeToButtonVariant: Record<ColorScheme, ButtonVariant> = {
-  red: "a",
+  red: "e",
   black: "a",
-  white: "c",
+  white: "a",
 };
