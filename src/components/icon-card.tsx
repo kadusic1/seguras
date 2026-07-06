@@ -1,6 +1,13 @@
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import type { ColorScheme } from "@/lib/colours";
+import {
+  type ColorScheme,
+  cardBorderBgColourMap,
+  descColourMap,
+  iconColourMap,
+  linkColourMap,
+  titleColourMap,
+} from "@/lib/colours";
 
 interface IconCardProps {
   icon: LucideIcon;
@@ -9,36 +16,6 @@ interface IconCardProps {
   href?: string;
   colorScheme?: ColorScheme;
 }
-
-const cardColourMap: Record<ColorScheme, string> = {
-  red: "border-black/10 bg-black/5",
-  black: "border-white/10 bg-white/5",
-  white: "border-black/10 bg-black/5",
-};
-
-const iconColourMap: Record<ColorScheme, string> = {
-  red: "text-red-500",
-  black: "text-red-500",
-  white: "text-black",
-};
-
-const titleColourMap: Record<ColorScheme, string> = {
-  red: "text-black",
-  black: "text-white",
-  white: "text-black",
-};
-
-const descColourMap: Record<ColorScheme, string> = {
-  red: "text-black/60",
-  black: "text-white/70",
-  white: "text-black/60",
-};
-
-const linkColourMap: Record<ColorScheme, string> = {
-  red: "text-red-500 hover:text-red-400",
-  black: "text-red-500 hover:text-red-400",
-  white: "text-black/70 hover:text-black",
-};
 
 export function IconCard({
   icon: Icon,
@@ -49,7 +26,7 @@ export function IconCard({
 }: IconCardProps) {
   return (
     <div
-      className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 ${cardColourMap[colorScheme]}`}
+      className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 ${cardBorderBgColourMap[colorScheme]}`}
     >
       <Icon
         className={`mb-4 h-12 w-12 transition-colors ${iconColourMap[colorScheme]}`}

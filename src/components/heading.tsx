@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ColorScheme } from "@/lib/colours";
+import { type ColorScheme, textColourMap } from "@/lib/colours";
 
 interface HeadingProps {
   children: ReactNode;
@@ -10,12 +10,6 @@ interface HeadingProps {
 const base =
   "font-black italic leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl";
 
-const colourMap: Record<ColorScheme, string> = {
-  red: "text-red-500",
-  black: "text-black",
-  white: "text-white",
-};
-
 export function Heading({
   className,
   children,
@@ -23,7 +17,7 @@ export function Heading({
 }: HeadingProps) {
   return (
     <h2
-      className={`${base} ${colourMap[color]}${className ? ` ${className}` : ""}`}
+      className={`${base} ${textColourMap[color]}${className ? ` ${className}` : ""}`}
     >
       {children}
     </h2>
