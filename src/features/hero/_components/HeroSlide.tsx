@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/button";
+import { Heading } from "@/components/heading";
+import { Lead } from "@/components/lead";
 import type { HeroSlideType } from "../types";
 
 interface HeroSlideProps {
@@ -57,16 +59,10 @@ export function HeroSlide({ slide, isActive }: HeroSlideProps) {
       />
       <div className="relative z-10 flex h-full items-center sm:items-end p-4 sm:p-10 lg:p-36">
         <div className="max-w-2xl">
-          <h2
-            className={`text-3xl font-black italic leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl ${fadeIn(isActive)}`}
-          >
-            {slide.headline}
-          </h2>
-          <p
-            className={`mt-2 max-w-lg text-base tracking-wide text-white/80 md:text-lg lg:text-xl ${fadeIn(isActive, "0.15s")}`}
-          >
+          <Heading className={fadeIn(isActive)}>{slide.headline}</Heading>
+          <Lead className={`mt-2 max-w-lg ${fadeIn(isActive, "0.15s")}`}>
             {slide.subtitle}
-          </p>
+          </Lead>
           <div
             className={`mt-4 flex flex-wrap gap-3 sm:mt-6 sm:gap-4 ${fadeIn(isActive, "0.3s")}`}
           >
