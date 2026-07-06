@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type Variant = "a" | "b";
+type Variant = "a" | "b" | "c" | "d";
 
 interface ButtonProps extends ComponentPropsWithoutRef<typeof Link> {
   variant?: Variant;
@@ -12,6 +12,8 @@ interface ButtonProps extends ComponentPropsWithoutRef<typeof Link> {
 const variantStyles: Record<Variant, string> = {
   a: "bg-red-600 text-white shadow-sm hover:bg-red-700",
   b: "border border-red-600 text-red-500 hover:bg-red-600/10",
+  c: "bg-black text-white shadow-sm hover:bg-gray-900",
+  d: "border border-white text-white hover:bg-white/10",
 };
 
 const baseClass =
