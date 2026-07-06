@@ -11,33 +11,33 @@ interface IconCardProps {
 }
 
 const cardColourMap: Record<ColorScheme, string> = {
-  red: "border-white/10 bg-white/5",
-  black: "border-black/10 bg-black/5",
-  white: "border-white/20 bg-white/10",
+  red: "border-black/10 bg-black/5",
+  black: "border-white/10 bg-white/5",
+  white: "border-black/10 bg-black/5",
 };
 
 const iconColourMap: Record<ColorScheme, string> = {
   red: "text-red-500",
-  black: "text-black",
-  white: "text-white",
+  black: "text-red-500",
+  white: "text-black",
 };
 
 const titleColourMap: Record<ColorScheme, string> = {
-  red: "text-white",
-  black: "text-black",
-  white: "text-white",
+  red: "text-black",
+  black: "text-white",
+  white: "text-black",
 };
 
 const descColourMap: Record<ColorScheme, string> = {
-  red: "text-white/70",
-  black: "text-black/60",
-  white: "text-white/70",
+  red: "text-black/60",
+  black: "text-white/70",
+  white: "text-black/60",
 };
 
 const linkColourMap: Record<ColorScheme, string> = {
   red: "text-red-500 hover:text-red-400",
-  black: "text-black/70 hover:text-black",
-  white: "text-white/70 hover:text-white",
+  black: "text-red-500 hover:text-red-400",
+  white: "text-black/70 hover:text-black",
 };
 
 export function IconCard({

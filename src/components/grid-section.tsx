@@ -14,10 +14,22 @@ interface GridSectionProps {
   className?: string;
 }
 
-const buttonVariantMap: Record<ColorScheme, "a" | "b" | "c" | "d"> = {
+const bgColourMap: Record<ColorScheme, string> = {
+  red: "bg-white",
+  black: "bg-black",
+  white: "bg-white",
+};
+
+const textColourMap: Record<ColorScheme, "white" | "black"> = {
+  red: "black",
+  black: "white",
+  white: "black",
+};
+
+const buttonVariantMap: Record<ColorScheme, "a" | "c" | "d"> = {
   red: "a",
-  black: "c",
-  white: "d",
+  black: "a",
+  white: "c",
 };
 
 export function GridSection({
@@ -30,12 +42,14 @@ export function GridSection({
   className,
 }: GridSectionProps) {
   return (
-    <section className={`py-24 sm:py-32${className ? ` ${className}` : ""}`}>
+    <section
+      className={`py-24 sm:py-32 ${bgColourMap[colorScheme]}${className ? ` ${className}` : ""}`}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <Heading color={colorScheme}>{title}</Heading>
+          <Heading color={textColourMap[colorScheme]}>{title}</Heading>
           {subtitle && (
-            <Lead color={colorScheme} className="mt-4">
+            <Lead color={textColourMap[colorScheme]} className="mt-4">
               {subtitle}
             </Lead>
           )}
