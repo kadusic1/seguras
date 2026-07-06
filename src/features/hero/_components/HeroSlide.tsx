@@ -57,14 +57,16 @@ export function HeroSlide({ slide, isActive }: HeroSlideProps) {
             "linear-gradient(135deg, rgba(220,38,38,0.045) 0%, transparent 50%), linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.4) 100%)",
         }}
       />
-      <div className="relative z-10 flex h-full items-center sm:items-end p-4 sm:p-10 lg:p-36">
-        <div className="max-w-2xl">
+      <div className="relative z-10 flex h-full items-center justify-center p-4 sm:p-10 lg:p-36">
+        <div className="text-center">
           <Heading className={fadeIn(isActive)}>{slide.headline}</Heading>
-          <Lead className={`mt-2 max-w-lg ${fadeIn(isActive, "0.15s")}`}>
+          <Lead
+            className={`mt-2 mx-auto max-w-lg ${fadeIn(isActive, "0.15s")}`}
+          >
             {slide.subtitle}
           </Lead>
           <div
-            className={`mt-4 flex flex-wrap gap-3 sm:mt-6 sm:gap-4 ${fadeIn(isActive, "0.3s")}`}
+            className={`mt-4 flex flex-wrap justify-center gap-3 sm:mt-6 sm:gap-4 ${fadeIn(isActive, "0.3s")}`}
           >
             <Button href={slide.ctaHref} variant="a">
               {slide.cta}
