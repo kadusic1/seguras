@@ -22,14 +22,14 @@ export const services: Service[] = [
     icon: Users,
     title: "Crowd Management & Stewarding",
     description:
-      "SIA-licensed stewards for crowd flow, spectator safety, and ingress management at football, concerts, and festivals.",
+      "Licensed stewards for crowd flow, spectator safety, and ingress management at concerts, festivals, and sporting events.",
     href: "/services",
   },
   {
     icon: ClipboardCheck,
     title: "Event Safety Planning",
     description:
-      "Pre-event risk assessments, site surveys, stewarding ratio calculations, and full SGSA and Green Guide compliance.",
+      "Pre-event risk assessments, site surveys, stewarding ratio calculations, and full regulatory compliance with local safety standards.",
     href: "/services",
   },
 ];
