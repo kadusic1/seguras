@@ -10,7 +10,7 @@ export default function Home() {
       <HeroCarousel slides={heroSlides} />
       <GridSection
         title="Safety Solutions for the World's Biggest Events"
-        subtitle="From sold-out football stadiums to major festivals — professional crowd management and safety for every event."
+        subtitle="From sold-out football stadiums to major festivals - professional crowd management and safety for every event."
         colorScheme="red"
         ctaLabel="View All Services"
         ctaHref="/services"
