@@ -41,10 +41,15 @@ export function CaptionedImage({
         <figcaption
           className={`${schemes[captionScheme].bg} space-y-3 p-4 sm:p-5`}
         >
-          <Heading size="sm" bgScheme={captionScheme} className="italic">
+          <Heading size="md" bgScheme={captionScheme}>
             {caption.heading}
           </Heading>
-          <Text variant="base" bgScheme={captionScheme} className="font-bold">
+          <Text
+            variant="base"
+            emphasis="primary"
+            bgScheme={captionScheme}
+            className="font-semibold"
+          >
             {caption.text}
           </Text>
           <Button href={caption.ctaHref} variant="primary" bgScheme="red">
