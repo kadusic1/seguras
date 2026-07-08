@@ -1,93 +1,42 @@
 export type ColorScheme = "red" | "black" | "white";
 
-export const textColourMap: Record<ColorScheme, string> = {
-  red: "text-red-500",
-  black: "text-black",
-  white: "text-white",
-};
+export interface SchemeTokens {
+  text: {
+    primary: string;
+    muted: string;
+  };
+  bg: string;
+  accent: string;
+  card: string;
+  captionScheme: ColorScheme;
+  buttonScheme: ColorScheme;
+}
 
-export const textMutedColourMap: Record<ColorScheme, string> = {
-  red: "text-red-400/90",
-  black: "text-black/80",
-  white: "text-white/90",
-};
-
-export const bgAccentColourMap: Record<ColorScheme, string> = {
-  red: "bg-red-600",
-  black: "bg-black",
-  white: "bg-white",
-};
-
-export const cardBorderBgColourMap: Record<ColorScheme, string> = {
-  red: "border-white/20 bg-white/10",
-  black: "border-white/10 bg-white/5",
-  white: "border-black/10 bg-black/5",
-};
-
-export const iconColourMap: Record<ColorScheme, string> = {
-  red: "text-white",
-  black: "text-red-500",
-  white: "text-red-500",
-};
-
-export const titleColourMap: Record<ColorScheme, string> = {
-  red: "text-white",
-  black: "text-white",
-  white: "text-black",
-};
-
-export const descColourMap: Record<ColorScheme, string> = {
-  red: "text-white/80",
-  black: "text-white/70",
-  white: "text-black/60",
-};
-
-export const linkColourMap: Record<ColorScheme, string> = {
-  red: "text-white/90 hover:text-white",
-  black: "text-red-500 hover:text-red-400",
-  white: "text-red-500 hover:text-red-400",
-};
-
-export const captionBgColourMap: Record<ColorScheme, string> = {
-  red: "bg-white",
-  black: "bg-white",
-  white: "bg-black",
-};
-
-export const captionHeadingSchemeMap: Record<ColorScheme, ColorScheme> = {
-  red: "black",
-  black: "black",
-  white: "white",
-};
-
-export const sectionBgColourMap: Record<ColorScheme, string> = {
-  red: "bg-red-600",
-  black: "bg-black",
-  white: "bg-white",
-};
-
-export const sectionTextSchemeMap: Record<ColorScheme, ColorScheme> = {
-  red: "white",
-  black: "white",
-  white: "black",
-};
-
-export const listingAccentColourMap: Record<ColorScheme, string> = {
-  red: "border-l-white",
-  black: "border-l-red-500",
-  white: "border-l-red-500",
-};
-
-export const badgeColourMap: Record<ColorScheme, string> = {
-  red: "bg-red-700 text-white",
-  black: "bg-red-500/10 text-red-400",
-  white: "bg-red-500/10 text-red-600",
-};
-
-export const listingMetaColourMap: Record<ColorScheme, string> = {
-  red: "text-white/60",
-  black: "text-white/50",
-  white: "text-black/50",
+export const schemes: Record<ColorScheme, SchemeTokens> = {
+  red: {
+    text: { primary: "text-white", muted: "text-white/80" },
+    bg: "bg-red-600",
+    accent: "text-white",
+    card: "border-white/20 bg-white/10",
+    captionScheme: "white",
+    buttonScheme: "white",
+  },
+  black: {
+    text: { primary: "text-white", muted: "text-white/70" },
+    bg: "bg-black",
+    accent: "text-red-500",
+    card: "border-white/10 bg-white/5",
+    captionScheme: "white",
+    buttonScheme: "red",
+  },
+  white: {
+    text: { primary: "text-black", muted: "text-black/60" },
+    bg: "bg-white",
+    accent: "text-red-500",
+    card: "border-black/10 bg-black/5",
+    captionScheme: "black",
+    buttonScheme: "red",
+  },
 };
 
 export type ButtonVariant = "primary" | "outline" | "link";
@@ -111,10 +60,4 @@ export const buttonVariantStyles: Record<
     black: "text-red-500 hover:text-red-400",
     white: "text-red-500 hover:text-red-400",
   },
-};
-
-export const schemeToButtonColorScheme: Record<ColorScheme, ColorScheme> = {
-  red: "white",
-  black: "red",
-  white: "red",
 };

@@ -1,21 +1,16 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
-import {
-  type ColorScheme,
-  schemeToButtonColorScheme,
-  sectionBgColourMap,
-  sectionTextSchemeMap,
-} from "@/lib/colours";
+import { type ColorScheme, schemes } from "@/lib/colours";
 import { Button } from "./button";
 import { CaptionedImage, type CaptionedImageCaption } from "./captioned-image";
 import { Heading } from "./heading";
-import { Lead } from "./lead";
+import { Text } from "./text";
 
 interface SectionProps {
   title?: string;
   subtitle?: string;
   children: ReactNode;
-  colorScheme?: ColorScheme;
+  bgScheme?: ColorScheme;
   ctaLabel?: string;
   ctaHref?: string;
   className?: string;
@@ -27,35 +22,31 @@ export function Section({
   title,
   subtitle,
   children,
-  colorScheme = "red",
+  bgScheme = "red",
   ctaLabel,
   ctaHref,
   className,
   image,
   imagePosition = "right",
 }: SectionProps) {
-  const textScheme = sectionTextSchemeMap[colorScheme];
+  const s = schemes[bgScheme];
 
-  const renderContent = (textColor: ColorScheme) => (
+  const renderContent = () => (
     <>
       {(title || subtitle) && (
         <div className="mx-auto max-w-3xl text-center">
-          {title && <Heading color={textColor}>{title}</Heading>}
+          {title && <Heading bgScheme={bgScheme}>{title}</Heading>}
           {subtitle && (
-            <Lead color={textColor} className="mt-4">
+            <Text variant="lg" bgScheme={bgScheme} className="mt-4">
               {subtitle}
-            </Lead>
+            </Text>
           )}
         </div>
       )}
       {children}
       {ctaLabel && ctaHref && (
         <div className="mt-12 text-center">
-          <Button
-            href={ctaHref}
-            variant="primary"
-            colorScheme={schemeToButtonColorScheme[colorScheme]}
-          >
+          <Button href={ctaHref} variant="primary" bgScheme={s.buttonScheme}>
             {ctaLabel}
           </Button>
         </div>
@@ -79,7 +70,7 @@ export function Section({
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/30" />
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {renderContent("white")}
+          {renderContent()}
         </div>
       </section>
     );
@@ -88,19 +79,19 @@ export function Section({
   if (image) {
     return (
       <section
-        className={`py-24 sm:py-32 ${sectionBgColourMap[colorScheme]}${className ? ` ${className}` : ""}`}
+        className={`py-24 sm:py-32 ${s.bg}${className ? ` ${className}` : ""}`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             className={`flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16${imagePosition === "left" ? " md:flex-row-reverse" : ""}`}
           >
-            <div className="flex-1">{renderContent(textScheme)}</div>
+            <div className="flex-1">{renderContent()}</div>
             <div className="mt-8 md:mt-0 md:w-[45%] md:flex-shrink-0">
               <CaptionedImage
                 src={image.src}
                 alt={image.alt}
                 caption={image.caption}
-                colorScheme={colorScheme}
+                bgScheme={bgScheme}
               />
             </div>
           </div>
@@ -111,10 +102,10 @@ export function Section({
 
   return (
     <section
-      className={`py-24 sm:py-32 ${sectionBgColourMap[colorScheme]}${className ? ` ${className}` : ""}`}
+      className={`py-24 sm:py-32 ${s.bg}${className ? ` ${className}` : ""}`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {renderContent(textScheme)}
+        {renderContent()}
       </div>
     </section>
   );

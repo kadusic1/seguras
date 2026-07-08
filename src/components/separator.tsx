@@ -1,14 +1,14 @@
-import { bgAccentColourMap, type ColorScheme } from "@/lib/colours";
+import { type ColorScheme, schemes } from "@/lib/colours";
 
 interface SeparatorProps {
   className?: string;
-  color?: ColorScheme;
+  bgScheme?: ColorScheme;
 }
 
-export function Separator({ className, color = "red" }: SeparatorProps) {
+export function Separator({ className, bgScheme = "red" }: SeparatorProps) {
   return (
     <div
-      className={`h-2 w-36 md:w-64 rounded-sm mx-auto ${bgAccentColourMap[color]}${className ? ` ${className}` : ""}`}
+      className={`h-2 w-36 md:w-64 rounded-sm mx-auto ${schemes[bgScheme].bg}${className ? ` ${className}` : ""}`}
     />
   );
 }

@@ -8,7 +8,7 @@ import {
 
 interface ButtonProps extends ComponentPropsWithoutRef<typeof Link> {
   variant?: ButtonVariant;
-  colorScheme?: ColorScheme;
+  bgScheme?: ColorScheme;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
 }
@@ -24,7 +24,7 @@ const variantBaseClass: Record<ButtonVariant, string> = {
 
 export function Button({
   variant = "primary",
-  colorScheme = "red",
+  bgScheme = "red",
   className,
   children,
   iconLeft,
@@ -33,7 +33,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <Link
-      className={`${variantBaseClass[variant]} ${buttonVariantStyles[variant][colorScheme]}${className ? ` ${className}` : ""}`}
+      className={`${variantBaseClass[variant]} ${buttonVariantStyles[variant][bgScheme]}${className ? ` ${className}` : ""}`}
       {...props}
     >
       {iconLeft && <span className="shrink-0">{iconLeft}</span>}

@@ -1,10 +1,5 @@
 import Image from "next/image";
-import {
-  type ColorScheme,
-  captionBgColourMap,
-  captionHeadingSchemeMap,
-  sectionTextSchemeMap,
-} from "@/lib/colours";
+import { type ColorScheme, schemes } from "@/lib/colours";
 import { Button } from "./button";
 import { Heading } from "./heading";
 import { Text } from "./text";
@@ -20,17 +15,16 @@ export interface CaptionedImageProps {
   src: string;
   alt: string;
   caption?: CaptionedImageCaption;
-  colorScheme: ColorScheme;
+  bgScheme: ColorScheme;
 }
 
 export function CaptionedImage({
   src,
   alt,
   caption,
-  colorScheme,
+  bgScheme,
 }: CaptionedImageProps) {
-  const headingScheme = captionHeadingSchemeMap[colorScheme];
-  const bodyScheme = sectionTextSchemeMap[colorScheme];
+  const captionScheme = schemes[bgScheme].captionScheme;
 
   return (
     <figure className="group overflow-hidden rounded-xl shadow-lg">
@@ -45,15 +39,15 @@ export function CaptionedImage({
       </div>
       {caption && (
         <figcaption
-          className={`${captionBgColourMap[colorScheme]} space-y-3 p-4 sm:p-5`}
+          className={`${schemes[captionScheme].bg} space-y-3 p-4 sm:p-5`}
         >
-          <Heading size="small" color={headingScheme}>
+          <Heading size="sm" bgScheme={captionScheme} className="italic">
             {caption.heading}
           </Heading>
-          <Text variant="body" color={bodyScheme} className="font-bold">
+          <Text variant="base" bgScheme={captionScheme} className="font-bold">
             {caption.text}
           </Text>
-          <Button href={caption.ctaHref} variant="primary" colorScheme="red">
+          <Button href={caption.ctaHref} variant="primary" bgScheme="red">
             {caption.ctaLabel}
           </Button>
         </figcaption>

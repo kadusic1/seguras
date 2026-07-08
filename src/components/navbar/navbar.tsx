@@ -21,7 +21,7 @@ export function Navbar() {
             <Button
               href="/contact"
               variant="primary"
-              colorScheme="red"
+              bgScheme="red"
               iconRight={<ArrowRight className="size-4" />}
             >
               Contact

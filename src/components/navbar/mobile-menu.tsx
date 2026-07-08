@@ -85,7 +85,7 @@ export function MobileMenu() {
             <Button
               href="/contact"
               variant="primary"
-              colorScheme="red"
+              bgScheme="red"
               onClick={() => setIsOpen(false)}
               iconRight={<ArrowRight className="size-4" />}
             >

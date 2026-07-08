@@ -1,12 +1,6 @@
 import { ArrowRight, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import {
-  type ColorScheme,
-  cardBorderBgColourMap,
-  iconColourMap,
-  listingAccentColourMap,
-  listingMetaColourMap,
-} from "@/lib/colours";
+import { type ColorScheme, schemes } from "@/lib/colours";
 import { Button } from "./button";
 import { Heading } from "./heading";
 import { Text } from "./text";
@@ -20,8 +14,14 @@ interface CardProps {
   href?: string;
   badge?: string;
   meta?: { label: string; value: string }[];
-  colorScheme?: ColorScheme;
+  bgScheme?: ColorScheme;
 }
+
+const listingBorder: Record<ColorScheme, string> = {
+  red: "border-l-white",
+  black: "border-l-red-500",
+  white: "border-l-red-500",
+};
 
 export function Card({
   variant = "icon",
@@ -32,24 +32,25 @@ export function Card({
   href,
   badge,
   meta,
-  colorScheme = "red",
+  bgScheme = "red",
 }: CardProps) {
   const isListing = variant === "listing";
+  const s = schemes[bgScheme];
 
   return (
     <div
-      className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${cardBorderBgColourMap[colorScheme]}${isListing ? ` ${listingAccentColourMap[colorScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}`}
+      className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}`}
     >
       {HeroIcon && (
         <HeroIcon
-          className={`mb-4 h-12 w-12 transition-colors ${iconColourMap[colorScheme]}`}
+          className={`mb-4 h-12 w-12 transition-colors ${s.accent}`}
           strokeWidth={1.5}
         />
       )}
       <Heading
         as="h3"
-        size="card"
-        color={colorScheme}
+        size="md"
+        bgScheme={bgScheme}
         icon={Icon}
         badge={isListing ? badge : undefined}
       >
@@ -62,13 +63,13 @@ export function Card({
         )}
       </Heading>
       {description && (
-        <Text variant="body" color={colorScheme} className="mt-2">
+        <Text variant="base" bgScheme={bgScheme} className="mt-2">
           {description}
         </Text>
       )}
       {isListing && meta && meta.length > 0 && (
         <div
-          className={`mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm ${listingMetaColourMap[colorScheme]}`}
+          className={`mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm ${s.text.muted}`}
         >
           {meta.map((m) => (
             <span key={m.label}>
@@ -80,7 +81,7 @@ export function Card({
       {href && (
         <Button
           variant="link"
-          colorScheme={colorScheme}
+          bgScheme={bgScheme}
           href={href}
           iconRight={<ArrowRight />}
           className="mt-4"

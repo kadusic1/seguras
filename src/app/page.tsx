@@ -16,7 +16,7 @@ export default function Home() {
       <Section
         title="Trusted By"
         subtitle="Events and organizations that trust Seguras"
-        colorScheme="red"
+        bgScheme="red"
       >
         <Carousel
           slideClassName="min-w-0 flex-[0_0_25%]"
@@ -43,20 +43,20 @@ export default function Home() {
       <Section
         title="Safety Solutions for the World's Biggest Events"
         subtitle="From sold-out football stadiums to major festivals - professional crowd management and safety for every event."
-        colorScheme="white"
+        bgScheme="white"
         ctaLabel="View All Services"
         ctaHref="/services"
       >
         <Grid cols={3}>
           {services.map((s) => (
-            <Card key={s.title} {...s} variant="icon" colorScheme="white" />
+            <Card key={s.title} {...s} variant="icon" bgScheme="white" />
           ))}
         </Grid>
       </Section>
       <Section
         title="Join Our Team"
         subtitle="Be part of a growing team that keeps events safe and welcoming across the country."
-        colorScheme="black"
+        bgScheme="black"
         ctaLabel="View All Openings"
         ctaHref="/jobs"
         image={{
@@ -73,7 +73,7 @@ export default function Home() {
       >
         <Grid cols={1}>
           {jobs.map((j) => (
-            <Card key={j.title} {...j} variant="listing" colorScheme="black" />
+            <Card key={j.title} {...j} variant="listing" bgScheme="black" />
           ))}
         </Grid>
       </Section>

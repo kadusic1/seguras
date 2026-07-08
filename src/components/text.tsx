@@ -1,30 +1,27 @@
 import type { ReactNode } from "react";
-import {
-  type ColorScheme,
-  descColourMap,
-  textMutedColourMap,
-} from "@/lib/colours";
+import { type ColorScheme, schemes } from "@/lib/colours";
 
-type TextVariant = "lead" | "body" | "small";
+type TextVariant = "lg" | "base" | "sm";
 
 interface TextProps {
   as?: "p" | "span" | "div";
   variant: TextVariant;
   children: ReactNode;
   className?: string;
-  color?: ColorScheme;
+  bgScheme?: ColorScheme;
+  emphasis?: "primary" | "muted";
 }
 
 const variantStyles: Record<TextVariant, string> = {
-  lead: "text-base font-bold tracking-wide md:text-lg lg:text-xl",
-  body: "text-base sm:text-lg leading-relaxed",
-  small: "text-sm",
+  lg: "text-base font-bold tracking-wide md:text-lg lg:text-xl",
+  base: "text-base sm:text-lg leading-relaxed",
+  sm: "text-sm",
 };
 
-const colourMapForVariant: Record<TextVariant, Record<ColorScheme, string>> = {
-  lead: textMutedColourMap,
-  body: descColourMap,
-  small: textMutedColourMap,
+const defaultEmphasis: Record<TextVariant, "primary" | "muted"> = {
+  lg: "primary",
+  base: "muted",
+  sm: "muted",
 };
 
 export function Text({
@@ -32,11 +29,17 @@ export function Text({
   variant,
   className,
   children,
-  color = "white",
+  bgScheme = "white",
+  emphasis,
 }: TextProps) {
+  const resolvedEmphasis = emphasis ?? defaultEmphasis[variant];
+  const s = schemes[bgScheme];
+  const textColor =
+    resolvedEmphasis === "primary" ? s.text.primary : s.text.muted;
+
   return (
     <Tag
-      className={`${variantStyles[variant]} ${colourMapForVariant[variant][color]}${className ? ` ${className}` : ""}`}
+      className={`${variantStyles[variant]} ${textColor}${className ? ` ${className}` : ""}`}
     >
       {children}
     </Tag>
