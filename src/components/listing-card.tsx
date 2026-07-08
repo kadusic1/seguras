@@ -1,10 +1,9 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import {
   type ColorScheme,
   cardBorderBgColourMap,
   listingAccentColourMap,
-  listingBadgeColourMap,
   listingMetaColourMap,
 } from "@/lib/colours";
 import { Button } from "./button";
@@ -12,6 +11,7 @@ import { Heading } from "./heading";
 import { Text } from "./text";
 
 interface ListingCardProps {
+  icon?: LucideIcon;
   title: string;
   description?: string;
   href?: string;
@@ -21,6 +21,7 @@ interface ListingCardProps {
 }
 
 export function ListingCard({
+  icon: Icon,
   title,
   description,
   href,
@@ -32,18 +33,12 @@ export function ListingCard({
     <div
       className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${cardBorderBgColourMap[colorScheme]} ${listingAccentColourMap[colorScheme]} hover:border-l-[6px]`}
     >
-      {badge && (
-        <span
-          className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${listingBadgeColourMap[colorScheme]}`}
-        >
-          {badge}
-        </span>
-      )}
       <Heading
         as="h3"
         size="card"
         color={colorScheme}
-        className={badge ? "mt-2" : ""}
+        icon={Icon}
+        badge={badge}
       >
         {href ? (
           <Link href={href} className="hover:underline">

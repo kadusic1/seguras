@@ -1,5 +1,12 @@
+import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { type ColorScheme, textColourMap, titleColourMap } from "@/lib/colours";
+import {
+  badgeColourMap,
+  type ColorScheme,
+  iconColourMap,
+  textColourMap,
+  titleColourMap,
+} from "@/lib/colours";
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 type HeadingSize = "hero" | "card" | "small";
@@ -10,6 +17,10 @@ interface HeadingProps {
   children: ReactNode;
   className?: string;
   color?: ColorScheme;
+  icon?: LucideIcon;
+  badge?: string;
+  iconPosition?: "left" | "right";
+  badgePosition?: "left" | "right";
 }
 
 const sizeStyles: Record<HeadingSize, string> = {
@@ -39,13 +50,49 @@ export function Heading({
   className,
   children,
   color = "white",
+  icon: Icon,
+  badge,
+  iconPosition = "left",
+  badgePosition = "right",
 }: HeadingProps) {
   const resolvedSize = size ?? defaultSizeForLevel[Tag];
-  return (
-    <Tag
-      className={`${sizeStyles[resolvedSize]} ${colourMapForSize[resolvedSize][color]}${className ? ` ${className}` : ""}`}
-    >
-      {children}
-    </Tag>
+  const tagClass = `${sizeStyles[resolvedSize]} ${colourMapForSize[resolvedSize][color]}${className ? ` ${className}` : ""}`;
+
+  const content = (
+    <>
+      {Icon && iconPosition === "left" && (
+        <Icon
+          className={`h-6 w-6 shrink-0 ${iconColourMap[color]}`}
+          strokeWidth={1.5}
+        />
+      )}
+      {badge && badgePosition === "left" && (
+        <span
+          className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badgeColourMap[color]}`}
+        >
+          {badge}
+        </span>
+      )}
+      <Tag className={tagClass}>{children}</Tag>
+      {badge && badgePosition === "right" && (
+        <span
+          className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badgeColourMap[color]}`}
+        >
+          {badge}
+        </span>
+      )}
+      {Icon && iconPosition === "right" && (
+        <Icon
+          className={`h-6 w-6 shrink-0 ${iconColourMap[color]}`}
+          strokeWidth={1.5}
+        />
+      )}
+    </>
   );
+
+  if (Icon || badge) {
+    return <div className="flex items-center gap-2">{content}</div>;
+  }
+
+  return <>{content}</>;
 }

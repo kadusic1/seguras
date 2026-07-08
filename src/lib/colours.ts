@@ -66,7 +66,7 @@ export const listingAccentColourMap: Record<ColorScheme, string> = {
   white: "border-l-red-500",
 };
 
-export const listingBadgeColourMap: Record<ColorScheme, string> = {
+export const badgeColourMap: Record<ColorScheme, string> = {
   red: "bg-red-700 text-white",
   black: "bg-red-500/10 text-red-400",
   white: "bg-red-500/10 text-red-600",

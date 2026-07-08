@@ -1,9 +1,5 @@
 import { ArrowRight, type LucideIcon } from "lucide-react";
-import {
-  type ColorScheme,
-  cardBorderBgColourMap,
-  iconColourMap,
-} from "@/lib/colours";
+import { type ColorScheme, cardBorderBgColourMap } from "@/lib/colours";
 import { Button } from "./button";
 import { Heading } from "./heading";
 import { Text } from "./text";
@@ -27,11 +23,7 @@ export function IconCard({
     <div
       className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 ${cardBorderBgColourMap[colorScheme]}`}
     >
-      <Icon
-        className={`mb-4 h-12 w-12 transition-colors ${iconColourMap[colorScheme]}`}
-        strokeWidth={1.5}
-      />
-      <Heading as="h3" size="card" color={colorScheme}>
+      <Heading as="h3" size="card" color={colorScheme} icon={Icon}>
         {title}
       </Heading>
       <Text variant="body" color={colorScheme} className="mt-2">
