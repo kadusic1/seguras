@@ -3,13 +3,13 @@ import Link from "next/link";
 import {
   type ColorScheme,
   cardBorderBgColourMap,
-  descColourMap,
-  linkColourMap,
   listingAccentColourMap,
   listingBadgeColourMap,
   listingMetaColourMap,
-  titleColourMap,
 } from "@/lib/colours";
+import { Button } from "./button";
+import { Heading } from "./heading";
+import { Text } from "./text";
 
 interface ListingCardProps {
   title: string;
@@ -39,8 +39,11 @@ export function ListingCard({
           {badge}
         </span>
       )}
-      <h3
-        className={`text-xl font-bold sm:text-2xl ${badge ? "mt-2" : ""} ${titleColourMap[colorScheme]}`}
+      <Heading
+        as="h3"
+        size="card"
+        color={colorScheme}
+        className={badge ? "mt-2" : ""}
       >
         {href ? (
           <Link href={href} className="hover:underline">
@@ -49,11 +52,11 @@ export function ListingCard({
         ) : (
           title
         )}
-      </h3>
+      </Heading>
       {description && (
-        <p className={`mt-2 leading-relaxed ${descColourMap[colorScheme]}`}>
+        <Text variant="body" color={colorScheme} className="mt-2">
           {description}
-        </p>
+        </Text>
       )}
       {meta && meta.length > 0 && (
         <div
@@ -67,13 +70,15 @@ export function ListingCard({
         </div>
       )}
       {href && (
-        <Link
+        <Button
+          variant="link"
+          colorScheme={colorScheme}
           href={href}
-          className={`mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-colors ${linkColourMap[colorScheme]}`}
+          iconRight={<ArrowRight />}
+          className="mt-4"
         >
           Learn more
-          <ArrowRight />
-        </Link>
+        </Button>
       )}
     </div>
   );

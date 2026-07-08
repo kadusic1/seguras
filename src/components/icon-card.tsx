@@ -1,13 +1,12 @@
 import { ArrowRight, type LucideIcon } from "lucide-react";
-import Link from "next/link";
 import {
   type ColorScheme,
   cardBorderBgColourMap,
-  descColourMap,
   iconColourMap,
-  linkColourMap,
-  titleColourMap,
 } from "@/lib/colours";
+import { Button } from "./button";
+import { Heading } from "./heading";
+import { Text } from "./text";
 
 interface IconCardProps {
   icon: LucideIcon;
@@ -32,22 +31,22 @@ export function IconCard({
         className={`mb-4 h-12 w-12 transition-colors ${iconColourMap[colorScheme]}`}
         strokeWidth={1.5}
       />
-      <h3
-        className={`text-xl font-bold sm:text-2xl ${titleColourMap[colorScheme]}`}
-      >
+      <Heading as="h3" size="card" color={colorScheme}>
         {title}
-      </h3>
-      <p className={`mt-2 leading-relaxed ${descColourMap[colorScheme]}`}>
+      </Heading>
+      <Text variant="body" color={colorScheme} className="mt-2">
         {description}
-      </p>
+      </Text>
       {href && (
-        <Link
+        <Button
+          variant="link"
+          colorScheme={colorScheme}
           href={href}
-          className={`mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-colors ${linkColourMap[colorScheme]}`}
+          iconRight={<ArrowRight />}
+          className="mt-4"
         >
           Learn more
-          <ArrowRight />
-        </Link>
+        </Button>
       )}
     </div>
   );
