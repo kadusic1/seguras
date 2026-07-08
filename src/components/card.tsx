@@ -11,7 +11,8 @@ import { Button } from "./button";
 import { Heading } from "./heading";
 import { Text } from "./text";
 
-interface ListingCardProps {
+interface CardProps {
+  variant?: "icon" | "listing";
   icon?: LucideIcon;
   heroIcon?: LucideIcon;
   title: string;
@@ -22,7 +23,8 @@ interface ListingCardProps {
   colorScheme?: ColorScheme;
 }
 
-export function ListingCard({
+export function Card({
+  variant = "icon",
   icon: Icon,
   heroIcon: HeroIcon,
   title,
@@ -31,10 +33,12 @@ export function ListingCard({
   badge,
   meta,
   colorScheme = "red",
-}: ListingCardProps) {
+}: CardProps) {
+  const isListing = variant === "listing";
+
   return (
     <div
-      className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${cardBorderBgColourMap[colorScheme]} ${listingAccentColourMap[colorScheme]} hover:border-l-[6px]`}
+      className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${cardBorderBgColourMap[colorScheme]}${isListing ? ` ${listingAccentColourMap[colorScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}`}
     >
       {HeroIcon && (
         <HeroIcon
@@ -47,9 +51,9 @@ export function ListingCard({
         size="card"
         color={colorScheme}
         icon={Icon}
-        badge={badge}
+        badge={isListing ? badge : undefined}
       >
-        {href ? (
+        {isListing && href ? (
           <Link href={href} className="hover:underline">
             {title}
           </Link>
@@ -62,7 +66,7 @@ export function ListingCard({
           {description}
         </Text>
       )}
-      {meta && meta.length > 0 && (
+      {isListing && meta && meta.length > 0 && (
         <div
           className={`mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm ${listingMetaColourMap[colorScheme]}`}
         >

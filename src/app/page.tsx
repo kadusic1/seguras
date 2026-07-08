@@ -1,9 +1,7 @@
 import Image from "next/image";
-
+import { Card } from "@/components/card";
 import { Carousel } from "@/components/carousel";
 import { Grid } from "@/components/grid";
-import { IconCard } from "@/components/icon-card";
-import { ListingCard } from "@/components/listing-card";
 import { Section } from "@/components/section";
 import { HeroCarousel } from "@/features/hero/_components/HeroCarousel";
 import { heroSlides } from "@/features/hero/data";
@@ -50,7 +48,7 @@ export default function Home() {
       >
         <Grid cols={3}>
           {services.map((s) => (
-            <IconCard key={s.title} {...s} colorScheme="white" />
+            <Card key={s.title} {...s} variant="icon" colorScheme="white" />
           ))}
         </Grid>
       </Section>
@@ -63,7 +61,7 @@ export default function Home() {
       >
         <Grid cols={2}>
           {jobs.map((j) => (
-            <ListingCard key={j.title} {...j} colorScheme="black" />
+            <Card key={j.title} {...j} variant="listing" colorScheme="black" />
           ))}
         </Grid>
       </Section>
