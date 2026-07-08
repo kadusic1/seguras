@@ -1,25 +1,51 @@
 import type { ReactNode } from "react";
-import { type ColorScheme, textColourMap } from "@/lib/colours";
+import { type ColorScheme, textColourMap, titleColourMap } from "@/lib/colours";
+
+type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+type HeadingSize = "hero" | "card" | "small";
 
 interface HeadingProps {
+  as?: HeadingLevel;
+  size?: HeadingSize;
   children: ReactNode;
   className?: string;
   color?: ColorScheme;
 }
 
-const base =
-  "font-black italic leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl";
+const sizeStyles: Record<HeadingSize, string> = {
+  hero: "font-black italic leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl",
+  card: "text-xl font-bold sm:text-2xl",
+  small: "text-lg font-semibold",
+};
+
+const defaultSizeForLevel: Record<HeadingLevel, HeadingSize> = {
+  h1: "hero",
+  h2: "hero",
+  h3: "card",
+  h4: "small",
+  h5: "small",
+  h6: "small",
+};
+
+const colourMapForSize: Record<HeadingSize, Record<ColorScheme, string>> = {
+  hero: textColourMap,
+  card: titleColourMap,
+  small: textColourMap,
+};
 
 export function Heading({
+  as: Tag = "h2",
+  size,
   className,
   children,
   color = "white",
 }: HeadingProps) {
+  const resolvedSize = size ?? defaultSizeForLevel[Tag];
   return (
-    <h2
-      className={`${base} ${textColourMap[color]}${className ? ` ${className}` : ""}`}
+    <Tag
+      className={`${sizeStyles[resolvedSize]} ${colourMapForSize[resolvedSize][color]}${className ? ` ${className}` : ""}`}
     >
       {children}
-    </h2>
+    </Tag>
   );
 }

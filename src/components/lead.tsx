@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { type ColorScheme, textMutedColourMap } from "@/lib/colours";
+import type { ColorScheme } from "@/lib/colours";
+import { Text } from "./text";
 
 interface LeadProps {
   children: ReactNode;
@@ -7,14 +8,10 @@ interface LeadProps {
   color?: ColorScheme;
 }
 
-const base = "text-base font-bold tracking-wide md:text-lg lg:text-xl";
-
 export function Lead({ className, children, color = "white" }: LeadProps) {
   return (
-    <p
-      className={`${base} ${textMutedColourMap[color]}${className ? ` ${className}` : ""}`}
-    >
+    <Text as="p" variant="lead" color={color} className={className}>
       {children}
-    </p>
+    </Text>
   );
 }
