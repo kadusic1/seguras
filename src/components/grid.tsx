@@ -2,11 +2,12 @@ import type { ReactNode } from "react";
 
 interface GridProps {
   children: ReactNode;
-  cols?: 2 | 3 | 4;
+  cols?: 1 | 2 | 3 | 4;
   className?: string;
 }
 
 const gridColsMap = {
+  1: "",
   2: "md:grid-cols-2",
   3: "md:grid-cols-3",
   4: "md:grid-cols-4",

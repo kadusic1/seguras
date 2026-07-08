@@ -59,8 +59,10 @@ export default function Home() {
         colorScheme="black"
         ctaLabel="View All Openings"
         ctaHref="/jobs"
+        image={{ src: "/hero/hero-1.jpg", alt: "Seguras security team member" }}
+        imagePosition="right"
       >
-        <Grid cols={2}>
+        <Grid cols={1}>
           {jobs.map((j) => (
             <Card key={j.title} {...j} variant="listing" colorScheme="black" />
           ))}
