@@ -1,11 +1,16 @@
 import { ArrowRight, type LucideIcon } from "lucide-react";
-import { type ColorScheme, cardBorderBgColourMap } from "@/lib/colours";
+import {
+  type ColorScheme,
+  cardBorderBgColourMap,
+  iconColourMap,
+} from "@/lib/colours";
 import { Button } from "./button";
 import { Heading } from "./heading";
 import { Text } from "./text";
 
 interface IconCardProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
+  heroIcon?: LucideIcon;
   title: string;
   description: string;
   href?: string;
@@ -14,6 +19,7 @@ interface IconCardProps {
 
 export function IconCard({
   icon: Icon,
+  heroIcon: HeroIcon,
   title,
   description,
   href,
@@ -23,6 +29,12 @@ export function IconCard({
     <div
       className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 ${cardBorderBgColourMap[colorScheme]}`}
     >
+      {HeroIcon && (
+        <HeroIcon
+          className={`mb-4 h-12 w-12 transition-colors ${iconColourMap[colorScheme]}`}
+          strokeWidth={1.5}
+        />
+      )}
       <Heading as="h3" size="card" color={colorScheme} icon={Icon}>
         {title}
       </Heading>

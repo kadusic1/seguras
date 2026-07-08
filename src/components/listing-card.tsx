@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   type ColorScheme,
   cardBorderBgColourMap,
+  iconColourMap,
   listingAccentColourMap,
   listingMetaColourMap,
 } from "@/lib/colours";
@@ -12,6 +13,7 @@ import { Text } from "./text";
 
 interface ListingCardProps {
   icon?: LucideIcon;
+  heroIcon?: LucideIcon;
   title: string;
   description?: string;
   href?: string;
@@ -22,6 +24,7 @@ interface ListingCardProps {
 
 export function ListingCard({
   icon: Icon,
+  heroIcon: HeroIcon,
   title,
   description,
   href,
@@ -33,6 +36,12 @@ export function ListingCard({
     <div
       className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${cardBorderBgColourMap[colorScheme]} ${listingAccentColourMap[colorScheme]} hover:border-l-[6px]`}
     >
+      {HeroIcon && (
+        <HeroIcon
+          className={`mb-4 h-12 w-12 transition-colors ${iconColourMap[colorScheme]}`}
+          strokeWidth={1.5}
+        />
+      )}
       <Heading
         as="h3"
         size="card"
