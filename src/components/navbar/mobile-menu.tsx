@@ -84,7 +84,8 @@ export function MobileMenu() {
           <div className="mt-auto px-6 pb-8">
             <Button
               href="/contact"
-              variant="a"
+              variant="primary"
+              colorScheme="red"
               onClick={() => setIsOpen(false)}
               iconRight={<ArrowRight className="size-4" />}
             >

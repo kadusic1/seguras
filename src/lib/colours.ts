@@ -78,18 +78,31 @@ export const listingMetaColourMap: Record<ColorScheme, string> = {
   white: "text-black/50",
 };
 
-export type ButtonVariant = "a" | "b" | "c" | "d" | "e";
+export type ButtonVariant = "primary" | "outline" | "link";
 
-export const buttonVariantStyles: Record<ButtonVariant, string> = {
-  a: "bg-red-600 text-white shadow-sm hover:bg-red-700",
-  b: "border border-red-600 text-red-500 hover:bg-red-600/10",
-  c: "bg-black text-white shadow-sm hover:bg-gray-900",
-  d: "border border-white text-white hover:bg-white/10",
-  e: "bg-white text-red-600 shadow-sm hover:bg-red-50",
+export const buttonVariantStyles: Record<
+  ButtonVariant,
+  Record<ColorScheme, string>
+> = {
+  primary: {
+    red: "bg-red-600 text-white shadow-sm hover:bg-red-700",
+    black: "bg-black text-white shadow-sm hover:bg-gray-900",
+    white: "bg-white text-red-600 shadow-sm hover:bg-red-50",
+  },
+  outline: {
+    red: "border border-red-600 text-red-500 hover:bg-red-600/10",
+    black: "border border-black text-black hover:bg-black/10",
+    white: "border border-white text-white hover:bg-white/10",
+  },
+  link: {
+    red: "text-white/90 hover:text-white",
+    black: "text-red-500 hover:text-red-400",
+    white: "text-red-500 hover:text-red-400",
+  },
 };
 
-export const schemeToButtonVariant: Record<ColorScheme, ButtonVariant> = {
-  red: "e",
-  black: "a",
-  white: "a",
+export const schemeToButtonColorScheme: Record<ColorScheme, ColorScheme> = {
+  red: "white",
+  black: "red",
+  white: "red",
 };

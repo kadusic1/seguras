@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import {
   type ColorScheme,
-  schemeToButtonVariant,
+  schemeToButtonColorScheme,
   sectionBgColourMap,
   sectionTextSchemeMap,
 } from "@/lib/colours";
@@ -47,7 +47,11 @@ export function Section({
         {children}
         {ctaLabel && ctaHref && (
           <div className="mt-12 text-center">
-            <Button href={ctaHref} variant={schemeToButtonVariant[colorScheme]}>
+            <Button
+              href={ctaHref}
+              variant="primary"
+              colorScheme={schemeToButtonColorScheme[colorScheme]}
+            >
               {ctaLabel}
             </Button>
           </div>

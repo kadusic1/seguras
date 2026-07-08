@@ -20,7 +20,8 @@ export function Navbar() {
           <div className="hidden lg:block">
             <Button
               href="/contact"
-              variant="a"
+              variant="primary"
+              colorScheme="red"
               iconRight={<ArrowRight className="size-4" />}
             >
               Contact

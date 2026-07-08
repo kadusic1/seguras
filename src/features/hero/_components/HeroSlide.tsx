@@ -70,10 +70,10 @@ export function HeroSlide({ slide, isActive }: HeroSlideProps) {
           <div
             className={`mt-4 flex flex-wrap justify-center gap-3 sm:mt-6 sm:gap-4 ${fadeIn(isActive, "0.3s")}`}
           >
-            <Button href={slide.ctaHref} variant="a">
+            <Button href={slide.ctaHref} variant="primary" colorScheme="red">
               {slide.cta}
             </Button>
-            <Button href={slide.ctaHref} variant="b">
+            <Button href={slide.ctaHref} variant="outline" colorScheme="red">
               Learn More
             </Button>
           </div>
