@@ -3,9 +3,11 @@ import Image from "next/image";
 import { Carousel } from "@/components/carousel";
 import { Grid } from "@/components/grid";
 import { IconCard } from "@/components/icon-card";
+import { ListingCard } from "@/components/listing-card";
 import { Section } from "@/components/section";
 import { HeroCarousel } from "@/features/hero/_components/HeroCarousel";
 import { heroSlides } from "@/features/hero/data";
+import { jobs } from "@/features/jobs/data";
 import { services } from "@/features/services/data";
 import { trustedCompanies } from "@/features/trusted-companies/data";
 
@@ -49,6 +51,19 @@ export default function Home() {
         <Grid cols={3}>
           {services.map((s) => (
             <IconCard key={s.title} {...s} colorScheme="white" />
+          ))}
+        </Grid>
+      </Section>
+      <Section
+        title="Join Our Team"
+        subtitle="Be part of a growing team that keeps events safe and welcoming across the country."
+        colorScheme="black"
+        ctaLabel="View All Openings"
+        ctaHref="/jobs"
+      >
+        <Grid cols={2}>
+          {jobs.map((j) => (
+            <ListingCard key={j.title} {...j} colorScheme="black" />
           ))}
         </Grid>
       </Section>

@@ -60,6 +60,24 @@ export const sectionTextSchemeMap: Record<ColorScheme, ColorScheme> = {
   white: "black",
 };
 
+export const listingAccentColourMap: Record<ColorScheme, string> = {
+  red: "border-l-white",
+  black: "border-l-red-500",
+  white: "border-l-red-500",
+};
+
+export const listingBadgeColourMap: Record<ColorScheme, string> = {
+  red: "bg-red-700 text-white",
+  black: "bg-red-500/10 text-red-400",
+  white: "bg-red-500/10 text-red-600",
+};
+
+export const listingMetaColourMap: Record<ColorScheme, string> = {
+  red: "text-white/60",
+  black: "text-white/50",
+  white: "text-black/50",
+};
+
 export type ButtonVariant = "a" | "b" | "c" | "d" | "e";
 
 export const buttonVariantStyles: Record<ButtonVariant, string> = {
