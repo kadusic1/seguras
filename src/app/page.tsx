@@ -21,6 +21,7 @@ export default function Home() {
         <Carousel
           slideClassName="min-w-0 flex-[0_0_25%]"
           className="mt-12"
+          autoplayDelay={2000}
           slides={trustedCompanies.map((c) => ({
             id: c.alt,
             content: (
