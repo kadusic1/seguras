@@ -1,0 +1,37 @@
+import { type ColorScheme, schemes } from "@/lib/colours";
+
+interface WaveDividerProps {
+  fillScheme: ColorScheme;
+  className?: string;
+  flipHorizontal?: boolean;
+  flipVertical?: boolean;
+}
+
+const path = "M0,0 C 240,120 720,80 1440,0 L 1440,120 L 0,120 Z";
+
+export function WaveDivider({
+  fillScheme,
+  className = "",
+  flipHorizontal = false,
+  flipVertical = false,
+}: WaveDividerProps) {
+  const flipX = flipHorizontal ? "-scale-x-100" : "";
+  const flipY = flipVertical ? "-scale-y-100" : "";
+
+  return (
+    <div
+      className={`overflow-hidden leading-none ${className}`}
+      aria-hidden="true"
+    >
+      <svg
+        viewBox="0 0 1440 120"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        className={`block w-full h-[60px] sm:h-[80px] md:h-[100px] lg:h-[120px] ${schemes[fillScheme].bg.replace("bg-", "fill-")} ${flipX} ${flipY}`}
+      >
+        <title>Section divider</title>
+        <path d={path} />
+      </svg>
+    </div>
+  );
+}

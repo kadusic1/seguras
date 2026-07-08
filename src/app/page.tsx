@@ -4,6 +4,7 @@ import { Card } from "@/components/card";
 import { Carousel } from "@/components/carousel";
 import { Grid } from "@/components/grid";
 import { Section } from "@/components/section";
+import { WaveDivider } from "@/components/wave-divider";
 import { HeroCarousel } from "@/features/hero/_components/HeroCarousel";
 import { heroSlides } from "@/features/hero/data";
 import { jobs } from "@/features/jobs/data";
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <>
       <HeroCarousel slides={heroSlides} />
+      <WaveDivider fillScheme="red" />
       <Section
         title="Trusted By"
         subtitle="Events and organizations that trust Seguras"
