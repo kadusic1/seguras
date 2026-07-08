@@ -59,7 +59,16 @@ export default function Home() {
         colorScheme="black"
         ctaLabel="View All Openings"
         ctaHref="/jobs"
-        image={{ src: "/hero/hero-1.jpg", alt: "Seguras security team member" }}
+        image={{
+          src: "/hero/hero-1.jpg",
+          alt: "Seguras security team member",
+          caption: {
+            heading: "Grow With Us",
+            text: "We're looking for dedicated professionals who take pride in keeping events safe. From stadium security to crowd management, every role makes a real impact. Join a team that values your growth and invests in your future.",
+            ctaLabel: "See Open Roles",
+            ctaHref: "/jobs",
+          },
+        }}
         imagePosition="right"
       >
         <Grid cols={1}>

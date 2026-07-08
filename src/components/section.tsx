@@ -7,6 +7,7 @@ import {
   sectionTextSchemeMap,
 } from "@/lib/colours";
 import { Button } from "./button";
+import { CaptionedImage, type CaptionedImageCaption } from "./captioned-image";
 import { Heading } from "./heading";
 import { Lead } from "./lead";
 
@@ -18,7 +19,7 @@ interface SectionProps {
   ctaLabel?: string;
   ctaHref?: string;
   className?: string;
-  image?: { src: string; alt: string };
+  image?: { src: string; alt: string; caption?: CaptionedImageCaption };
   imagePosition?: "left" | "right" | "background";
 }
 
@@ -95,15 +96,12 @@ export function Section({
           >
             <div className="flex-1">{renderContent(textScheme)}</div>
             <div className="mt-8 md:mt-0 md:w-[45%] md:flex-shrink-0">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 45vw"
-                />
-              </div>
+              <CaptionedImage
+                src={image.src}
+                alt={image.alt}
+                caption={image.caption}
+                colorScheme={colorScheme}
+              />
             </div>
           </div>
         </div>

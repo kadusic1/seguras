@@ -48,6 +48,18 @@ export const linkColourMap: Record<ColorScheme, string> = {
   white: "text-red-500 hover:text-red-400",
 };
 
+export const captionBgColourMap: Record<ColorScheme, string> = {
+  red: "bg-white",
+  black: "bg-white",
+  white: "bg-black",
+};
+
+export const captionHeadingSchemeMap: Record<ColorScheme, ColorScheme> = {
+  red: "black",
+  black: "black",
+  white: "white",
+};
+
 export const sectionBgColourMap: Record<ColorScheme, string> = {
   red: "bg-red-600",
   black: "bg-black",
