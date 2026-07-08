@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { type ColorScheme, schemes } from "@/lib/colours";
 import { Button } from "./button";
@@ -9,6 +10,7 @@ export interface CaptionedImageCaption {
   text: string;
   ctaLabel: string;
   ctaHref: string;
+  icon?: LucideIcon;
 }
 
 export interface CaptionedImageProps {
@@ -41,7 +43,7 @@ export function CaptionedImage({
         <figcaption
           className={`${schemes[captionScheme].bg} space-y-3 p-4 sm:p-5`}
         >
-          <Heading size="md" bgScheme={captionScheme}>
+          <Heading size="md" bgScheme={captionScheme} icon={caption.icon}>
             {caption.heading}
           </Heading>
           <Text

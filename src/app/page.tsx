@@ -1,3 +1,4 @@
+import { TrendingUp } from "lucide-react";
 import Image from "next/image";
 import { Card } from "@/components/card";
 import { Carousel } from "@/components/carousel";
@@ -64,6 +65,7 @@ export default function Home() {
           alt: "Seguras security team member",
           caption: {
             heading: "Grow With Us",
+            icon: TrendingUp,
             text: "We're looking for dedicated professionals who take pride in keeping events safe. From stadium security to crowd management, every role makes a real impact. Join a team that values your growth and invests in your future.",
             ctaLabel: "See Open Roles",
             ctaHref: "/jobs",
