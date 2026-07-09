@@ -7,7 +7,7 @@ interface WaveDividerProps {
   flipVertical?: boolean;
 }
 
-const path = "M0,0 C 240,120 720,80 1440,0 L 1440,120 L 0,120 Z";
+const path = "M0,0 C 240,120 720,80 1440,0 L 1440,200 L 0,200 Z";
 
 export function WaveDivider({
   fillScheme,
