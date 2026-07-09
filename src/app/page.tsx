@@ -20,6 +20,7 @@ export default function Home() {
         title="Trusted By"
         subtitle="Events and organizations that trust Seguras"
         bgScheme="red"
+        animation="slideUp"
       >
         <Carousel
           slideClassName="min-w-0 flex-[0_0_25%]"
@@ -49,6 +50,7 @@ export default function Home() {
         bgScheme="white"
         ctaLabel="View All Services"
         ctaHref="/services"
+        animation="scaleIn"
       >
         <Grid cols={3}>
           {services.map((s) => (
@@ -62,6 +64,7 @@ export default function Home() {
         bgScheme="black"
         ctaLabel="View All Openings"
         ctaHref="/jobs"
+        animation="fadeIn"
         image={{
           src: "/hero/hero-1.jpg",
           alt: "Seguras security team member",

@@ -4,3 +4,25 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+.reveal {
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration, 600ms) ease-out,
+    transform var(--reveal-duration, 600ms) ease-out;
+}
+
+.reveal-slideUp {
+  transform: translateY(24px);
+}
+.reveal-slideDown {
+  transform: translateY(-24px);
+}
+.reveal-scaleIn {
+  transform: scale(0.95);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: none;
+}

@@ -4,6 +4,7 @@ import { type ColorScheme, schemes } from "@/lib/colours";
 import { Button } from "./button";
 import { CaptionedImage, type CaptionedImageCaption } from "./captioned-image";
 import { Heading } from "./heading";
+import { Reveal, type RevealAnimation } from "./reveal";
 import { Text } from "./text";
 
 interface SectionProps {
@@ -16,6 +17,7 @@ interface SectionProps {
   className?: string;
   image?: { src: string; alt: string; caption?: CaptionedImageCaption };
   imagePosition?: "left" | "right" | "background";
+  animation?: RevealAnimation;
 }
 
 export function Section({
@@ -28,10 +30,11 @@ export function Section({
   className,
   image,
   imagePosition = "right",
+  animation,
 }: SectionProps) {
   const s = schemes[bgScheme];
 
-  const renderContent = () => (
+  const content = (
     <>
       {(title || subtitle) && (
         <div className="mx-auto max-w-3xl text-center">
@@ -54,6 +57,12 @@ export function Section({
     </>
   );
 
+  const animatedContent = animation ? (
+    <Reveal animation={animation}>{content}</Reveal>
+  ) : (
+    content
+  );
+
   if (image && imagePosition === "background") {
     return (
       <section
@@ -70,7 +79,7 @@ export function Section({
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/30" />
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {renderContent()}
+          {animatedContent}
         </div>
       </section>
     );
@@ -85,7 +94,7 @@ export function Section({
           <div
             className={`flex flex-col md:flex-row md:items-center md:gap-12 lg:gap-16${imagePosition === "left" ? " md:flex-row-reverse" : ""}`}
           >
-            <div className="flex-1">{renderContent()}</div>
+            <div className="flex-1">{animatedContent}</div>
             <div className="mt-8 md:mt-0 md:w-[45%] md:flex-shrink-0">
               <CaptionedImage
                 src={image.src}
@@ -105,7 +114,7 @@ export function Section({
       className={`py-24 sm:py-32 ${s.bg}${className ? ` ${className}` : ""}`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {renderContent()}
+        {animatedContent}
       </div>
     </section>
   );
