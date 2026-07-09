@@ -27,10 +27,10 @@ export function WaveDivider({
         viewBox="0 0 1440 120"
         preserveAspectRatio="none"
         aria-hidden="true"
-        className={`block w-full h-[30px] sm:h-[50px] md:h-[80px] lg:h-[120px] ${schemes[fillScheme].bg.replace("bg-", "fill-")} ${flipX} ${flipY}`}
+        className={`block w-full h-[30px] sm:h-[50px] md:h-[80px] lg:h-[120px] ${flipX} ${flipY}`}
       >
         <title>Section divider</title>
-        <path d={path} />
+        <path d={path} fill={schemes[fillScheme].fill} />
       </svg>
     </div>
   );

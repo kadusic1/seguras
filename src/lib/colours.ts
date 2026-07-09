@@ -8,6 +8,7 @@ export interface SchemeTokens {
   bg: string;
   accent: string;
   card: string;
+  fill: string;
   captionScheme: ColorScheme;
   buttonScheme: ColorScheme;
 }
@@ -18,6 +19,7 @@ export const schemes: Record<ColorScheme, SchemeTokens> = {
     bg: "bg-red-600",
     accent: "text-white",
     card: "border-white/20 bg-white/10",
+    fill: "#dc2626",
     captionScheme: "white",
     buttonScheme: "white",
   },
@@ -26,6 +28,7 @@ export const schemes: Record<ColorScheme, SchemeTokens> = {
     bg: "bg-black",
     accent: "text-red-500",
     card: "border-white/10 bg-white/5",
+    fill: "#000000",
     captionScheme: "white",
     buttonScheme: "red",
   },
@@ -34,6 +37,7 @@ export const schemes: Record<ColorScheme, SchemeTokens> = {
     bg: "bg-white",
     accent: "text-red-500",
     card: "border-black/10 bg-black/5",
+    fill: "#ffffff",
     captionScheme: "black",
     buttonScheme: "red",
   },
