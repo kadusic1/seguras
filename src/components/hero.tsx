@@ -32,6 +32,18 @@ export function Hero({
 
   return (
     <section className={`relative overflow-hidden ${s.bg}`}>
+      <div className="lg:hidden absolute inset-0">
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          className="object-cover"
+          quality={85}
+          sizes="100vw"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/85 to-black/80" />
+      </div>
       <div
         className="relative hidden lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:block lg:w-[47%]"
         style={{ clipPath: "polygon(18% 0, 100% 0, 100% 100%, 0% 100%)" }}
