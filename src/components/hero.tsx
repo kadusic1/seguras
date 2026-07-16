@@ -37,7 +37,7 @@ export function Hero({
           fill
           className="object-cover"
           quality={85}
-          sizes="100vw"
+          sizes="(max-width: 1023px) 100vw, 0px"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/85 to-black/80" />
@@ -52,7 +52,7 @@ export function Hero({
           fill
           className="object-cover"
           quality={85}
-          sizes="(min-width: 768px) 55vw, 0px"
+          sizes="(min-width: 1024px) 47vw, 0px"
           priority
         />
       </div>
