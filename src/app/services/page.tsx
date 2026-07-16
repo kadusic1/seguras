@@ -3,6 +3,7 @@ import { Card } from "@/components/card";
 import { Grid } from "@/components/grid";
 import { Hero } from "@/components/hero";
 import { Section } from "@/components/section";
+import { WaveDivider } from "@/components/wave-divider";
 import { services } from "@/features/services/data";
 
 export default function ServicesPage() {
@@ -50,6 +51,7 @@ export default function ServicesPage() {
         ctaIconRight={<ArrowRight size={16} />}
         animation="slideUp"
       />
+      <WaveDivider fillScheme="white" />
       <Section
         title="Latest in Event Security"
         subtitle="Read about our newest services, case studies, and industry insights from the Seguras team."
