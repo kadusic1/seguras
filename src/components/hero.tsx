@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
-import { type ColorScheme, schemes } from "@/lib/colours";
+import { schemes } from "@/lib/colours";
 import { Button } from "./button";
 import { Heading } from "./heading";
 import { Text } from "./text";
@@ -12,7 +12,6 @@ interface HeroProps {
   ctaHref?: string;
   imageSrc: string;
   imageAlt: string;
-  bgScheme?: ColorScheme;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
 }
@@ -24,11 +23,10 @@ export function Hero({
   ctaHref,
   imageSrc,
   imageAlt,
-  bgScheme = "red",
   iconLeft,
   iconRight,
 }: HeroProps) {
-  const s = schemes[bgScheme];
+  const s = schemes["red"];
 
   return (
     <section className={`relative overflow-hidden ${s.bg}`}>
@@ -60,20 +58,11 @@ export function Hero({
       </div>
       <div className="relative z-10 flex min-h-[90vh] items-center px-4 py-20 sm:px-6 sm:py-24 lg:px-12 lg:py-32">
         <div className="max-w-xl">
-          <Heading
-            as="h1"
-            size="xl"
-            bgScheme={bgScheme}
-            className="uppercase mr-12"
-          >
+          <Heading as="h1" size="xl" bgScheme="red" className="uppercase mr-12">
             {headline}
           </Heading>
           {subtitle && (
-            <Text
-              variant="lg"
-              bgScheme={bgScheme}
-              className="mt-4 italic mr-12"
-            >
+            <Text variant="lg" bgScheme="red" className="mt-4 italic mr-12">
               {subtitle}
             </Text>
           )}
