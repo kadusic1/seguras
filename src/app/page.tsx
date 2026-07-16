@@ -66,7 +66,7 @@ export default function Home() {
         ctaHref="/jobs"
         animation="fadeIn"
         image={{
-          src: "/hero/hero-1.jpg",
+          src: "/hero/hero-1.webp",
           alt: "Seguras security team member",
           caption: {
             heading: "Grow With Us",
