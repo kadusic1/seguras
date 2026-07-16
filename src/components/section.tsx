@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { type ColorScheme, schemes } from "@/lib/colours";
 import { Button } from "./button";
 import { CaptionedImage, type CaptionedImageCaption } from "./captioned-image";
@@ -10,10 +10,11 @@ import { Text } from "./text";
 interface SectionProps {
   title?: string;
   subtitle?: string;
-  children: ReactNode;
+  children?: ReactNode;
   bgScheme?: ColorScheme;
   ctaLabel?: string;
   ctaHref?: string;
+  ctaIconRight?: ReactElement;
   className?: string;
   image?: { src: string; alt: string; caption?: CaptionedImageCaption };
   imagePosition?: "left" | "right" | "background";
@@ -27,6 +28,7 @@ export function Section({
   bgScheme = "red",
   ctaLabel,
   ctaHref,
+  ctaIconRight,
   className,
   image,
   imagePosition = "right",
@@ -49,7 +51,12 @@ export function Section({
       {children}
       {ctaLabel && ctaHref && (
         <div className="mt-12 text-center">
-          <Button href={ctaHref} variant="primary" bgScheme={s.buttonScheme}>
+          <Button
+            href={ctaHref}
+            variant="primary"
+            bgScheme={s.buttonScheme}
+            iconRight={ctaIconRight}
+          >
             {ctaLabel}
           </Button>
         </div>
