@@ -46,7 +46,7 @@ export function Hero({
           priority
         />
       </div>
-      <div className="relative z-10 flex min-h-[50vh] items-center px-4 py-20 sm:px-6 sm:py-24 lg:px-12 lg:py-32">
+      <div className="relative z-10 flex min-h-[90vh] items-center px-4 py-20 sm:px-6 sm:py-24 lg:px-12 lg:py-32">
         <div className="max-w-xl">
           <Heading
             as="h1"
