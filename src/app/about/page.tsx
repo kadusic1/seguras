@@ -15,6 +15,7 @@ import { Heading } from "@/components/heading";
 import { Hero } from "@/components/hero";
 import { Section } from "@/components/section";
 import { Text } from "@/components/text";
+import { WaveDivider } from "@/components/wave-divider";
 import { trustedCompanies } from "@/features/trusted-companies/data";
 
 const missionValues = [
@@ -122,6 +123,7 @@ export default function AboutPage() {
           {ceoMessage}
         </Text>
       </Section>
+      <WaveDivider fillScheme="red" />
       <Section
         title="Trusted By"
         subtitle="Events and organizations that trust Seguras. With certified professionals and years of experience, we earn trust through proven results."
