@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export function Logo() {
+export function Logo({ href = "/" }: { href?: string }) {
   return (
-    <Link href="/" className="flex items-center gap-3">
+    <Link href={href} className="flex items-center gap-3">
       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
         <Image
           src="/logo.svg"

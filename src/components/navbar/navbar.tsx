@@ -9,7 +9,7 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-10">
-          <Logo />
+          <Logo href="/login" />
 
           <div className="hidden lg:block">
             <NavbarLinks />
