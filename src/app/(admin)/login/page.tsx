@@ -21,7 +21,7 @@ export default function LoginPage() {
         onSubmit={(data) => console.log(data)}
         defaultValues={{ email: "", password: "" }}
         bgScheme="black"
-        submitLabel="Sign In"
+        submitLabel="Log In"
         submitIcon={<ArrowRight size={16} />}
         submitIconPosition="right"
         headerIcon={Shield}
