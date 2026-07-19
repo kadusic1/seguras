@@ -32,7 +32,7 @@ export default function LoginPage() {
           name="email"
           label="Email"
           type="email"
-          placeholder="admin@seguras.com"
+          placeholder="name@example.com"
           rules={{ required: "Email is required" }}
         />
         <FormField
