@@ -11,6 +11,7 @@ export interface SchemeTokens {
   fill: string;
   captionScheme: ColorScheme;
   buttonScheme: ColorScheme;
+  input: string;
 }
 
 export const schemes: Record<ColorScheme, SchemeTokens> = {
@@ -22,6 +23,7 @@ export const schemes: Record<ColorScheme, SchemeTokens> = {
     fill: "#dc2626",
     captionScheme: "white",
     buttonScheme: "white",
+    input: "border-white/30 bg-white/15 text-white placeholder:text-white/50",
   },
   black: {
     text: { primary: "text-white", muted: "text-white/70" },
@@ -31,6 +33,7 @@ export const schemes: Record<ColorScheme, SchemeTokens> = {
     fill: "#000000",
     captionScheme: "white",
     buttonScheme: "red",
+    input: "border-white/20 bg-white/10 text-white placeholder:text-white/50",
   },
   white: {
     text: { primary: "text-black", muted: "text-black/60" },
@@ -40,6 +43,7 @@ export const schemes: Record<ColorScheme, SchemeTokens> = {
     fill: "#ffffff",
     captionScheme: "black",
     buttonScheme: "red",
+    input: "border-black/20 bg-white text-black placeholder:text-black/40",
   },
 };
 
