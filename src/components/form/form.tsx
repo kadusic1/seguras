@@ -8,11 +8,12 @@ import {
   FormProvider,
   useForm,
 } from "react-hook-form";
-import { type ColorScheme, schemes } from "@/lib/colours";
+import { schemes } from "@/lib/colours";
 import { Button } from "../button";
 import { Heading } from "../heading";
 import { Text } from "../text";
 import { FormCtx } from "./context";
+import type { FormColorScheme } from "./types";
 
 /**
  * Props for the {@link Form} component.
@@ -34,7 +35,7 @@ export interface FormProps<T extends FieldValues> {
   /** Label for the submit button. Defaults to `"Submit"`. */
   submitLabel?: string;
   /** Background colour scheme. Defaults to `"white"`. */
-  bgScheme?: ColorScheme;
+  bgScheme?: FormColorScheme;
   /** Additional classes forwarded to the `<form>` element. */
   className?: string;
   /** Icon rendered alongside the heading. */

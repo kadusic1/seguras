@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { ColorScheme } from "@/lib/colours";
+import type { FormColorScheme } from "./types";
 
 /**
  * React context that propagates the color scheme down to all field components
@@ -7,4 +7,4 @@ import type { ColorScheme } from "@/lib/colours";
  *
  * @internal
  */
-export const FormCtx = createContext<ColorScheme>("white");
+export const FormCtx = createContext<FormColorScheme>("white");
