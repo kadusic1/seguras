@@ -6,15 +6,27 @@ import {
   type ColorScheme,
 } from "@/lib/colours";
 
-interface ButtonProps extends ComponentPropsWithoutRef<typeof Link> {
+type ButtonShared = {
   variant?: ButtonVariant;
   bgScheme?: ColorScheme;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
-}
+  className?: string;
+  children?: ReactNode;
+};
+
+type ButtonAsLink = ButtonShared & { href: string } & Omit<
+    ComponentPropsWithoutRef<typeof Link>,
+    "href"
+  >;
+
+type ButtonAsButton = ButtonShared &
+  Omit<ComponentPropsWithoutRef<"button">, "className">;
+
+type ButtonProps = ButtonAsLink | ButtonAsButton;
 
 const pillBase =
-  "inline-flex items-center justify-center rounded-md px-5 py-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-red-500 sm:px-6 sm:py-3 sm:text-sm";
+  "inline-flex cursor-pointer items-center justify-center rounded-md px-5 py-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-red-500 sm:px-6 sm:py-3 sm:text-sm";
 
 const variantBaseClass: Record<ButtonVariant, string> = {
   primary: pillBase,
@@ -31,14 +43,31 @@ export function Button({
   iconRight,
   ...props
 }: ButtonProps) {
-  return (
-    <Link
-      className={`${variantBaseClass[variant]} ${buttonVariantStyles[variant][bgScheme]}${className ? ` ${className}` : ""}`}
-      {...props}
-    >
+  const classes = `${variantBaseClass[variant]} ${buttonVariantStyles[variant][bgScheme]}${className ? ` ${className}` : ""}`;
+  const content = (
+    <>
       {iconLeft && <span className="shrink-0">{iconLeft}</span>}
       {children}
       {iconRight && <span className="shrink-0">{iconRight}</span>}
-    </Link>
+    </>
+  );
+
+  if ("href" in props) {
+    return (
+      <Link
+        className={classes}
+        {...(props as ComponentPropsWithoutRef<typeof Link>)}
+      >
+        {content}
+      </Link>
+    );
+  }
+  return (
+    <button
+      className={classes}
+      {...(props as ComponentPropsWithoutRef<"button">)}
+    >
+      {content}
+    </button>
   );
 }
