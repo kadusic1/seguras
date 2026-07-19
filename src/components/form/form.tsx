@@ -1,5 +1,6 @@
 "use client";
 
+import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import {
   type DefaultValues,
@@ -36,6 +37,14 @@ export interface FormProps<T extends FieldValues> {
   bgScheme?: ColorScheme;
   /** Additional classes forwarded to the `<form>` element. */
   className?: string;
+  /** Icon rendered alongside the heading. */
+  headerIcon?: LucideIcon;
+  /** Side of the heading the icon appears on. Defaults to `"left"`. */
+  headerIconPosition?: "left" | "right";
+  /** Icon rendered inside the submit button. */
+  submitIcon?: ReactNode;
+  /** Side of the submit button the icon appears on. Defaults to `"left"`. */
+  submitIconPosition?: "left" | "right";
   /** Form fields rendered inside the provider context. */
   children: ReactNode;
 }
@@ -67,6 +76,10 @@ export function Form<T extends FieldValues>({
   submitLabel = "Submit",
   bgScheme = "white",
   className,
+  headerIcon,
+  headerIconPosition = "left",
+  submitIcon,
+  submitIconPosition = "left",
   children,
 }: FormProps<T>) {
   const methods = useForm<T>({ defaultValues, mode: "onBlur" });
@@ -86,7 +99,13 @@ export function Form<T extends FieldValues>({
         >
           <div className="space-y-6">
             <div className="space-y-2">
-              <Heading as="h2" size="md" bgScheme={bgScheme}>
+              <Heading
+                as="h2"
+                size="md"
+                bgScheme={bgScheme}
+                icon={headerIcon}
+                iconPosition={headerIconPosition}
+              >
                 {header}
               </Heading>
               {subtitle && (
@@ -100,6 +119,11 @@ export function Form<T extends FieldValues>({
               type="submit"
               disabled={isSubmitting}
               bgScheme={s.buttonScheme}
+              {...(submitIcon
+                ? submitIconPosition === "left"
+                  ? { iconLeft: submitIcon }
+                  : { iconRight: submitIcon }
+                : {})}
             >
               {submitLabel}
             </Button>
