@@ -12,6 +12,7 @@ import { schemes } from "@/lib/colours";
 import { FormCtx } from "./context";
 import { FieldChrome } from "./field-chrome";
 import { DEFAULT_RULES } from "./rules";
+import type { FieldType } from "./types";
 
 /**
  * Props for the {@link FormField} component.
@@ -32,7 +33,7 @@ export interface FormFieldProps<T extends FieldValues> {
    * - `"email"` — adds a pattern validator
    * - `"text"`, `"password"`, `"number"` — no built-in defaults
    */
-  type?: "text" | "email" | "password" | "number";
+  type?: FieldType;
 }
 
 /**

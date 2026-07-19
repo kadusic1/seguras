@@ -1,4 +1,5 @@
 import type { RegisterOptions } from "react-hook-form";
+import type { FieldType } from "./types";
 
 /**
  * Regex that validates a basic email format.
@@ -17,9 +18,7 @@ export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * Currently only `"email"` has a default rule (pattern validation); the
  * remaining types return `undefined` and are skipped.
  */
-export const DEFAULT_RULES: Partial<
-  Record<"text" | "email" | "password" | "number", RegisterOptions>
-> = {
+export const DEFAULT_RULES: Partial<Record<FieldType, RegisterOptions>> = {
   email: {
     pattern: {
       value: EMAIL_PATTERN,
