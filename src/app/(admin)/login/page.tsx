@@ -1,8 +1,12 @@
 "use client";
 
 import { ArrowRight, Shield } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { Form, FormField } from "@/components/form";
 import { Logo } from "@/components/logo";
+import { Text } from "@/components/text";
 
 interface LoginFormData {
   email: string;
@@ -10,6 +14,9 @@ interface LoginFormData {
 }
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+
   return (
     <div className="w-full max-w-md space-y-8">
       <div className="flex justify-center scale-150">
@@ -18,7 +25,20 @@ export default function LoginPage() {
       <Form<LoginFormData>
         header="Login"
         subtitle="Enter your email and password"
-        onSubmit={(data) => console.log(data)}
+        onSubmit={async (data) => {
+          setError(null);
+          const result = await signIn("credentials", {
+            email: data.email,
+            password: data.password,
+            redirect: false,
+          });
+          if (result?.error) {
+            setError("Invalid email or password");
+          } else {
+            router.push("/");
+            router.refresh();
+          }
+        }}
         defaultValues={{ email: "", password: "" }}
         bgScheme="black"
         submitLabel="Log In"
@@ -42,6 +62,11 @@ export default function LoginPage() {
           placeholder="Enter your password"
           rules={{ required: "Password is required" }}
         />
+        {error && (
+          <Text variant="sm" bgScheme="black" className="text-center">
+            {error}
+          </Text>
+        )}
       </Form>
     </div>
   );
