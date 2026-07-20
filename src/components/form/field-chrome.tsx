@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
+import type { NeutralColorScheme } from "@/lib/colours";
 import { schemes } from "@/lib/colours";
-import type { FormColorScheme } from "./types";
 
 /**
  * Props for {@link FieldChrome}.
@@ -19,7 +19,7 @@ export interface FieldChromeProps {
   /** Field-level error object from react-hook-form (checked for a string `.message`). */
   error?: { message?: unknown };
   /** Color scheme token inherited from the parent Form. */
-  bgScheme: FormColorScheme;
+  bgScheme: NeutralColorScheme;
   /**
    * Semantic wrapper element.
    * - `"label"` (default) — renders a `<div>` with an inner `<label htmlFor={name}>`.

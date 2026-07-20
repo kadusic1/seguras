@@ -1,4 +1,5 @@
 export type ColorScheme = "red" | "black" | "white";
+export type NeutralColorScheme = "black" | "white";
 
 export interface SchemeTokens {
   text: {
