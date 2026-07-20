@@ -6,7 +6,7 @@ export async function proxy(request: NextRequest) {
   const session = await auth();
 
   if (request.nextUrl.pathname.startsWith("/admin") && !session) {
-    return new NextResponse(null, { status: 404 });
+    return NextResponse.rewrite(new URL("/login", request.url));
   }
 
   return NextResponse.next();
