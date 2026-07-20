@@ -4,9 +4,9 @@ import { ArrowRight, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { ErrorText } from "@/components/error-text";
 import { Form, FormField } from "@/components/form";
 import { Logo } from "@/components/logo";
-import { Text } from "@/components/text";
 
 interface LoginFormData {
   email: string;
@@ -33,7 +33,7 @@ export default function LoginPage() {
             redirect: false,
           });
           if (result?.error) {
-            setError("Invalid email or password");
+            setError("Invalid email or password.");
           } else {
             router.push("/");
             router.refresh();
@@ -62,11 +62,7 @@ export default function LoginPage() {
           placeholder="Enter your password"
           rules={{ required: "Password is required" }}
         />
-        {error && (
-          <Text variant="sm" bgScheme="black" className="text-center">
-            {error}
-          </Text>
-        )}
+        {error && <ErrorText className="mt-2 text-center">{error}</ErrorText>}
       </Form>
     </div>
   );
