@@ -19,7 +19,10 @@ export function NavbarSignOut() {
         description="Are you sure you want to sign out?"
         icon={LogOut}
         confirmLabel="Sign out"
-        onConfirm={() => signOut({ redirectTo: "/" })}
+        onConfirm={async () => {
+          await signOut({ redirect: false });
+          window.location.href = "/";
+        }}
         bgScheme="white"
       />
     </>
