@@ -35,7 +35,11 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-export function MobileMenu() {
+interface MobileMenuProps {
+  isLoggedIn?: boolean;
+}
+
+export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -78,6 +82,7 @@ export function MobileMenu() {
             <NavbarLinks
               wrapperClassName="flex flex-col gap-4"
               onLinkClick={() => setIsOpen(false)}
+              isLoggedIn={isLoggedIn}
             />
           </nav>
 

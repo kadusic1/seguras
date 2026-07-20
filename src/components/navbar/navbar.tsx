@@ -1,10 +1,12 @@
 import { ArrowRight } from "lucide-react";
+import { auth } from "@/auth";
 import { Button } from "@/components/button";
 import { Logo } from "@/components/logo";
 import { MobileMenu } from "./mobile-menu";
 import { NavbarLinks } from "./navbar-links";
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await auth();
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -12,7 +14,7 @@ export function Navbar() {
           <Logo href="/login" />
 
           <div className="hidden lg:block">
-            <NavbarLinks />
+            <NavbarLinks isLoggedIn={!!session} />
           </div>
         </div>
 
@@ -27,7 +29,7 @@ export function Navbar() {
               Contact
             </Button>
           </div>
-          <MobileMenu />
+          <MobileMenu isLoggedIn={!!session} />
         </div>
       </div>
     </nav>
