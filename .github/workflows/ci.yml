@@ -7,6 +7,10 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: frontend
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -19,13 +23,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: bun-${{ hashFiles('bun.lock') }}
+          key: bun-${{ hashFiles('frontend/bun.lock') }}
           restore-keys: bun-
       - name: Cache node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: modules-${{ hashFiles('bun.lock') }}
+          path: frontend/node_modules
+          key: modules-${{ hashFiles('frontend/bun.lock') }}
           restore-keys: modules-
       - run: bun install --frozen-lockfile
       - run: bunx biome check .
@@ -41,13 +45,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: bun-${{ hashFiles('bun.lock') }}
+          key: bun-${{ hashFiles('frontend/bun.lock') }}
           restore-keys: bun-
       - name: Cache node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: modules-${{ hashFiles('bun.lock') }}
+          path: frontend/node_modules
+          key: modules-${{ hashFiles('frontend/bun.lock') }}
           restore-keys: modules-
       - run: bun install --frozen-lockfile
       - run: bun run type-check
@@ -64,18 +68,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: bun-${{ hashFiles('bun.lock') }}
+          key: bun-${{ hashFiles('frontend/bun.lock') }}
           restore-keys: bun-
       - name: Cache node_modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: modules-${{ hashFiles('bun.lock') }}
+          path: frontend/node_modules
+          key: modules-${{ hashFiles('frontend/bun.lock') }}
           restore-keys: modules-
       - name: Cache Next.js build
         uses: actions/cache@v4
         with:
-          path: .next/cache
-          key: next-${{ hashFiles('package.json', 'next.config.ts') }}
+          path: frontend/.next/cache
+          key: next-${{ hashFiles('frontend/package.json', 'frontend/next.config.ts') }}
       - run: bun install --frozen-lockfile
       - run: bun run build

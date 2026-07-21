@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     format:
-      run: bunx biome check --write --no-errors-on-unmatched --staged && git add {staged_files}
+      run: cd frontend && bunx biome check --write --no-errors-on-unmatched --staged && git -C .. add {staged_files}
       glob: "**/*.{js,ts,jsx,tsx,json,md}"
     type-check:
-      run: bun run type-check
+      run: cd frontend && bun run type-check
