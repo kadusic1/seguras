@@ -20,7 +20,10 @@ func (k ContextKey) Value(ctx context.Context) (any, bool) {
 func WriteJSON(w http.ResponseWriter, status int, v any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(v)
+	err := json.NewEncoder(w).Encode(v)
+	if err != nil {
+		http.Error(w, "failed to encode JSON", http.StatusInternalServerError)
+	}
 }
 
 func WriteError(w http.ResponseWriter, status int, msg, code string) {

@@ -149,5 +149,3 @@ func extractUserID(subject string) (int, error) {
 	_, err := fmt.Sscanf(subject, "refresh:%d", &id)
 	return id, err
 }
-
-

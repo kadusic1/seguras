@@ -27,7 +27,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to open database: %v", err)
 	}
-	defer db.Close()
+	defer func() {
+		if err := db.Close(); err != nil {
+			log.Printf("failed to close database connection: %v", err)
+		}
+	}()
 
 	db.SetMaxOpenConns(25)
 	db.SetMaxIdleConns(5)

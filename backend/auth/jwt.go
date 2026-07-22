@@ -10,9 +10,9 @@ import (
 )
 
 type JWTService struct {
-	secret      []byte
-	accessTTL   time.Duration
-	refreshTTL  time.Duration
+	secret     []byte
+	accessTTL  time.Duration
+	refreshTTL time.Duration
 }
 
 func NewJWTService(secret string, accessTTL, refreshTTL time.Duration) *JWTService {
