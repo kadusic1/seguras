@@ -14,6 +14,7 @@ type Config struct {
 	AccessTTL  time.Duration
 	RefreshTTL time.Duration
 	Port       string
+	CORSOrigin string
 }
 
 // Load reads required and optional environment variables and returns a Config.
@@ -41,5 +42,6 @@ func Load() (*Config, error) {
 		AccessTTL:  accessTTL,
 		RefreshTTL: refreshTTL,
 		Port:       util.GetEnv("PORT", "8080"),
+		CORSOrigin: util.GetEnv("CORS_ORIGIN", "http://localhost:3000"),
 	}, nil
 }

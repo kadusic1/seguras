@@ -20,27 +20,73 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         const parsed = signInSchema.safeParse(credentials);
         if (!parsed.success) return null;
+
         const { email, password } = parsed.data;
-        if (email !== "admin@seguras.com" || password !== "admin123")
+        const apiUrl = process.env.AUTH_API_URL;
+        if (!apiUrl) return null;
+
+        try {
+          const res = await fetch(`${apiUrl}/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          if (!res.ok) return null;
+
+          const data = await res.json();
+
+          return {
+            id: String(data.user.id),
+            email: data.user.email,
+            name: data.user.name,
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+            accessTokenExpiresAt: data.expires_in,
+          };
+        } catch {
           return null;
-        return {
-          id: "1",
-          email,
-          name: "Admin",
-          accessTokenExpiresAt: Infinity,
-        };
+        }
       },
     }),
   ],
   callbacks: {
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.accessToken = (user as Record<string, unknown>).accessToken;
+        token.refreshToken = (user as Record<string, unknown>).refreshToken;
         token.accessTokenExpiresAt = (
           user as Record<string, unknown>
         ).accessTokenExpiresAt;
+        return token;
       }
+
+      if (
+        token.accessTokenExpiresAt &&
+        Date.now() / 1000 >= (token.accessTokenExpiresAt as number) - 30
+      ) {
+        const apiUrl = process.env.AUTH_API_URL;
+        if (apiUrl && token.refreshToken) {
+          try {
+            const res = await fetch(`${apiUrl}/auth/refresh`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ refresh_token: token.refreshToken }),
+            });
+            if (res.ok) {
+              const data = await res.json();
+              token.accessToken = data.access_token;
+              token.accessTokenExpiresAt = data.expires_in;
+            } else {
+              return null;
+            }
+          } catch {
+            return null;
+          }
+        }
+      }
+
       return token;
     },
     session({ session, token }) {

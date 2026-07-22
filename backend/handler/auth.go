@@ -62,7 +62,17 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	util.WriteJSON(w, http.StatusOK, tokens)
+	util.WriteJSON(w, http.StatusOK, domain.LoginResponse{
+		AccessToken:  tokens.AccessToken,
+		RefreshToken: tokens.RefreshToken,
+		ExpiresIn:    tokens.ExpiresIn,
+		User: domain.UserResponse{
+			ID:       user.ID,
+			Name:     user.Name,
+			LastName: user.LastName,
+			Email:    user.Email,
+		},
+	})
 }
 
 // Refresh accepts a valid refresh token and returns a new access token.
