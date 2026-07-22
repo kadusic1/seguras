@@ -7,6 +7,5 @@ pre-commit:
     type-check:
       run: cd frontend && bun run type-check
     golangci-lint:
-      dir: backend
-      run: golangci-lint run ./...
-      glob: "*.go"
+      run: cd backend && golangci-lint run ./...
+      glob: "**/*.go"

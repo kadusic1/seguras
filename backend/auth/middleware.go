@@ -11,6 +11,7 @@ import (
 
 var userIDKey = util.ContextKey("user_id")
 
+// UserIDFromContext extracts the authenticated user ID from the context.
 func UserIDFromContext(ctx context.Context) (int, bool) {
 	v, ok := userIDKey.Value(ctx)
 	if !ok {
@@ -20,6 +21,8 @@ func UserIDFromContext(ctx context.Context) (int, bool) {
 	return id, ok
 }
 
+// AuthMiddleware returns a middleware that validates a Bearer access token and
+// injects the user ID into the request context.
 func AuthMiddleware(jwtService *JWTService) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

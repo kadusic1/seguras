@@ -1,3 +1,4 @@
+// Package handler wires HTTP routes to request handlers.
 package handler
 
 import (
@@ -10,6 +11,7 @@ import (
 	"github.com/kadusic1/seguras/backend/database"
 )
 
+// NewRouter builds the chi router with all middleware and route groups.
 func NewRouter(cfg *config.Config, db *sql.DB) *chi.Mux {
 	userStore := database.NewUserStore(db)
 	jwtSvc := auth.NewJWTService(cfg.JWTSecret, cfg.AccessTTL, cfg.RefreshTTL)

@@ -1,3 +1,4 @@
+// Command server starts the Seguras HTTP API server.
 package main
 
 import (

@@ -1,3 +1,4 @@
+// Package auth provides JWT token operations and HTTP authentication middleware.
 package auth
 
 import (
@@ -9,12 +10,14 @@ import (
 	"github.com/kadusic1/seguras/backend/domain"
 )
 
+// JWTService handles signing, parsing, and validating JWT tokens.
 type JWTService struct {
 	secret     []byte
 	accessTTL  time.Duration
 	refreshTTL time.Duration
 }
 
+// NewJWTService creates a JWTService with the given signing secret and TTLs.
 func NewJWTService(secret string, accessTTL, refreshTTL time.Duration) *JWTService {
 	return &JWTService{
 		secret:     []byte(secret),
@@ -23,6 +26,7 @@ func NewJWTService(secret string, accessTTL, refreshTTL time.Duration) *JWTServi
 	}
 }
 
+// GenerateAccessToken creates a signed access JWT for the given user.
 func (s *JWTService) GenerateAccessToken(user *domain.User) (string, error) {
 	claims := domain.AccessClaims{
 		RegisteredClaims: jwt.RegisteredClaims{
@@ -36,6 +40,7 @@ func (s *JWTService) GenerateAccessToken(user *domain.User) (string, error) {
 	return token.SignedString(s.secret)
 }
 
+// GenerateRefreshToken creates a signed refresh JWT for the given user.
 func (s *JWTService) GenerateRefreshToken(user *domain.User) (string, error) {
 	claims := domain.RefreshClaims{
 		RegisteredClaims: jwt.RegisteredClaims{
@@ -48,6 +53,7 @@ func (s *JWTService) GenerateRefreshToken(user *domain.User) (string, error) {
 	return token.SignedString(s.secret)
 }
 
+// ParseAndValidateAccessToken parses a token string and validates it as an access token.
 func (s *JWTService) ParseAndValidateAccessToken(tokenString string) (*domain.AccessClaims, error) {
 	claims := &domain.AccessClaims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, s.keyFunc,
@@ -65,6 +71,7 @@ func (s *JWTService) ParseAndValidateAccessToken(tokenString string) (*domain.Ac
 	return claims, nil
 }
 
+// ParseAndValidateRefreshToken parses a token string and validates it as a refresh token.
 func (s *JWTService) ParseAndValidateRefreshToken(tokenString string) (*domain.RefreshClaims, error) {
 	claims := &domain.RefreshClaims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, s.keyFunc,
@@ -82,6 +89,7 @@ func (s *JWTService) ParseAndValidateRefreshToken(tokenString string) (*domain.R
 	return claims, nil
 }
 
+// AccessTTL returns the configured access token TTL duration.
 func (s *JWTService) AccessTTL() time.Duration {
 	return s.accessTTL
 }

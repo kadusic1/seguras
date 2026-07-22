@@ -1,3 +1,4 @@
+// Command seed creates a user in the database with a hashed password.
 package main
 
 import (

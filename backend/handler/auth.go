@@ -16,15 +16,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// AuthHandler exposes HTTP handlers for authentication endpoints.
 type AuthHandler struct {
 	userStore *database.UserStore
 	jwtSvc    *auth.JWTService
 }
 
+// NewAuthHandler creates an AuthHandler with the given dependencies.
 func NewAuthHandler(userStore *database.UserStore, jwtSvc *auth.JWTService) *AuthHandler {
 	return &AuthHandler{userStore: userStore, jwtSvc: jwtSvc}
 }
 
+// Login authenticates a user with email and password and returns token pair.
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	var req domain.LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -62,6 +65,7 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	util.WriteJSON(w, http.StatusOK, tokens)
 }
 
+// Refresh accepts a valid refresh token and returns a new access token.
 func (h *AuthHandler) Refresh(w http.ResponseWriter, r *http.Request) {
 	var req domain.RefreshRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -104,6 +108,7 @@ func (h *AuthHandler) Refresh(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// Me returns the authenticated user's profile.
 func (h *AuthHandler) Me(w http.ResponseWriter, r *http.Request) {
 	userID, ok := auth.UserIDFromContext(r.Context())
 	if !ok {

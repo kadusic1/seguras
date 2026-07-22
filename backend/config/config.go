@@ -1,3 +1,4 @@
+// Package config loads application configuration from environment variables.
 package config
 
 import (
@@ -6,6 +7,7 @@ import (
 	"github.com/kadusic1/seguras/backend/util"
 )
 
+// Config holds runtime configuration values loaded from the environment.
 type Config struct {
 	DBDSN      string
 	JWTSecret  string
@@ -14,6 +16,7 @@ type Config struct {
 	Port       string
 }
 
+// Load reads required and optional environment variables and returns a Config.
 func Load() (*Config, error) {
 	dbDSN, err := util.MustEnv("DB_DSN")
 	if err != nil {
