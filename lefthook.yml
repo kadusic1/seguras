@@ -6,3 +6,7 @@ pre-commit:
       glob: "**/*.{js,ts,jsx,tsx,json,md}"
     type-check:
       run: cd frontend && bun run type-check
+    golangci-lint:
+      dir: backend
+      run: golangci-lint run ./...
+      glob: "*.go"
