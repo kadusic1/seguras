@@ -12,6 +12,8 @@ interface CardProps {
   title: string;
   description?: string;
   href?: string;
+  onClick?: () => void;
+  buttonLabel?: string;
   badge?: string;
   meta?: { label: string; value: string }[];
   bgScheme?: ColorScheme;
@@ -30,6 +32,8 @@ export function Card({
   title,
   description,
   href,
+  onClick,
+  buttonLabel,
   badge,
   meta,
   bgScheme = "red",
@@ -78,15 +82,15 @@ export function Card({
           ))}
         </div>
       )}
-      {href && (
+      {(href || onClick) && (
         <Button
           variant="link"
           bgScheme={bgScheme}
-          href={href}
+          {...(href ? { href } : { onClick })}
           iconRight={<ArrowRight />}
           className="mt-4"
         >
-          Learn more
+          {buttonLabel ?? "Learn more"}
         </Button>
       )}
     </div>
