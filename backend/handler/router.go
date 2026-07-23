@@ -41,5 +41,10 @@ func NewRouter(cfg *config.Config, db *sql.DB, emailSender *util.AsyncSender) *c
 		})
 	})
 
+	jobStore := database.NewJobStore(db)
+	jobHandler := NewJobHandler(jobStore, emailSender)
+
+	r.Post("/jobs/apply", jobHandler.Submit)
+
 	return r
 }
