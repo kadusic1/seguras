@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS job_applications (
     phone             VARCHAR(20) NOT NULL,
     bank_account      VARCHAR(50) NOT NULL,
     hours_available   INT NOT NULL,
-    clothing_size     VARCHAR(10) NOT NULL,
+    clothing_size     ENUM('XS', 'S', 'M', 'L', 'XL', '2XL', '3XL') NOT NULL,
     employment_type   ENUM('security', 'service') NOT NULL,
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

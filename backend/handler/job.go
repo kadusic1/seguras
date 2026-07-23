@@ -51,6 +51,14 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if req.ClothingSize != domain.ClothingXS && req.ClothingSize != domain.ClothingS &&
+		req.ClothingSize != domain.ClothingM && req.ClothingSize != domain.ClothingL &&
+		req.ClothingSize != domain.ClothingXL && req.ClothingSize != domain.Clothing2XL &&
+		req.ClothingSize != domain.Clothing3XL {
+		util.WriteError(w, http.StatusBadRequest, "clothing_size must be one of: XS, S, M, L, XL, 2XL, 3XL", "BAD_REQUEST")
+		return
+	}
+
 	if _, err := time.Parse("2006-01-02", req.DateOfBirth); err != nil {
 		util.WriteError(w, http.StatusBadRequest, "invalid date_of_birth format, expected YYYY-MM-DD", "BAD_REQUEST")
 		return

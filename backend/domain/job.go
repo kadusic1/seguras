@@ -10,6 +10,19 @@ const (
 	EmploymentService  EmploymentType = "service"
 )
 
+// ClothingSize represents a clothing size option for job applicants.
+type ClothingSize string
+
+const (
+	ClothingXS  ClothingSize = "XS"
+	ClothingS   ClothingSize = "S"
+	ClothingM   ClothingSize = "M"
+	ClothingL   ClothingSize = "L"
+	ClothingXL  ClothingSize = "XL"
+	Clothing2XL ClothingSize = "2XL"
+	Clothing3XL ClothingSize = "3XL"
+)
+
 // JobApplication represents a job application submitted through the frontend form.
 type JobApplication struct {
 	ID             int
@@ -22,7 +35,7 @@ type JobApplication struct {
 	Phone          string
 	BankAccount    string
 	HoursAvailable int
-	ClothingSize   string
+	ClothingSize   ClothingSize
 	EmploymentType EmploymentType
 	CreatedAt      time.Time
 }
@@ -38,7 +51,7 @@ type SubmitJobApplicationRequest struct {
 	Phone          string         `json:"phone"`
 	BankAccount    string         `json:"bank_account"`
 	HoursAvailable int            `json:"hours_available"`
-	ClothingSize   string         `json:"clothing_size"`
+	ClothingSize   ClothingSize   `json:"clothing_size"`
 	EmploymentType EmploymentType `json:"employment_type"`
 }
 
@@ -54,7 +67,7 @@ type JobApplicationResponse struct {
 	Phone          string         `json:"phone"`
 	BankAccount    string         `json:"bank_account"`
 	HoursAvailable int            `json:"hours_available"`
-	ClothingSize   string         `json:"clothing_size"`
+	ClothingSize   ClothingSize   `json:"clothing_size"`
 	EmploymentType EmploymentType `json:"employment_type"`
 	CreatedAt      time.Time      `json:"created_at"`
 }
