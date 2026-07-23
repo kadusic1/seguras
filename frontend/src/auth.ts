@@ -22,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!parsed.success) return null;
 
         const { email, password } = parsed.data;
-        const apiUrl = process.env.AUTH_API_URL;
+        const apiUrl = process.env.API_URL;
         if (!apiUrl) return null;
 
         try {
@@ -66,7 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.accessTokenExpiresAt &&
         Date.now() / 1000 >= (token.accessTokenExpiresAt as number) - 30
       ) {
-        const apiUrl = process.env.AUTH_API_URL;
+        const apiUrl = process.env.API_URL;
         if (apiUrl && token.refreshToken) {
           try {
             const res = await fetch(`${apiUrl}/auth/refresh`, {

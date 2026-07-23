@@ -31,7 +31,7 @@ const pillBase =
 const variantBaseClass: Record<ButtonVariant, string> = {
   primary: pillBase,
   outline: pillBase,
-  link: "inline-flex items-center gap-1 text-sm font-semibold transition-colors",
+  link: "inline-flex cursor-pointer items-center gap-1 text-sm font-semibold transition-colors",
 };
 
 export function Button({

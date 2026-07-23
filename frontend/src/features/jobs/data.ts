@@ -1,5 +1,3 @@
-import "server-only";
-
 import { Shield, UserCheck } from "lucide-react";
 import type { Job } from "./types";
 
