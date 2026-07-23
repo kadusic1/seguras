@@ -10,10 +10,11 @@ import (
 	"github.com/kadusic1/seguras/backend/auth"
 	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/database"
+	"github.com/kadusic1/seguras/backend/util"
 )
 
 // NewRouter builds the chi router with all middleware and route groups.
-func NewRouter(cfg *config.Config, db *sql.DB) *chi.Mux {
+func NewRouter(cfg *config.Config, db *sql.DB, emailSender *util.AsyncSender) *chi.Mux {
 	userStore := database.NewUserStore(db)
 	jwtSvc := auth.NewJWTService(cfg.JWTSecret, cfg.AccessTTL, cfg.RefreshTTL)
 	authHandler := NewAuthHandler(userStore, jwtSvc)

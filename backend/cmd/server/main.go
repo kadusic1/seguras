@@ -12,6 +12,7 @@ import (
 
 	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/handler"
+	"github.com/kadusic1/seguras/backend/util"
 )
 
 func main() {
@@ -42,7 +43,15 @@ func main() {
 		log.Fatalf("failed to ping database: %v", err)
 	}
 
-	r := handler.NewRouter(cfg, db)
+	emailSender := util.NewAsyncSender(util.SMTPConfig{
+		Host:     cfg.SMTPHost,
+		Port:     cfg.SMTPPort,
+		Username: cfg.SMTPUsername,
+		Password: cfg.SMTPPassword,
+		From:     cfg.FromEmail,
+	})
+
+	r := handler.NewRouter(cfg, db, emailSender)
 
 	log.Printf("server starting on :%s", cfg.Port)
 	if err := http.ListenAndServe(":"+cfg.Port, r); err != nil {

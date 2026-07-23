@@ -15,6 +15,12 @@ type Config struct {
 	RefreshTTL time.Duration
 	Port       string
 	CORSOrigin string
+
+	SMTPHost     string
+	SMTPPort     string
+	SMTPUsername string
+	SMTPPassword string
+	FromEmail    string
 }
 
 // Load reads required and optional environment variables and returns a Config.
@@ -36,6 +42,23 @@ func Load() (*Config, error) {
 		return nil, err
 	}
 
+	smtpHost, err := util.MustEnv("SMTP_HOST")
+	if err != nil {
+		return nil, err
+	}
+	smtpUsername, err := util.MustEnv("SMTP_USERNAME")
+	if err != nil {
+		return nil, err
+	}
+	smtpPassword, err := util.MustEnv("SMTP_PASSWORD")
+	if err != nil {
+		return nil, err
+	}
+	fromEmail, err := util.MustEnv("FROM_EMAIL")
+	if err != nil {
+		return nil, err
+	}
+
 	return &Config{
 		DBDSN:      dbDSN,
 		JWTSecret:  jwtSecret,
@@ -43,5 +66,11 @@ func Load() (*Config, error) {
 		RefreshTTL: refreshTTL,
 		Port:       util.GetEnv("PORT", "8080"),
 		CORSOrigin: util.GetEnv("CORS_ORIGIN", "http://localhost:3000"),
+
+		SMTPHost:     smtpHost,
+		SMTPPort:     util.GetEnv("SMTP_PORT", "587"),
+		SMTPUsername: smtpUsername,
+		SMTPPassword: smtpPassword,
+		FromEmail:    fromEmail,
 	}, nil
 }
