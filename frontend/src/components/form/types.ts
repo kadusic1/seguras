@@ -4,4 +4,10 @@
  * Determines which default validation rules are applied and which input
  * element is rendered.
  */
-export type FieldType = "text" | "email" | "password" | "number";
+export type FieldType =
+  | "text"
+  | "email"
+  | "password"
+  | "number"
+  | "date"
+  | "tel";
