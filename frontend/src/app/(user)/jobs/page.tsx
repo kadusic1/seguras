@@ -97,7 +97,7 @@ export default function JobsPage() {
       />
 
       <Section title="Open Positions" bgScheme="black" animation="fadeIn">
-        <Grid cols={1}>
+        <Grid cols={2}>
           {jobs.map((j) => (
             <Card
               key={j.title}
@@ -133,6 +133,10 @@ export default function JobsPage() {
           <Heading as="h3" size="sm" bgScheme="white">
             Job Type
           </Heading>
+          <Text variant="sm" bgScheme="white" className="mb-2">
+            Note: Service positions require no prior exam. Security positions
+            require a passed ESO (Event Security Officer) exam.
+          </Text>
           <RadioGroupField
             name="employmentType"
             label="Position"
@@ -271,6 +275,7 @@ export default function JobsPage() {
             height={472}
             unoptimized
             className="mx-auto mt-10"
+            style={{ width: "auto", height: "auto" }}
           />
         </div>
       </Section>
