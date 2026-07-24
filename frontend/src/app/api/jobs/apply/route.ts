@@ -9,12 +9,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const body = await request.json();
+  const formData = await request.formData();
 
   const res = await fetch(`${apiUrl}/jobs/apply`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
+    body: formData,
   });
 
   const data = await res.json();

@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -22,10 +22,26 @@ func NewJobHandler(jobStore *database.JobStore, emailSender *util.AsyncSender) *
 }
 
 func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
-	var req domain.SubmitJobApplicationRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		util.WriteError(w, http.StatusBadRequest, "invalid request body", "BAD_REQUEST")
+	if err := r.ParseMultipartForm(10 << 20); err != nil {
+		util.WriteError(w, http.StatusBadRequest, "invalid form data", "BAD_REQUEST")
 		return
+	}
+
+	hoursStr := r.FormValue("hours_available")
+	hoursAvailable, _ := strconv.Atoi(hoursStr)
+
+	req := domain.SubmitJobApplicationRequest{
+		FirstName:      r.FormValue("first_name"),
+		LastName:       r.FormValue("last_name"),
+		DateOfBirth:    r.FormValue("date_of_birth"),
+		BSN:            r.FormValue("bsn"),
+		Address:        r.FormValue("address"),
+		Email:          r.FormValue("email"),
+		Phone:          r.FormValue("phone"),
+		BankAccount:    r.FormValue("bank_account"),
+		HoursAvailable: hoursAvailable,
+		ClothingSize:   domain.ClothingSize(r.FormValue("clothing_size")),
+		EmploymentType: domain.EmploymentType(r.FormValue("employment_type")),
 	}
 
 	req.FirstName = strings.TrimSpace(req.FirstName)
@@ -82,6 +98,18 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		util.WriteError(w, http.StatusInternalServerError, "failed to save application", "SERVER_ERROR")
 		return
 	}
+
+	// file, header, err := r.FormFile("cv")
+	// if err == nil {
+	// 	defer file.Close()
+	// 	os.MkdirAll("./uploads", 0755)
+	// 	destPath := fmt.Sprintf("./uploads/cv_%d_%s", time.Now().Unix(), header.Filename)
+	// 	dest, createErr := os.Create(destPath)
+	// 	if createErr == nil {
+	// 		io.Copy(dest, file)
+	// 		dest.Close()
+	// 	}
+	// }
 
 	htmlBody := jobEmailBody(&app)
 	h.emailSender.Send(util.EmailPayload{

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Card } from "@/components/card";
 import {
+  FileInputField,
   Form,
   FormField,
   RadioGroupField,
@@ -28,6 +29,7 @@ interface JobApplicationForm {
   email: string;
   phone: string;
   bankAccount: string;
+  cv?: File;
   hoursAvailable: number;
   clothingSize: string;
   employmentType: string;
@@ -50,25 +52,27 @@ export default function JobsPage() {
   const handleSubmit = async (data: JobApplicationForm) => {
     setSubmitError(null);
 
-    const body = {
-      first_name: data.firstName,
-      last_name: data.lastName,
-      date_of_birth: data.dateOfBirth,
-      bsn: data.bsn,
-      address: data.address,
-      email: data.email,
-      phone: data.phone,
-      bank_account: data.bankAccount,
-      hours_available: data.hoursAvailable,
-      clothing_size: data.clothingSize,
-      employment_type: data.employmentType,
-    };
+    const formData = new FormData();
+    formData.append("first_name", data.firstName);
+    formData.append("last_name", data.lastName);
+    formData.append("date_of_birth", data.dateOfBirth);
+    formData.append("bsn", data.bsn);
+    formData.append("address", data.address);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("bank_account", data.bankAccount);
+    formData.append("hours_available", String(data.hoursAvailable));
+    formData.append("clothing_size", data.clothingSize);
+    formData.append("employment_type", data.employmentType);
+
+    if (data.cv) {
+      formData.append("cv", data.cv);
+    }
 
     try {
       const res = await fetch("/api/jobs/apply", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: formData,
       });
 
       if (!res.ok) {
@@ -230,6 +234,19 @@ export default function JobsPage() {
             label="Bank Account (IBAN)"
             type="text"
             rules={{ required: true }}
+          />
+
+          <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
+            Additional
+          </Heading>
+          <Text variant="sm" bgScheme="white" className="mb-4">
+            CV upload is not mandatory, but it helps us get to know you better
+            and increases your chances of being selected for an interview.
+          </Text>
+          <FileInputField
+            name="cv"
+            label="Upload CV"
+            accept=".pdf,.doc,.docx"
           />
 
           {submitError && (
