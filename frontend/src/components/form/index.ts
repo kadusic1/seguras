@@ -13,6 +13,8 @@
 
 export type { CheckboxGroupFieldProps } from "./checkbox-group-field";
 export { CheckboxGroupField } from "./checkbox-group-field";
+export type { FileInputFieldProps } from "./file-input-field";
+export { FileInputField } from "./file-input-field";
 export type { FormProps } from "./form";
 export { Form } from "./form";
 export type { FormFieldProps } from "./form-field";
