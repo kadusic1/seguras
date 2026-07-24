@@ -47,8 +47,9 @@ function toFileArray(value: unknown): File[] {
 
 /**
  * Thumbnail for a single selected file, with an object-URL image preview when
- * the file is an image and a generic icon/name fallback otherwise. Renders a
- * {@link CloseButton} in the top-right corner to remove the file.
+ * the file is an image and a generic icon/name fallback otherwise. Clicking
+ * the thumbnail opens the file in a new tab. Renders a {@link CloseButton} in
+ * the top-right corner to remove the file.
  *
  * @internal
  */
@@ -61,29 +62,33 @@ function FilePreview({
   onRemove: () => void;
   bgScheme: "black" | "white";
 }) {
-  const [previewUrl, setPreviewUrl] = useState<string>();
+  const [fileUrl, setFileUrl] = useState<string>();
   const s = schemes[bgScheme];
+  const isImage = file.type.startsWith("image/");
 
   // Object URLs must be created/revoked per file to avoid leaking memory.
   useEffect(() => {
-    if (!file.type.startsWith("image/")) return;
     const url = URL.createObjectURL(file);
-    setPreviewUrl(url);
+    setFileUrl(url);
     return () => URL.revokeObjectURL(url);
   }, [file]);
 
   return (
     <div className="relative h-20 w-20 shrink-0">
-      <div
-        className={`h-full w-full overflow-hidden rounded-md border ${s.card}`}
+      <button
+        type="button"
+        className={`h-full w-full cursor-pointer overflow-hidden rounded-md border ${s.card}`}
+        onClick={() =>
+          fileUrl && window.open(fileUrl, "_blank", "noopener,noreferrer")
+        }
       >
-        {previewUrl ? (
+        {isImage && fileUrl ? (
           <Image
-            src={previewUrl}
+            src={fileUrl}
             alt={file.name}
             fill
             unoptimized
-            className="h-full w-full object-cover"
+            className="object-cover"
           />
         ) : (
           <div
@@ -95,7 +100,7 @@ function FilePreview({
             </span>
           </div>
         )}
-      </div>
+      </button>
       <CloseButton
         onClick={onRemove}
         className="absolute -top-2 -right-2 rounded-full bg-white shadow"
