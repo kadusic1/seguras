@@ -4,7 +4,6 @@ import { useContext } from "react";
 import {
   type FieldPath,
   type FieldValues,
-  get,
   type RegisterOptions,
   useFormContext,
 } from "react-hook-form";
@@ -57,11 +56,7 @@ export function SelectField<T extends FieldValues>({
   rules,
 }: SelectFieldProps<T>) {
   const bgScheme = useContext(FormCtx);
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<T>();
-  const error = get(errors, name);
+  const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
 
   return (
@@ -69,7 +64,6 @@ export function SelectField<T extends FieldValues>({
       name={name}
       label={label}
       required={!!rules?.required}
-      error={error}
       bgScheme={bgScheme}
     >
       <select

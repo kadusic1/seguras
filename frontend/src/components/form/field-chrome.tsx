@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { get, useFormContext } from "react-hook-form";
 import type { NeutralColorScheme } from "@/lib/colours";
 import { schemes } from "@/lib/colours";
 
@@ -16,8 +17,6 @@ export interface FieldChromeProps {
   label: string;
   /** Show a red asterisk next to the label when `true`. */
   required?: boolean;
-  /** Field-level error object from react-hook-form (checked for a string `.message`). */
-  error?: { message?: unknown };
   /** Color scheme token inherited from the parent Form. */
   bgScheme: NeutralColorScheme;
   /** Field control(s) rendered inside the chrome. */
@@ -37,10 +36,13 @@ export function FieldChrome({
   name,
   label,
   required,
-  error,
   bgScheme,
   children,
 }: FieldChromeProps) {
+  const {
+    formState: { errors },
+  } = useFormContext();
+  const error = get(errors, name);
   const s = schemes[bgScheme];
 
   return (

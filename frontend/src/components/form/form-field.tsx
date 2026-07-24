@@ -4,7 +4,6 @@ import { useContext } from "react";
 import {
   type FieldPath,
   type FieldValues,
-  get,
   type RegisterOptions,
   useFormContext,
 } from "react-hook-form";
@@ -55,11 +54,7 @@ export function FormField<T extends FieldValues>({
   type = "text",
 }: FormFieldProps<T>) {
   const bgScheme = useContext(FormCtx);
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<T>();
-  const error = get(errors, name);
+  const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
   const effectiveRules = {
     ...(DEFAULT_RULES[type] ?? {}),
@@ -71,7 +66,6 @@ export function FormField<T extends FieldValues>({
       name={name}
       label={label}
       required={!!effectiveRules.required}
-      error={error}
       bgScheme={bgScheme}
     >
       <input
