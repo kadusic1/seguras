@@ -26,8 +26,6 @@ export interface RadioGroupFieldProps<T extends FieldValues> {
   options: { label: string; value: string }[];
   /** Validation rules forwarded to `register()`. */
   rules?: RegisterOptions<T>;
-  /** Number of grid columns. Defaults to `1`. */
-  columns?: 1 | 2;
 }
 
 /**
@@ -44,7 +42,6 @@ export function RadioGroupField<T extends FieldValues>({
   label,
   options,
   rules,
-  columns = 1,
 }: RadioGroupFieldProps<T>) {
   const bgScheme = useContext(FormCtx);
   const {
@@ -62,9 +59,7 @@ export function RadioGroupField<T extends FieldValues>({
       error={error}
       bgScheme={bgScheme}
     >
-      <div
-        className={`grid gap-2 ${columns === 2 ? "grid-cols-2" : "grid-cols-1"}`}
-      >
+      <div className="flex flex-col gap-3">
         {options.map((opt) => (
           <label
             key={opt.value}

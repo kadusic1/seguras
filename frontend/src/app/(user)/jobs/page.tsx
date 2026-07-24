@@ -144,7 +144,6 @@ export default function JobsPage() {
               { label: "Security Officer", value: "security" },
               { label: "Service Host", value: "service" },
             ]}
-            columns={2}
             rules={{ required: "Select a position" }}
           />
 
