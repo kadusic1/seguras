@@ -34,46 +34,46 @@ export function Modal({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay
-          className="fixed inset-0 z-50 bg-black/50
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4
         data-[state=closed]:opacity-0 data-[state=open]:opacity-100"
-        />
-        <Dialog.Content
-          className={`fixed left-1/2 top-1/2 z-50 w-full max-w-lg
-          -translate-x-1/2 -translate-y-1/2 rounded-lg p-6 shadow-lg
+        >
+          <Dialog.Content
+            className={`z-50 w-full max-w-lg rounded-lg p-6 shadow-lg
           data-[state=closed]:scale-95 data-[state=closed]:opacity-0
           data-[state=open]:scale-100 data-[state=open]:opacity-100 ${s.bg}`}
-        >
-          {Icon && (
-            <div className="mb-4 flex justify-center">
-              <Icon className={`size-10 ${s.accent}`} strokeWidth={1.5} />
-            </div>
-          )}
-
-          <Dialog.Title
-            className={`text-center text-lg font-bold ${s.text.primary}`}
           >
-            {title}
-          </Dialog.Title>
+            {Icon && (
+              <div className="mb-4 flex justify-center">
+                <Icon className={`size-10 ${s.accent}`} strokeWidth={1.5} />
+              </div>
+            )}
 
-          <Dialog.Description
-            className={`mt-2 text-center text-sm ${s.text.muted}`}
-          >
-            {description}
-          </Dialog.Description>
-
-          <div className="mt-6 flex justify-center gap-3">
-            <Button
-              variant="outline"
-              bgScheme={bgScheme === "white" ? "black" : "white"}
-              onClick={() => onOpenChange(false)}
+            <Dialog.Title
+              className={`text-center text-lg font-bold ${s.text.primary}`}
             >
-              {cancelLabel}
-            </Button>
-            <Button variant="primary" bgScheme="red" onClick={onConfirm}>
-              {confirmLabel}
-            </Button>
-          </div>
-        </Dialog.Content>
+              {title}
+            </Dialog.Title>
+
+            <Dialog.Description
+              className={`mt-2 text-center text-sm ${s.text.muted}`}
+            >
+              {description}
+            </Dialog.Description>
+
+            <div className="mt-6 flex justify-center gap-3">
+              <Button
+                variant="outline"
+                bgScheme={bgScheme === "white" ? "black" : "white"}
+                onClick={() => onOpenChange(false)}
+              >
+                {cancelLabel}
+              </Button>
+              <Button variant="primary" bgScheme="red" onClick={onConfirm}>
+                {confirmLabel}
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog.Overlay>
       </Dialog.Portal>
     </Dialog.Root>
   );

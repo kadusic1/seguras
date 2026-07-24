@@ -77,7 +77,7 @@ function FilePreview({
     <div className="relative h-20 w-20 shrink-0">
       <button
         type="button"
-        className={`h-full w-full cursor-pointer overflow-hidden rounded-md border ${s.card}`}
+        className={`relative h-full w-full cursor-pointer overflow-hidden rounded-md border ${s.card}`}
         onClick={() =>
           fileUrl && window.open(fileUrl, "_blank", "noopener,noreferrer")
         }

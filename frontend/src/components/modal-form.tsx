@@ -40,34 +40,35 @@ export function ModalForm({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 max-h-[90vh] flex flex-col rounded-xl border border-black/10 bg-white shadow-lg overflow-hidden">
-          <div className="shrink-0 flex justify-end px-6 pt-4 sm:px-10">
-            <CloseButton onClick={() => onOpenChange(false)} />
-          </div>
-
-          <div className="overflow-y-auto flex-1 px-6 pb-8 sm:px-10 sm:pb-10">
-            <div className="flex flex-col items-center gap-3 pt-6 sm:pt-8">
-              <Logo variant="dark" />
-
-              <Heading
-                as="h2"
-                size="md"
-                bgScheme="white"
-                className="text-center"
-              >
-                {heading}
-              </Heading>
-              {text && (
-                <Text variant="base" bgScheme="white" className="text-center">
-                  {text}
-                </Text>
-              )}
+        <Dialog.Overlay className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <Dialog.Content className="z-50 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-black/10 bg-white shadow-lg">
+            <div className="shrink-0 flex justify-end px-6 pt-4 sm:px-10">
+              <CloseButton onClick={() => onOpenChange(false)} />
             </div>
 
-            {children}
-          </div>
-        </Dialog.Content>
+            <div className="overflow-y-auto flex-1 px-6 pb-8 sm:px-10 sm:pb-10">
+              <div className="flex flex-col items-center gap-3 pt-6 sm:pt-8">
+                <Logo variant="dark" />
+
+                <Heading
+                  as="h2"
+                  size="md"
+                  bgScheme="white"
+                  className="text-center"
+                >
+                  {heading}
+                </Heading>
+                {text && (
+                  <Text variant="base" bgScheme="white" className="text-center">
+                    {text}
+                  </Text>
+                )}
+              </div>
+
+              {children}
+            </div>
+          </Dialog.Content>
+        </Dialog.Overlay>
       </Dialog.Portal>
     </Dialog.Root>
   );
