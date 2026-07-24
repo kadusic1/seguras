@@ -16,11 +16,18 @@ type Config struct {
 	Port       string
 	CORSOrigin string
 
-	SMTPHost     string
-	SMTPPort     string
-	SMTPUsername string
-	SMTPPassword string
-	FromEmail    string
+	SMTPHost          string
+	SMTPPort          string
+	SMTPUsername      string
+	SMTPPassword      string
+	FromEmail         string
+	NotificationEmail string
+
+	B2Endpoint string
+	B2Region   string
+	B2KeyID    string
+	B2AppKey   string
+	B2Bucket   string
 }
 
 // Load reads required and optional environment variables and returns a Config.
@@ -58,6 +65,31 @@ func Load() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	notificationEmail, err := util.MustEnv("NOTIFICATION_EMAIL")
+	if err != nil {
+		return nil, err
+	}
+
+	b2Endpoint, err := util.MustEnv("B2_ENDPOINT")
+	if err != nil {
+		return nil, err
+	}
+	b2Region, err := util.MustEnv("B2_REGION")
+	if err != nil {
+		return nil, err
+	}
+	b2KeyID, err := util.MustEnv("B2_KEY_ID")
+	if err != nil {
+		return nil, err
+	}
+	b2AppKey, err := util.MustEnv("B2_APP_KEY")
+	if err != nil {
+		return nil, err
+	}
+	b2Bucket, err := util.MustEnv("B2_BUCKET")
+	if err != nil {
+		return nil, err
+	}
 
 	return &Config{
 		DBDSN:      dbDSN,
@@ -67,10 +99,17 @@ func Load() (*Config, error) {
 		Port:       util.GetEnv("PORT", "8080"),
 		CORSOrigin: util.GetEnv("CORS_ORIGIN", "http://localhost:3000"),
 
-		SMTPHost:     smtpHost,
-		SMTPPort:     util.GetEnv("SMTP_PORT", "587"),
-		SMTPUsername: smtpUsername,
-		SMTPPassword: smtpPassword,
-		FromEmail:    fromEmail,
+		SMTPHost:          smtpHost,
+		SMTPPort:          util.GetEnv("SMTP_PORT", "587"),
+		SMTPUsername:      smtpUsername,
+		SMTPPassword:      smtpPassword,
+		FromEmail:         fromEmail,
+		NotificationEmail: notificationEmail,
+
+		B2Endpoint: b2Endpoint,
+		B2Region:   b2Region,
+		B2KeyID:    b2KeyID,
+		B2AppKey:   b2AppKey,
+		B2Bucket:   b2Bucket,
 	}, nil
 }

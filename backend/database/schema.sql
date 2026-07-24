@@ -27,5 +27,6 @@ CREATE TABLE IF NOT EXISTS job_applications (
     hours_available   INT NOT NULL,
     clothing_size     ENUM('XS', 'S', 'M', 'L', 'XL', '2XL', '3XL') NOT NULL,
     employment_type   ENUM('security', 'service') NOT NULL,
+    cv_key            VARCHAR(500) DEFAULT NULL,
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

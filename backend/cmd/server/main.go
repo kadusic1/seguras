@@ -2,6 +2,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/handler"
+	"github.com/kadusic1/seguras/backend/services"
 	"github.com/kadusic1/seguras/backend/util"
 )
 
@@ -51,7 +53,19 @@ func main() {
 		From:     cfg.FromEmail,
 	})
 
-	r := handler.NewRouter(cfg, db, emailSender)
+	b2Service, err := services.NewB2Service(
+		context.Background(), services.B2Config{
+			Endpoint: cfg.B2Endpoint,
+			Region:   cfg.B2Region,
+			KeyID:    cfg.B2KeyID,
+			AppKey:   cfg.B2AppKey,
+			Bucket:   cfg.B2Bucket,
+		})
+	if err != nil {
+		log.Fatalf("failed to init b2 service: %v", err)
+	}
+
+	r := handler.NewRouter(cfg, db, emailSender, b2Service)
 
 	log.Printf("server starting on :%s", cfg.Port)
 	if err := http.ListenAndServe(":"+cfg.Port, r); err != nil {

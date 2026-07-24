@@ -37,6 +37,7 @@ type JobApplication struct {
 	HoursAvailable int
 	ClothingSize   ClothingSize
 	EmploymentType EmploymentType
+	CVKey          string
 	CreatedAt      time.Time
 }
 

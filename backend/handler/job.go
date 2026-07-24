@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -9,16 +10,29 @@ import (
 
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/domain"
+	"github.com/kadusic1/seguras/backend/services"
 	"github.com/kadusic1/seguras/backend/util"
 )
 
 type JobHandler struct {
-	jobStore    *database.JobStore
-	emailSender *util.AsyncSender
+	jobStore          *database.JobStore
+	emailSender       *util.AsyncSender
+	notificationEmail string
+	b2Service         *services.B2Service
 }
 
-func NewJobHandler(jobStore *database.JobStore, emailSender *util.AsyncSender) *JobHandler {
-	return &JobHandler{jobStore: jobStore, emailSender: emailSender}
+func NewJobHandler(
+	jobStore *database.JobStore,
+	emailSender *util.AsyncSender,
+	notificationEmail string,
+	b2Service *services.B2Service,
+) *JobHandler {
+	return &JobHandler{
+		jobStore:          jobStore,
+		emailSender:       emailSender,
+		notificationEmail: notificationEmail,
+		b2Service:         b2Service,
+	}
 }
 
 func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
@@ -95,27 +109,58 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.jobStore.Create(r.Context(), &app); err != nil {
-		util.WriteError(w, http.StatusInternalServerError, "failed to save application", "SERVER_ERROR")
+		util.WriteError(
+			w,
+			http.StatusInternalServerError,
+			"failed to save application", "SERVER_ERROR",
+		)
 		return
 	}
 
-	// file, header, err := r.FormFile("cv")
-	// if err == nil {
-	// 	defer file.Close()
-	// 	os.MkdirAll("./uploads", 0755)
-	// 	destPath := fmt.Sprintf("./uploads/cv_%d_%s", time.Now().Unix(), header.Filename)
-	// 	dest, createErr := os.Create(destPath)
-	// 	if createErr == nil {
-	// 		io.Copy(dest, file)
-	// 		dest.Close()
-	// 	}
-	// }
+	file, header, err := r.FormFile("cv")
+	if err != nil {
+		util.WriteError(
+			w, http.StatusBadRequest,
+			"failed to read CV file",
+			"BAD_REQUEST",
+		)
+		return
+	}
+	defer func() { _ = file.Close() }()
+	data, err := io.ReadAll(file)
+	if err != nil {
+		util.WriteError(
+			w, http.StatusBadRequest,
+			"failed to read cv file",
+			"BAD_REQUEST",
+		)
+		return
+	}
+	fileKey := fmt.Sprintf("cv/%d_%s", app.ID, header.Filename)
+	contentType := header.Header.Get("Content-Type")
+	if contentType == "" {
+		contentType = "application/octet-stream"
+	}
+
+	if err := h.jobStore.UpdateCVKey(r.Context(), app.ID, fileKey); err != nil {
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to save cv",
+			"SERVER_ERROR",
+		)
+		return
+	}
+
+	h.b2Service.UploadFileAsync(fileKey, data, contentType)
 
 	htmlBody := jobEmailBody(&app)
 	h.emailSender.Send(util.EmailPayload{
-		To:      "segurasservicediensten@gmail.com",
-		Subject: "New Job Application",
-		Body:    htmlBody,
+		To:                    h.notificationEmail,
+		Subject:               "New Job Application",
+		Body:                  htmlBody,
+		AttachmentFilename:    header.Filename,
+		AttachmentData:        data,
+		AttachmentContentType: contentType,
 	})
 
 	util.WriteJSON(w, http.StatusCreated, domain.JobApplicationResponse{

@@ -10,11 +10,17 @@ import (
 	"github.com/kadusic1/seguras/backend/auth"
 	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/database"
+	"github.com/kadusic1/seguras/backend/services"
 	"github.com/kadusic1/seguras/backend/util"
 )
 
 // NewRouter builds the chi router with all middleware and route groups.
-func NewRouter(cfg *config.Config, db *sql.DB, emailSender *util.AsyncSender) *chi.Mux {
+func NewRouter(
+	cfg *config.Config,
+	db *sql.DB,
+	emailSender *util.AsyncSender,
+	b2Service *services.B2Service,
+) *chi.Mux {
 	userStore := database.NewUserStore(db)
 	jwtSvc := auth.NewJWTService(cfg.JWTSecret, cfg.AccessTTL, cfg.RefreshTTL)
 	authHandler := NewAuthHandler(userStore, jwtSvc)
@@ -42,7 +48,7 @@ func NewRouter(cfg *config.Config, db *sql.DB, emailSender *util.AsyncSender) *c
 	})
 
 	jobStore := database.NewJobStore(db)
-	jobHandler := NewJobHandler(jobStore, emailSender)
+	jobHandler := NewJobHandler(jobStore, emailSender, cfg.NotificationEmail, b2Service)
 
 	r.Post("/jobs/apply", jobHandler.Submit)
 

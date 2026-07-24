@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"strconv"
@@ -17,9 +18,12 @@ type SMTPConfig struct {
 }
 
 type EmailPayload struct {
-	To      string
-	Subject string
-	Body    string
+	To                    string
+	Subject               string
+	Body                  string
+	AttachmentFilename    string
+	AttachmentData        []byte
+	AttachmentContentType string
 }
 
 type AsyncSender struct {
@@ -53,6 +57,14 @@ func send(cfg SMTPConfig, payload EmailPayload) error {
 	}
 	m.Subject(payload.Subject)
 	m.SetBodyString(mail.TypeTextHTML, payload.Body)
+
+	if len(payload.AttachmentData) > 0 {
+		m.AttachReadSeeker(
+			payload.AttachmentFilename,
+			bytes.NewReader(payload.AttachmentData),
+			mail.WithFileContentType(mail.ContentType(payload.AttachmentContentType)),
+		)
+	}
 
 	c, err := mail.NewClient(cfg.Host,
 		mail.WithPort(port),

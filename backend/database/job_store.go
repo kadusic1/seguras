@@ -38,3 +38,11 @@ func (s *JobStore) Create(ctx context.Context, app *domain.JobApplication) error
 	app.ID = int(id)
 	return nil
 }
+
+func (s *JobStore) UpdateCVKey(ctx context.Context, id int, cvKey string) error {
+	_, err := s.db.ExecContext(ctx,
+		`UPDATE job_applications SET cv_key = ? WHERE id = ?`,
+		cvKey, id,
+	)
+	return err
+}
