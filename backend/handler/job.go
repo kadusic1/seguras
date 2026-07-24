@@ -13,12 +13,13 @@ import (
 )
 
 type JobHandler struct {
-	jobStore    *database.JobStore
-	emailSender *util.AsyncSender
+	jobStore          *database.JobStore
+	emailSender       *util.AsyncSender
+	notificationEmail string
 }
 
-func NewJobHandler(jobStore *database.JobStore, emailSender *util.AsyncSender) *JobHandler {
-	return &JobHandler{jobStore: jobStore, emailSender: emailSender}
+func NewJobHandler(jobStore *database.JobStore, emailSender *util.AsyncSender, notificationEmail string) *JobHandler {
+	return &JobHandler{jobStore: jobStore, emailSender: emailSender, notificationEmail: notificationEmail}
 }
 
 func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
@@ -113,7 +114,7 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 
 	htmlBody := jobEmailBody(&app)
 	h.emailSender.Send(util.EmailPayload{
-		To:      "segurasservicediensten@gmail.com",
+		To:      h.notificationEmail,
 		Subject: "New Job Application",
 		Body:    htmlBody,
 	})

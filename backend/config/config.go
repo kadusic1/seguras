@@ -20,7 +20,8 @@ type Config struct {
 	SMTPPort     string
 	SMTPUsername string
 	SMTPPassword string
-	FromEmail    string
+	FromEmail         string
+	NotificationEmail string
 }
 
 // Load reads required and optional environment variables and returns a Config.
@@ -58,6 +59,10 @@ func Load() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	notificationEmail, err := util.MustEnv("NOTIFICATION_EMAIL")
+	if err != nil {
+		return nil, err
+	}
 
 	return &Config{
 		DBDSN:      dbDSN,
@@ -71,6 +76,7 @@ func Load() (*Config, error) {
 		SMTPPort:     util.GetEnv("SMTP_PORT", "587"),
 		SMTPUsername: smtpUsername,
 		SMTPPassword: smtpPassword,
-		FromEmail:    fromEmail,
+		FromEmail:         fromEmail,
+		NotificationEmail: notificationEmail,
 	}, nil
 }
