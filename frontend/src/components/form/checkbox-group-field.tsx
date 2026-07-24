@@ -71,7 +71,6 @@ export function CheckboxGroupField<T extends FieldValues>({
 
   return (
     <FieldChrome
-      as="fieldset"
       name={name}
       label={label}
       required={!!rules?.required}

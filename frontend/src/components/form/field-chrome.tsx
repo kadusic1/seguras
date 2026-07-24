@@ -20,12 +20,6 @@ export interface FieldChromeProps {
   error?: { message?: unknown };
   /** Color scheme token inherited from the parent Form. */
   bgScheme: NeutralColorScheme;
-  /**
-   * Semantic wrapper element.
-   * - `"label"` (default) — renders a `<div>` with an inner `<label htmlFor={name}>`.
-   * - `"fieldset"` — renders a `<fieldset>` with a `<legend>` (for checkbox groups).
-   */
-  as?: "label" | "fieldset";
   /** Field control(s) rendered inside the chrome. */
   children: ReactNode;
 }
@@ -45,18 +39,14 @@ export function FieldChrome({
   required,
   error,
   bgScheme,
-  as = "label",
   children,
 }: FieldChromeProps) {
   const s = schemes[bgScheme];
-  const Wrapper = as === "fieldset" ? "fieldset" : "div";
-  const LabelTag = as === "fieldset" ? "legend" : "label";
-  const labelProps = as === "fieldset" ? {} : { htmlFor: name };
 
   return (
-    <Wrapper className={as === "fieldset" ? "border-0 p-0 m-0" : undefined}>
-      <LabelTag
-        {...labelProps}
+    <div>
+      <label
+        htmlFor={name}
         className={`mb-1 block text-sm font-semibold ${s.text.primary}`}
       >
         {label}
@@ -65,7 +55,7 @@ export function FieldChrome({
             *
           </span>
         )}
-      </LabelTag>
+      </label>
       {children}
       {typeof error?.message === "string" && (
         <p
@@ -76,6 +66,6 @@ export function FieldChrome({
           {error.message}
         </p>
       )}
-    </Wrapper>
+    </div>
   );
 }
