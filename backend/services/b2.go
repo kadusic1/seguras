@@ -8,26 +8,11 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/config"
+	awsconfig "github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/kadusic1/seguras/backend/config"
 )
-
-// B2Config holds the credentials and settings needed to talk to a
-// Backblaze B2 bucket through its S3-compatible API.
-type B2Config struct {
-	// Endpoint is the S3-compatible endpoint for your bucket's region,
-	// e.g. "https://s3.us-west-004.backblazeb2.com".
-	Endpoint string
-	// Region is the B2 region, e.g. "us-west-004".
-	Region string
-	// KeyID is the Backblaze application key ID.
-	KeyID string
-	// AppKey is the Backblaze application key secret.
-	AppKey string
-	// Bucket is the default bucket name to operate on.
-	Bucket string
-}
 
 // B2Service uploads and deletes objects in a Backblaze B2 bucket using the
 // AWS SDK for Go v2
@@ -37,11 +22,16 @@ type B2Service struct {
 }
 
 // NewB2Service creates a B2Service wrapping an S3 client configured for
-// Backblaze B2, given the provided B2Config.
-func NewB2Service(ctx context.Context, cfg B2Config) (*B2Service, error) {
-	awsCfg, err := config.LoadDefaultConfig(ctx,
-		config.WithRegion(cfg.Region),
-		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
+// Backblaze B2, loading credentials from the environment.
+func NewB2Service(ctx context.Context) (*B2Service, error) {
+	cfg, err := config.LoadB2()
+	if err != nil {
+		return nil, err
+	}
+
+	awsCfg, err := awsconfig.LoadDefaultConfig(ctx,
+		awsconfig.WithRegion(cfg.Region),
+		awsconfig.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
 			cfg.KeyID, cfg.AppKey, "",
 		)),
 	)
@@ -51,8 +41,6 @@ func NewB2Service(ctx context.Context, cfg B2Config) (*B2Service, error) {
 
 	client := s3.NewFromConfig(awsCfg, func(o *s3.Options) {
 		o.BaseEndpoint = aws.String(cfg.Endpoint)
-		// B2's S3-compatible API works with virtual-hosted or path style;
-		// path style is the safer default across custom endpoints.
 		o.UsePathStyle = true
 	})
 

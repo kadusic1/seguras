@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/domain"
 	"github.com/kadusic1/seguras/backend/services"
@@ -24,15 +25,18 @@ type JobHandler struct {
 func NewJobHandler(
 	jobStore *database.JobStore,
 	emailSender *util.AsyncSender,
-	notificationEmail string,
 	b2Service *services.B2Service,
-) *JobHandler {
+) (*JobHandler, error) {
+	cfg, err := config.LoadSMTP()
+	if err != nil {
+		return nil, err
+	}
 	return &JobHandler{
 		jobStore:          jobStore,
 		emailSender:       emailSender,
-		notificationEmail: notificationEmail,
+		notificationEmail: cfg.NotificationEmail,
 		b2Service:         b2Service,
-	}
+	}, nil
 }
 
 func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {

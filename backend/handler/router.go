@@ -3,6 +3,7 @@ package handler
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -16,21 +17,26 @@ import (
 
 // NewRouter builds the chi router with all middleware and route groups.
 func NewRouter(
-	cfg *config.Config,
 	db *sql.DB,
 	emailSender *util.AsyncSender,
 	b2Service *services.B2Service,
-) *chi.Mux {
+) (*chi.Mux, error) {
 	userStore := database.NewUserStore(db)
-	jwtSvc := auth.NewJWTService(cfg.JWTSecret, cfg.AccessTTL, cfg.RefreshTTL)
+
+	jwtSvc, err := auth.NewJWTService()
+	if err != nil {
+		return nil, fmt.Errorf("jwt: %w", err)
+	}
 	authHandler := NewAuthHandler(userStore, jwtSvc)
+
+	serverCfg := config.LoadServer()
 
 	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{cfg.CORSOrigin},
+		AllowedOrigins:   []string{serverCfg.CORSOrigin},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
 		AllowCredentials: true,
@@ -48,9 +54,12 @@ func NewRouter(
 	})
 
 	jobStore := database.NewJobStore(db)
-	jobHandler := NewJobHandler(jobStore, emailSender, cfg.NotificationEmail, b2Service)
+	jobHandler, err := NewJobHandler(jobStore, emailSender, b2Service)
+	if err != nil {
+		return nil, fmt.Errorf("job handler: %w", err)
+	}
 
 	r.Post("/jobs/apply", jobHandler.Submit)
 
-	return r
+	return r, nil
 }

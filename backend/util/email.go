@@ -6,16 +6,9 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/kadusic1/seguras/backend/config"
 	"github.com/wneessen/go-mail"
 )
-
-type SMTPConfig struct {
-	Host     string
-	Port     string
-	Username string
-	Password string
-	From     string
-}
 
 type EmailPayload struct {
 	To                    string
@@ -27,11 +20,15 @@ type EmailPayload struct {
 }
 
 type AsyncSender struct {
-	cfg SMTPConfig
+	cfg config.SMTPConfig
 }
 
-func NewAsyncSender(cfg SMTPConfig) *AsyncSender {
-	return &AsyncSender{cfg: cfg}
+func NewAsyncSender() (*AsyncSender, error) {
+	cfg, err := config.LoadSMTP()
+	if err != nil {
+		return nil, err
+	}
+	return &AsyncSender{cfg: *cfg}, nil
 }
 
 func (a *AsyncSender) Send(payload EmailPayload) {
@@ -42,14 +39,14 @@ func (a *AsyncSender) Send(payload EmailPayload) {
 	}()
 }
 
-func send(cfg SMTPConfig, payload EmailPayload) error {
+func send(cfg config.SMTPConfig, payload EmailPayload) error {
 	port, err := strconv.Atoi(cfg.Port)
 	if err != nil {
 		return fmt.Errorf("invalid SMTP port %q: %w", cfg.Port, err)
 	}
 
 	m := mail.NewMsg()
-	if err := m.From(cfg.From); err != nil {
+	if err := m.From(cfg.FromEmail); err != nil {
 		return fmt.Errorf("set from: %w", err)
 	}
 	if err := m.To(payload.To); err != nil {

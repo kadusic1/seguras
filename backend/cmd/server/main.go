@@ -22,12 +22,12 @@ func main() {
 		log.Fatalf("failed to load .env file: %v", err)
 	}
 
-	cfg, err := config.Load()
+	dbCfg, err := config.LoadDB()
 	if err != nil {
 		log.Fatalf("config: %v", err)
 	}
 
-	db, err := sql.Open("mysql", cfg.DBDSN)
+	db, err := sql.Open("mysql", dbCfg.DSN)
 	if err != nil {
 		log.Fatalf("failed to open database: %v", err)
 	}
@@ -45,30 +45,24 @@ func main() {
 		log.Fatalf("failed to ping database: %v", err)
 	}
 
-	emailSender := util.NewAsyncSender(util.SMTPConfig{
-		Host:     cfg.SMTPHost,
-		Port:     cfg.SMTPPort,
-		Username: cfg.SMTPUsername,
-		Password: cfg.SMTPPassword,
-		From:     cfg.FromEmail,
-	})
-
-	b2Service, err := services.NewB2Service(
-		context.Background(), services.B2Config{
-			Endpoint: cfg.B2Endpoint,
-			Region:   cfg.B2Region,
-			KeyID:    cfg.B2KeyID,
-			AppKey:   cfg.B2AppKey,
-			Bucket:   cfg.B2Bucket,
-		})
+	emailSender, err := util.NewAsyncSender()
 	if err != nil {
-		log.Fatalf("failed to init b2 service: %v", err)
+		log.Fatalf("email sender: %v", err)
 	}
 
-	r := handler.NewRouter(cfg, db, emailSender, b2Service)
+	b2Service, err := services.NewB2Service(context.Background())
+	if err != nil {
+		log.Fatalf("b2 service: %v", err)
+	}
 
-	log.Printf("server starting on :%s", cfg.Port)
-	if err := http.ListenAndServe(":"+cfg.Port, r); err != nil {
+	r, err := handler.NewRouter(db, emailSender, b2Service)
+	if err != nil {
+		log.Fatalf("router: %v", err)
+	}
+
+	serverCfg := config.LoadServer()
+	log.Printf("server starting on :%s", serverCfg.Port)
+	if err := http.ListenAndServe(":"+serverCfg.Port, r); err != nil {
 		log.Fatalf("server failed: %v", err)
 	}
 }

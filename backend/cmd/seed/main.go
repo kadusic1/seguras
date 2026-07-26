@@ -31,12 +31,12 @@ func main() {
 		log.Fatalf("failed to load .env file: %v", err)
 	}
 
-	cfg, err := config.Load()
+	dbCfg, err := config.LoadDB()
 	if err != nil {
 		log.Fatalf("config: %v", err)
 	}
 
-	db, err := sql.Open("mysql", cfg.DBDSN)
+	db, err := sql.Open("mysql", dbCfg.DSN)
 	if err != nil {
 		log.Fatalf("failed to open database: %v", err)
 	}

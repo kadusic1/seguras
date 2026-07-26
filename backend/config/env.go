@@ -1,5 +1,5 @@
-// Package util provides shared helpers for environment, HTTP, and context operations.
-package util
+// Package config loads application configuration from environment variables.
+package config
 
 import (
 	"fmt"

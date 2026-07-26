@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/domain"
 )
 
@@ -17,13 +18,17 @@ type JWTService struct {
 	refreshTTL time.Duration
 }
 
-// NewJWTService creates a JWTService with the given signing secret and TTLs.
-func NewJWTService(secret string, accessTTL, refreshTTL time.Duration) *JWTService {
-	return &JWTService{
-		secret:     []byte(secret),
-		accessTTL:  accessTTL,
-		refreshTTL: refreshTTL,
+// NewJWTService creates a JWTService by loading configuration from the environment.
+func NewJWTService() (*JWTService, error) {
+	cfg, err := config.LoadAuth()
+	if err != nil {
+		return nil, err
 	}
+	return &JWTService{
+		secret:     []byte(cfg.JWTSecret),
+		accessTTL:  cfg.AccessTTL,
+		refreshTTL: cfg.RefreshTTL,
+	}, nil
 }
 
 // GenerateAccessToken creates a signed access JWT for the given user.
