@@ -12,13 +12,12 @@ import (
 	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/services"
-	"github.com/kadusic1/seguras/backend/util"
 )
 
 // NewRouter builds the chi router with all middleware and route groups.
 func NewRouter(
 	db *sql.DB,
-	emailSender *util.AsyncSender,
+	emailService *services.EmailService,
 	b2Service *services.B2Service,
 ) (*chi.Mux, error) {
 	userStore := database.NewUserStore(db)
@@ -54,7 +53,7 @@ func NewRouter(
 	})
 
 	jobStore := database.NewJobStore(db)
-	jobHandler, err := NewJobHandler(jobStore, emailSender, b2Service)
+	jobHandler, err := NewJobHandler(jobStore, emailService, b2Service)
 	if err != nil {
 		return nil, fmt.Errorf("job handler: %w", err)
 	}

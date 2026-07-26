@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/domain"
 	"github.com/kadusic1/seguras/backend/services"
@@ -16,26 +15,20 @@ import (
 )
 
 type JobHandler struct {
-	jobStore          *database.JobStore
-	emailSender       *util.AsyncSender
-	notificationEmail string
-	b2Service         *services.B2Service
+	jobStore     *database.JobStore
+	emailService *services.EmailService
+	b2Service    *services.B2Service
 }
 
 func NewJobHandler(
 	jobStore *database.JobStore,
-	emailSender *util.AsyncSender,
+	emailService *services.EmailService,
 	b2Service *services.B2Service,
 ) (*JobHandler, error) {
-	cfg, err := config.LoadSMTP()
-	if err != nil {
-		return nil, err
-	}
 	return &JobHandler{
-		jobStore:          jobStore,
-		emailSender:       emailSender,
-		notificationEmail: cfg.NotificationEmail,
-		b2Service:         b2Service,
+		jobStore:     jobStore,
+		emailService: emailService,
+		b2Service:    b2Service,
 	}, nil
 }
 
@@ -157,15 +150,7 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 
 	h.b2Service.UploadFileAsync(fileKey, data, contentType)
 
-	htmlBody := jobEmailBody(&app)
-	h.emailSender.Send(util.EmailPayload{
-		To:                    h.notificationEmail,
-		Subject:               "New Job Application",
-		Body:                  htmlBody,
-		AttachmentFilename:    header.Filename,
-		AttachmentData:        data,
-		AttachmentContentType: contentType,
-	})
+	h.emailService.SendJobApplicationNotification(&app, header.Filename, data, contentType)
 
 	util.WriteJSON(w, http.StatusCreated, domain.JobApplicationResponse{
 		ID:             app.ID,
@@ -182,23 +167,4 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		EmploymentType: app.EmploymentType,
 		CreatedAt:      time.Now(),
 	})
-}
-
-func jobEmailBody(app *domain.JobApplication) string {
-	return fmt.Sprintf(`New Job Application
-====================
-
-Name:             %s %s
-Date of Birth:    %s
-BSN:              %s
-Address:          %s
-Email:            %s
-Phone:            %s
-Bank Account:     %s
-Hours Available:  %d
-Clothing Size:    %s
-Employment Type:  %s`,
-		app.FirstName, app.LastName, app.DateOfBirth, app.BSN,
-		app.Address, app.Email, app.Phone, app.BankAccount,
-		app.HoursAvailable, app.ClothingSize, app.EmploymentType)
 }

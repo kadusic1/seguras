@@ -14,7 +14,6 @@ import (
 	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/handler"
 	"github.com/kadusic1/seguras/backend/services"
-	"github.com/kadusic1/seguras/backend/util"
 )
 
 func main() {
@@ -45,9 +44,9 @@ func main() {
 		log.Fatalf("failed to ping database: %v", err)
 	}
 
-	emailSender, err := util.NewAsyncSender()
+	emailService, err := services.NewEmailService()
 	if err != nil {
-		log.Fatalf("email sender: %v", err)
+		log.Fatalf("email service: %v", err)
 	}
 
 	b2Service, err := services.NewB2Service(context.Background())
@@ -55,7 +54,7 @@ func main() {
 		log.Fatalf("b2 service: %v", err)
 	}
 
-	r, err := handler.NewRouter(db, emailSender, b2Service)
+	r, err := handler.NewRouter(db, emailService, b2Service)
 	if err != nil {
 		log.Fatalf("router: %v", err)
 	}
