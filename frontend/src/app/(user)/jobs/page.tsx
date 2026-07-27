@@ -19,6 +19,15 @@ import { Section } from "@/components/section";
 import { SuccessMessage } from "@/components/success-message";
 import { Text } from "@/components/text";
 import { jobs } from "@/features/jobs/data";
+import {
+  dateInPast,
+  inRange,
+  isNumeric,
+  maxLength,
+  validBSN,
+  validIBAN,
+  validPhone,
+} from "@/lib/validators";
 
 interface JobApplicationForm {
   firstName: string;
@@ -158,32 +167,41 @@ export default function JobsPage() {
             name="firstName"
             label="First Name"
             type="text"
-            rules={{ required: true }}
+            rules={{
+              required: true,
+              validate: maxLength(100, "Name"),
+            }}
           />
           <FormField
             name="lastName"
             label="Last Name"
             type="text"
-            rules={{ required: true }}
+            rules={{
+              required: true,
+              validate: maxLength(100, "Last name"),
+            }}
           />
           <FormField
             name="dateOfBirth"
             label="Date of Birth"
             type="date"
-            rules={{ required: true }}
+            rules={{ required: true, validate: dateInPast() }}
           />
           <FormField
             name="bsn"
             label="BSN"
             type="text"
             placeholder="Dutch national ID"
-            rules={{ required: true }}
+            rules={{ required: true, validate: validBSN() }}
           />
           <FormField
             name="address"
             label="Address"
             type="text"
-            rules={{ required: true }}
+            rules={{
+              required: true,
+              validate: maxLength(255, "Address"),
+            }}
           />
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
@@ -199,7 +217,7 @@ export default function JobsPage() {
             name="phone"
             label="Phone"
             type="tel"
-            rules={{ required: true }}
+            rules={{ required: true, validate: validPhone() }}
           />
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
@@ -209,7 +227,13 @@ export default function JobsPage() {
             name="hoursAvailable"
             label="Hours Available per Week"
             type="number"
-            rules={{ required: true, valueAsNumber: true }}
+            rules={{
+              required: true,
+              validate: {
+                isNumeric: isNumeric("Hours available"),
+                inRange: inRange(1, 168, "Hours available"),
+              },
+            }}
           />
           <SelectField
             name="clothingSize"
@@ -233,7 +257,7 @@ export default function JobsPage() {
             name="bankAccount"
             label="Bank Account (IBAN)"
             type="text"
-            rules={{ required: true }}
+            rules={{ required: true, validate: validIBAN() }}
           />
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
@@ -250,7 +274,11 @@ export default function JobsPage() {
           />
 
           {submitError && (
-            <Text variant="sm" bgScheme="white" className="text-red-500">
+            <Text
+              variant="sm"
+              bgScheme="white"
+              className="text-red-500 lowercase first-letter:uppercase"
+            >
               {submitError}
             </Text>
           )}

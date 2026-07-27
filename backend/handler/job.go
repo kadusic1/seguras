@@ -34,12 +34,23 @@ func NewJobHandler(
 
 func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(10 << 20); err != nil {
-		util.WriteError(w, http.StatusBadRequest, "invalid form data", "BAD_REQUEST")
+		util.WriteError(
+			w, http.StatusBadRequest, "invalid form data", "BAD_REQUEST",
+		)
 		return
 	}
 
 	hoursStr := r.FormValue("hours_available")
-	hoursAvailable, _ := strconv.Atoi(hoursStr)
+	hoursAvailable, convErr := strconv.Atoi(hoursStr)
+	if convErr != nil {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"hours_available must be a valid number",
+			"BAD_REQUEST",
+		)
+		return
+	}
 
 	req := domain.SubmitJobApplicationRequest{
 		FirstName:      r.FormValue("first_name"),
@@ -57,24 +68,49 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 
 	req.FirstName = strings.TrimSpace(req.FirstName)
 	req.LastName = strings.TrimSpace(req.LastName)
+	req.DateOfBirth = strings.TrimSpace(req.DateOfBirth)
+	req.BSN = strings.TrimSpace(req.BSN)
+	req.Address = strings.TrimSpace(req.Address)
 	req.Email = strings.TrimSpace(req.Email)
 	req.Phone = strings.TrimSpace(req.Phone)
+	req.BankAccount = strings.TrimSpace(req.BankAccount)
 
 	if req.FirstName == "" || req.LastName == "" || req.DateOfBirth == "" ||
 		req.BSN == "" || req.Address == "" || req.Email == "" ||
-		req.Phone == "" || req.BankAccount == "" || req.ClothingSize == "" ||
-		req.HoursAvailable <= 0 {
-		util.WriteError(w, http.StatusBadRequest, "all fields are required", "BAD_REQUEST")
+		req.Phone == "" || req.BankAccount == "" || req.ClothingSize == "" {
+		util.WriteError(
+			w, http.StatusBadRequest, "all fields are required", "BAD_REQUEST",
+		)
 		return
 	}
 
-	if !strings.Contains(req.Email, "@") {
-		util.WriteError(w, http.StatusBadRequest, "invalid email format", "BAD_REQUEST")
+	if len(req.FirstName) > 100 || len(req.LastName) > 100 {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"name fields must not exceed 100 characters",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	if len(req.Address) > 255 {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"address must not exceed 255 characters",
+			"BAD_REQUEST",
+		)
 		return
 	}
 
 	if req.EmploymentType != domain.EmploymentSecurity && req.EmploymentType != domain.EmploymentService {
-		util.WriteError(w, http.StatusBadRequest, "employment_type must be 'security' or 'service'", "BAD_REQUEST")
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"employment_type must be 'security' or 'service'",
+			"BAD_REQUEST",
+		)
 		return
 	}
 
@@ -86,8 +122,67 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if _, err := time.Parse("2006-01-02", req.DateOfBirth); err != nil {
-		util.WriteError(w, http.StatusBadRequest, "invalid date_of_birth format, expected YYYY-MM-DD", "BAD_REQUEST")
+	if req.HoursAvailable < 1 || req.HoursAvailable > 168 {
+		util.WriteError(
+			w, http.StatusBadRequest,
+			"hours_available must be between 1 and 168",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	dob, err := time.Parse("2006-01-02", req.DateOfBirth)
+	if err != nil {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"invalid date_of_birth format, expected YYYY-MM-DD",
+			"BAD_REQUEST",
+		)
+		return
+	}
+	if !dob.Before(time.Now()) {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"date_of_birth must be in the past",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	if !util.ValidBSN(req.BSN) {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"invalid BSN: must pass the Dutch 11-check",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	if !util.ValidEmail(req.Email) {
+		util.WriteError(w, http.StatusBadRequest, "invalid email format", "BAD_REQUEST")
+		return
+	}
+
+	if !util.ValidDutchIBAN(req.BankAccount) {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"invalid Dutch IBAN",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	if !util.ValidPhone(req.Phone) {
+		util.WriteError(
+			w,
+			http.StatusBadRequest,
+			"invalid phone number",
+			"BAD_REQUEST",
+		)
 		return
 	}
 
