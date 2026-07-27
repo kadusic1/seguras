@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -209,8 +210,55 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, header, err := r.FormFile("cv")
-	if err != nil {
+	var (
+		fileKey     string
+		fileName    string
+		fileData    []byte
+		contentType string
+	)
+
+	file, header, fileErr := r.FormFile("cv")
+	switch {
+	case fileErr == nil:
+		defer func() { _ = file.Close() }()
+
+		data, readErr := io.ReadAll(file)
+		if readErr != nil {
+			util.WriteError(
+				w, http.StatusBadRequest,
+				"failed to read CV file",
+				"BAD_REQUEST",
+			)
+			return
+		}
+
+		if len(data) > 0 {
+			fileKey = fmt.Sprintf("cv/%d_%s", app.ID, header.Filename)
+			fileName = header.Filename
+			fileData = data
+			contentType = header.Header.Get("Content-Type")
+			if contentType == "" {
+				contentType = "application/octet-stream"
+			}
+
+			if err := h.jobStore.UpdateCVKey(
+				r.Context(), app.ID, fileKey,
+			); err != nil {
+				util.WriteError(
+					w, http.StatusInternalServerError,
+					"failed to save cv",
+					"SERVER_ERROR",
+				)
+				return
+			}
+
+			h.b2Service.UploadFileAsync(fileKey, fileData, contentType)
+		}
+
+	case errors.Is(fileErr, http.ErrMissingFile):
+		// No CV provided. This is allowed — proceed without one.
+
+	default:
 		util.WriteError(
 			w, http.StatusBadRequest,
 			"failed to read CV file",
@@ -218,34 +266,8 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		)
 		return
 	}
-	defer func() { _ = file.Close() }()
-	data, err := io.ReadAll(file)
-	if err != nil {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"failed to read cv file",
-			"BAD_REQUEST",
-		)
-		return
-	}
-	fileKey := fmt.Sprintf("cv/%d_%s", app.ID, header.Filename)
-	contentType := header.Header.Get("Content-Type")
-	if contentType == "" {
-		contentType = "application/octet-stream"
-	}
 
-	if err := h.jobStore.UpdateCVKey(r.Context(), app.ID, fileKey); err != nil {
-		util.WriteError(
-			w, http.StatusInternalServerError,
-			"failed to save cv",
-			"SERVER_ERROR",
-		)
-		return
-	}
-
-	h.b2Service.UploadFileAsync(fileKey, data, contentType)
-
-	h.emailService.SendJobApplicationNotification(&app, header.Filename, data, contentType)
+	h.emailService.SendJobApplicationNotification(&app, fileName, fileData, contentType)
 
 	util.WriteJSON(w, http.StatusCreated, domain.JobApplicationResponse{
 		ID:             app.ID,
