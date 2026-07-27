@@ -198,6 +198,7 @@ export default function JobsPage() {
             name="address"
             label="Address"
             type="text"
+            placeholder="Street, city, postcode"
             rules={{
               required: true,
               validate: maxLength(255, "Address"),
@@ -211,12 +212,14 @@ export default function JobsPage() {
             name="email"
             label="Email"
             type="email"
+            placeholder="you@example.com"
             rules={{ required: true }}
           />
           <FormField
             name="phone"
             label="Phone"
             type="tel"
+            placeholder="+31 6 12 34 56 78"
             rules={{ required: true, validate: validPhone() }}
           />
 
@@ -227,6 +230,7 @@ export default function JobsPage() {
             name="hoursAvailable"
             label="Hours Available per Week"
             type="number"
+            placeholder="e.g. 40"
             rules={{
               required: true,
               validate: {
