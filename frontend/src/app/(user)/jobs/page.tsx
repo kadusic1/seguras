@@ -191,7 +191,7 @@ export default function JobsPage() {
             name="bsn"
             label="BSN"
             type="text"
-            placeholder="Dutch national ID"
+            placeholder="####.###.##"
             rules={{ required: true, validate: validBSN() }}
           />
           <FormField
@@ -257,6 +257,7 @@ export default function JobsPage() {
             name="bankAccount"
             label="Bank Account (IBAN)"
             type="text"
+            placeholder="NL91 ABNA 0417 1643 00"
             rules={{ required: true, validate: validIBAN() }}
           />
 
