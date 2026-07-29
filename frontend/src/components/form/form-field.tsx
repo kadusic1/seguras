@@ -31,8 +31,11 @@ export interface FormFieldProps<T extends FieldValues> {
    * Input type. Controls which default validation rules are applied:
    * - `"email"` — adds a pattern validator
    * - `"text"`, `"password"`, `"number"` — no built-in defaults
+   * - `"textarea"` — renders a multi-line `<textarea>` instead of `<input>`
    */
   type?: FieldType;
+  /** Number of visible rows when `type` is `"textarea"`. */
+  rows?: number;
 }
 
 /**
@@ -52,6 +55,7 @@ export function FormField<T extends FieldValues>({
   placeholder,
   rules,
   type = "text",
+  rows,
 }: FormFieldProps<T>) {
   const bgScheme = useContext(FormCtx);
   const { register } = useFormContext<T>();
@@ -68,13 +72,23 @@ export function FormField<T extends FieldValues>({
       required={!!effectiveRules.required}
       bgScheme={bgScheme}
     >
-      <input
-        id={name}
-        type={type}
-        placeholder={placeholder}
-        className={`w-full rounded-md border px-3 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-red-500 aria-invalid:border-red-500 ${s.input}`}
-        {...register(name, effectiveRules)}
-      />
+      {type === "textarea" ? (
+        <textarea
+          id={name}
+          placeholder={placeholder}
+          rows={rows}
+          className={`w-full rounded-md border px-3 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-red-500 aria-invalid:border-red-500 ${s.input}`}
+          {...register(name, effectiveRules)}
+        />
+      ) : (
+        <input
+          id={name}
+          type={type}
+          placeholder={placeholder}
+          className={`w-full rounded-md border px-3 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-red-500 aria-invalid:border-red-500 ${s.input}`}
+          {...register(name, effectiveRules)}
+        />
+      )}
     </FieldChrome>
   );
 }

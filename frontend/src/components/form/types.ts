@@ -10,4 +10,5 @@ export type FieldType =
   | "password"
   | "number"
   | "date"
-  | "tel";
+  | "tel"
+  | "textarea";
