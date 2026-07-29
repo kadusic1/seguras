@@ -109,7 +109,7 @@ export default function JobsPage() {
         iconRight={<ArrowRight size={16} />}
       />
 
-      <Section title="Open Positions" bgScheme="black" animation="fadeIn">
+      <Section title="Open Positions" bgScheme="black" animation="zoomIn">
         <Grid cols={2}>
           {jobs.map((j) => (
             <Card
@@ -310,7 +310,7 @@ export default function JobsPage() {
 
       <SuccessMessage open={showSuccess} onOpenChange={setShowSuccess} />
 
-      <Section bgScheme="white" animation="fadeIn">
+      <Section bgScheme="white" animation="slideUp">
         <div className="mx-auto max-w-3xl text-center">
           <Heading bgScheme="white">Work All Across the Netherlands</Heading>
           <Text variant="lg" bgScheme="white" className="mt-4">

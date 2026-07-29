@@ -50,7 +50,7 @@ export default function Home() {
         bgScheme="white"
         ctaLabel="View All Services"
         ctaHref="/services"
-        animation="scaleIn"
+        animation="zoomIn"
       >
         <Grid cols={3}>
           {services.map((s) => (
@@ -64,7 +64,7 @@ export default function Home() {
         bgScheme="black"
         ctaLabel="View All Openings"
         ctaHref="/jobs"
-        animation="fadeIn"
+        animation="slideDown"
         image={{
           src: "/hero/hero-1.webp",
           alt: "Seguras security team member",

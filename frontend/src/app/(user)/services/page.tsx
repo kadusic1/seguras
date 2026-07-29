@@ -22,7 +22,7 @@ export default function ServicesPage() {
         title="Safety Solutions for Any Event"
         subtitle="From stadiums to festivals - we design security operations around your venue, crowd, and risk profile."
         bgScheme="white"
-        animation="fadeIn"
+        animation="slideUp"
         image={{
           src: "/services/services1.webp",
           alt: "Seguras team at an event",
@@ -49,7 +49,7 @@ export default function ServicesPage() {
         ctaLabel="Contact Our Team"
         ctaHref="/contact"
         ctaIconRight={<ArrowRight size={16} />}
-        animation="slideUp"
+        animation="zoomOut"
       />
       <WaveDivider fillScheme="white" />
       <Section
@@ -59,7 +59,7 @@ export default function ServicesPage() {
         ctaLabel="View All News"
         ctaHref="/news"
         ctaIconRight={<ArrowRight size={16} />}
-        animation="scaleIn"
+        animation="zoomIn"
       />
     </>
   );

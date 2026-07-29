@@ -82,7 +82,7 @@ export default function AboutPage() {
         title="Our Mission & Values"
         subtitle="Six principles that guide every decision we make and every event we protect."
         bgScheme="white"
-        animation="fadeIn"
+        animation="slideUp"
       >
         <Grid cols={3}>
           {missionValues.map((mv) => (
@@ -93,7 +93,7 @@ export default function AboutPage() {
       <Section
         title="Meet Adis"
         bgScheme="black"
-        animation="slideUp"
+        animation="zoomIn"
         image={{
           src: "/about/about2.webp",
           alt: "Adis Isakovic, CEO of Seguras",
@@ -131,7 +131,7 @@ export default function AboutPage() {
         ctaLabel="Contact Us"
         ctaHref="/contact"
         ctaIconRight={<ArrowRight size={16} />}
-        animation="slideUp"
+        animation="slideDown"
       >
         <Grid cols={3}>
           {trustedCompanies.map((c, i) => (
