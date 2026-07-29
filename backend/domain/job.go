@@ -29,11 +29,9 @@ type JobApplication struct {
 	FirstName      string
 	LastName       string
 	DateOfBirth    string
-	BSN            string
 	Address        string
 	Email          string
 	Phone          string
-	BankAccount    string
 	HoursAvailable int
 	ClothingSize   ClothingSize
 	EmploymentType EmploymentType
@@ -46,11 +44,9 @@ type SubmitJobApplicationRequest struct {
 	FirstName      string         `json:"first_name"`
 	LastName       string         `json:"last_name"`
 	DateOfBirth    string         `json:"date_of_birth"`
-	BSN            string         `json:"bsn"`
 	Address        string         `json:"address"`
 	Email          string         `json:"email"`
 	Phone          string         `json:"phone"`
-	BankAccount    string         `json:"bank_account"`
 	HoursAvailable int            `json:"hours_available"`
 	ClothingSize   ClothingSize   `json:"clothing_size"`
 	EmploymentType EmploymentType `json:"employment_type"`
@@ -62,11 +58,9 @@ type JobApplicationResponse struct {
 	FirstName      string         `json:"first_name"`
 	LastName       string         `json:"last_name"`
 	DateOfBirth    string         `json:"date_of_birth"`
-	BSN            string         `json:"bsn"`
 	Address        string         `json:"address"`
 	Email          string         `json:"email"`
 	Phone          string         `json:"phone"`
-	BankAccount    string         `json:"bank_account"`
 	HoursAvailable int            `json:"hours_available"`
 	ClothingSize   ClothingSize   `json:"clothing_size"`
 	EmploymentType EmploymentType `json:"employment_type"`

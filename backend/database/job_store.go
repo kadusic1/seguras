@@ -21,11 +21,11 @@ func NewJobStore(db *sql.DB) *JobStore {
 func (s *JobStore) Create(ctx context.Context, app *domain.JobApplication) error {
 	res, err := s.db.ExecContext(ctx,
 		`INSERT INTO job_applications
-		 (first_name, last_name, date_of_birth, bsn, address, email, phone,
-		  bank_account, hours_available, clothing_size, employment_type)
-		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		app.FirstName, app.LastName, app.DateOfBirth, app.BSN, app.Address,
-		app.Email, app.Phone, app.BankAccount, app.HoursAvailable,
+		 (first_name, last_name, date_of_birth, address, email, phone,
+		  hours_available, clothing_size, employment_type)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		app.FirstName, app.LastName, app.DateOfBirth, app.Address,
+		app.Email, app.Phone, app.HoursAvailable,
 		app.ClothingSize, app.EmploymentType,
 	)
 	if err != nil {

@@ -24,8 +24,8 @@ import {
   inRange,
   isNumeric,
   maxLength,
-  validBSN,
-  validIBAN,
+  // validBSN,
+  // validIBAN,
   validPhone,
 } from "@/lib/validators";
 
@@ -33,11 +33,11 @@ interface JobApplicationForm {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
-  bsn: string;
+  // bsn: string;
   address: string;
   email: string;
   phone: string;
-  bankAccount: string;
+  // bankAccount: string;
   cv?: File;
   hoursAvailable: number;
   clothingSize: string;
@@ -65,11 +65,11 @@ export default function JobsPage() {
     formData.append("first_name", data.firstName);
     formData.append("last_name", data.lastName);
     formData.append("date_of_birth", data.dateOfBirth);
-    formData.append("bsn", data.bsn);
+    // formData.append("bsn", data.bsn);
     formData.append("address", data.address);
     formData.append("email", data.email);
     formData.append("phone", data.phone);
-    formData.append("bank_account", data.bankAccount);
+    // formData.append("bank_account", data.bankAccount);
     formData.append("hours_available", String(data.hoursAvailable));
     formData.append("clothing_size", data.clothingSize);
     formData.append("employment_type", data.employmentType);
@@ -187,13 +187,13 @@ export default function JobsPage() {
             type="date"
             rules={{ required: true, validate: dateInPast() }}
           />
-          <FormField
+          {/* <FormField
             name="bsn"
             label="BSN"
             type="text"
             placeholder="####.###.##"
             rules={{ required: true, validate: validBSN() }}
-          />
+          /> */}
           <FormField
             name="address"
             label="Address"
@@ -254,7 +254,7 @@ export default function JobsPage() {
             rules={{ required: "Select your size" }}
           />
 
-          <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
+          {/* <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
             Bank Details
           </Heading>
           <FormField
@@ -263,7 +263,7 @@ export default function JobsPage() {
             type="text"
             placeholder="NL91 ABNA 0417 1643 00"
             rules={{ required: true, validate: validIBAN() }}
-          />
+          /> */}
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
             Additional

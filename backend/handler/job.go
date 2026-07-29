@@ -57,11 +57,9 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		FirstName:      r.FormValue("first_name"),
 		LastName:       r.FormValue("last_name"),
 		DateOfBirth:    r.FormValue("date_of_birth"),
-		BSN:            r.FormValue("bsn"),
 		Address:        r.FormValue("address"),
 		Email:          r.FormValue("email"),
 		Phone:          r.FormValue("phone"),
-		BankAccount:    r.FormValue("bank_account"),
 		HoursAvailable: hoursAvailable,
 		ClothingSize:   domain.ClothingSize(r.FormValue("clothing_size")),
 		EmploymentType: domain.EmploymentType(r.FormValue("employment_type")),
@@ -70,15 +68,13 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 	req.FirstName = strings.TrimSpace(req.FirstName)
 	req.LastName = strings.TrimSpace(req.LastName)
 	req.DateOfBirth = strings.TrimSpace(req.DateOfBirth)
-	req.BSN = strings.TrimSpace(req.BSN)
 	req.Address = strings.TrimSpace(req.Address)
 	req.Email = strings.TrimSpace(req.Email)
 	req.Phone = strings.TrimSpace(req.Phone)
-	req.BankAccount = strings.TrimSpace(req.BankAccount)
 
 	if req.FirstName == "" || req.LastName == "" || req.DateOfBirth == "" ||
-		req.BSN == "" || req.Address == "" || req.Email == "" ||
-		req.Phone == "" || req.BankAccount == "" || req.ClothingSize == "" {
+		req.Address == "" || req.Email == "" ||
+		req.Phone == "" || req.ClothingSize == "" {
 		util.WriteError(
 			w, http.StatusBadRequest, "all fields are required", "BAD_REQUEST",
 		)
@@ -152,28 +148,8 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !util.ValidBSN(req.BSN) {
-		util.WriteError(
-			w,
-			http.StatusBadRequest,
-			"invalid BSN: must pass the Dutch 11-check",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
 	if !util.ValidEmail(req.Email) {
 		util.WriteError(w, http.StatusBadRequest, "invalid email format", "BAD_REQUEST")
-		return
-	}
-
-	if !util.ValidDutchIBAN(req.BankAccount) {
-		util.WriteError(
-			w,
-			http.StatusBadRequest,
-			"invalid Dutch IBAN",
-			"BAD_REQUEST",
-		)
 		return
 	}
 
@@ -191,11 +167,9 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		FirstName:      req.FirstName,
 		LastName:       req.LastName,
 		DateOfBirth:    req.DateOfBirth,
-		BSN:            req.BSN,
 		Address:        req.Address,
 		Email:          req.Email,
 		Phone:          req.Phone,
-		BankAccount:    req.BankAccount,
 		HoursAvailable: req.HoursAvailable,
 		ClothingSize:   req.ClothingSize,
 		EmploymentType: req.EmploymentType,
@@ -274,11 +248,9 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		FirstName:      app.FirstName,
 		LastName:       app.LastName,
 		DateOfBirth:    app.DateOfBirth,
-		BSN:            app.BSN,
 		Address:        app.Address,
 		Email:          app.Email,
 		Phone:          app.Phone,
-		BankAccount:    app.BankAccount,
 		HoursAvailable: app.HoursAvailable,
 		ClothingSize:   app.ClothingSize,
 		EmploymentType: app.EmploymentType,

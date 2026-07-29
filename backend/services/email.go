@@ -115,11 +115,9 @@ func (s *EmailService) buildJobNotificationBody(app *domain.JobApplication) stri
 	rows := strings.Join([]string{
 		emailRow("Name", fmt.Sprintf("%s %s", app.FirstName, app.LastName)),
 		emailRow("Date of Birth", util.FormatDate(app.DateOfBirth)),
-		emailRow("BSN", app.BSN),
 		emailRow("Address", app.Address),
 		emailRow("Email", app.Email),
 		emailRow("Phone", app.Phone),
-		emailRow("Bank Account", app.BankAccount),
 		emailRow("Hours Available", fmt.Sprintf("%d", app.HoursAvailable)),
 		emailRow("Clothing Size", string(app.ClothingSize)),
 		emailRow("Employment Type", string(app.EmploymentType)),
