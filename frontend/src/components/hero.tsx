@@ -14,6 +14,7 @@ interface HeroProps {
   imageAlt: string;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
+  onCtaClick?: () => void;
 }
 
 export function Hero({
@@ -25,6 +26,7 @@ export function Hero({
   imageAlt,
   iconLeft,
   iconRight,
+  onCtaClick,
 }: HeroProps) {
   const s = schemes["red"];
 
@@ -66,9 +68,10 @@ export function Hero({
               {subtitle}
             </Text>
           )}
-          {ctaLabel && ctaHref && (
+          {ctaLabel && (ctaHref || onCtaClick) && (
             <Button
-              href={ctaHref}
+              {...(ctaHref ? { href: ctaHref } : {})}
+              onClick={onCtaClick}
               variant="outline"
               bgScheme={s.buttonScheme}
               className="mt-8"

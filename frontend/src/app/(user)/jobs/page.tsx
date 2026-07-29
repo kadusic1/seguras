@@ -103,7 +103,11 @@ export default function JobsPage() {
         headline="Work at Seguras"
         subtitle="Want to join the team? See open positions below!"
         ctaLabel="See Open Positions"
-        ctaHref="#open-positions"
+        onCtaClick={() =>
+          document
+            .getElementById("open-positions")
+            ?.scrollIntoView({ behavior: "smooth" })
+        }
         imageSrc="/jobs/jobs-hero.webp"
         imageAlt="Seguras team"
         iconRight={<ArrowRight size={16} />}
