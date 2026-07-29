@@ -317,7 +317,12 @@ export default function JobsPage() {
         </Form>
       </ModalForm>
 
-      <SuccessMessage open={showSuccess} onOpenChange={setShowSuccess} />
+      <SuccessMessage
+        open={showSuccess}
+        onOpenChange={setShowSuccess}
+        title="Application Received"
+        description="We will review your application and get back to you soon."
+      />
 
       <Section bgScheme="white" animation="slideUp">
         <div className="mx-auto max-w-3xl text-center">

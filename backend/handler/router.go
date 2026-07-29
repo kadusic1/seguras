@@ -60,5 +60,13 @@ func NewRouter(
 
 	r.Post("/jobs/apply", jobHandler.Submit)
 
+	contactStore := database.NewContactStore(db)
+	contactHandler, err := NewContactHandler(contactStore, emailService)
+	if err != nil {
+		return nil, fmt.Errorf("contact handler: %w", err)
+	}
+
+	r.Post("/contact", contactHandler.Submit)
+
 	return r, nil
 }

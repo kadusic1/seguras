@@ -7,9 +7,16 @@ import { Button } from "@/components/button";
 interface SuccessMessageProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  title: string;
+  description: string;
 }
 
-export function SuccessMessage({ open, onOpenChange }: SuccessMessageProps) {
+export function SuccessMessage({
+  open,
+  onOpenChange,
+  title,
+  description,
+}: SuccessMessageProps) {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -18,10 +25,10 @@ export function SuccessMessage({ open, onOpenChange }: SuccessMessageProps) {
           <div className="flex flex-col items-center gap-4">
             <CheckCircle className="size-12 text-green-500" strokeWidth={1.5} />
             <Dialog.Title className="text-center text-lg font-bold text-black">
-              Application Received
+              {title}
             </Dialog.Title>
             <Dialog.Description className="text-center text-sm text-black/60">
-              We will review your application and get back to you soon.
+              {description}
             </Dialog.Description>
             <Button onClick={() => onOpenChange(false)} bgScheme="red">
               Close
