@@ -1,23 +1,28 @@
 import { ArrowRight, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { type ColorScheme, schemes } from "@/lib/colours";
+import { buttonVariantStyles, type ColorScheme, schemes } from "@/lib/colours";
 import { Button } from "./button";
 import { Heading } from "./heading";
 import { Text } from "./text";
 
-interface CardProps {
+type CardShared = {
   variant?: "icon" | "listing";
   icon?: LucideIcon;
   heroIcon?: LucideIcon;
   title: string;
   description?: string;
-  href?: string;
-  onClick?: () => void;
   buttonLabel?: string;
   badge?: string;
   meta?: { label: string; value: string }[];
   bgScheme?: ColorScheme;
-}
+  clickable?: boolean;
+};
+
+type CardWithHref = CardShared & { href: string; onClick?: undefined };
+type CardWithOnClick = CardShared & { href?: undefined; onClick: () => void };
+type CardStatic = CardShared & { href?: undefined; onClick?: undefined };
+
+type CardProps = CardWithHref | CardWithOnClick | CardStatic;
 
 const listingBorder: Record<ColorScheme, string> = {
   red: "border-l-white",
@@ -37,14 +42,15 @@ export function Card({
   badge,
   meta,
   bgScheme = "red",
+  clickable = true,
 }: CardProps) {
   const isListing = variant === "listing";
   const s = schemes[bgScheme];
 
-  return (
-    <div
-      className={`group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}`}
-    >
+  const cardClasses = `group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}${clickable ? " cursor-pointer" : ""}`;
+
+  const content = (
+    <>
       {HeroIcon && (
         <HeroIcon
           className={`mb-4 h-12 w-12 transition-colors ${s.accent}`}
@@ -58,7 +64,7 @@ export function Card({
         icon={Icon}
         badge={isListing ? badge : undefined}
       >
-        {isListing && href ? (
+        {isListing && href && !clickable ? (
           <Link href={href} className="hover:underline">
             {title}
           </Link>
@@ -82,7 +88,7 @@ export function Card({
           ))}
         </div>
       )}
-      {(href || onClick) && (
+      {(href || onClick) && !clickable && (
         <Button
           variant="link"
           bgScheme={bgScheme}
@@ -93,6 +99,36 @@ export function Card({
           {buttonLabel ?? "Learn more"}
         </Button>
       )}
-    </div>
+      {(href || onClick) && clickable && (
+        <span
+          className={`inline-flex items-center gap-1 text-sm font-semibold transition-colors ${buttonVariantStyles.link[bgScheme]} mt-4`}
+        >
+          {buttonLabel ?? "Learn more"}
+          <ArrowRight className="h-4 w-4" />
+        </span>
+      )}
+    </>
   );
+
+  if (clickable && href) {
+    return (
+      <Link href={href} className={`${cardClasses} block`}>
+        {content}
+      </Link>
+    );
+  }
+
+  if (clickable && onClick) {
+    return (
+      <button
+        type="button"
+        className={`${cardClasses} text-start`}
+        onClick={onClick}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return <div className={cardClasses}>{content}</div>;
 }
