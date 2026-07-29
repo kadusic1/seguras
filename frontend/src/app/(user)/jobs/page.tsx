@@ -101,15 +101,20 @@ export default function JobsPage() {
     <>
       <Hero
         headline="Work at Seguras"
-        subtitle="Want to join the team? Get in touch or browse our open positions below."
-        ctaLabel="Contact Us"
-        ctaHref="/contact"
+        subtitle="Want to join the team? See open positions below!"
+        ctaLabel="See Open Positions"
+        ctaHref="#open-positions"
         imageSrc="/jobs/jobs-hero.webp"
         imageAlt="Seguras team"
         iconRight={<ArrowRight size={16} />}
       />
 
-      <Section title="Open Positions" bgScheme="black" animation="zoomIn">
+      <Section
+        id="open-positions"
+        title="Open Positions"
+        bgScheme="black"
+        animation="zoomIn"
+      >
         <Grid cols={2}>
           {jobs.map((j) => (
             <Card

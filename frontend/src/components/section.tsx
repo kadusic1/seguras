@@ -16,6 +16,7 @@ interface SectionProps {
   ctaHref?: string;
   ctaIconRight?: ReactElement;
   className?: string;
+  id?: string;
   image?: { src: string; alt: string; caption?: CaptionedImageCaption };
   imagePosition?: "left" | "right" | "background";
   animation?: RevealAnimation;
@@ -30,6 +31,7 @@ export function Section({
   ctaHref,
   ctaIconRight,
   className,
+  id,
   image,
   imagePosition = "right",
   animation,
@@ -73,6 +75,7 @@ export function Section({
   if (image && imagePosition === "background") {
     return (
       <section
+        id={id}
         className={`relative overflow-hidden py-24 sm:py-32${className ? ` ${className}` : ""}`}
       >
         <div className="absolute inset-0">
@@ -95,6 +98,7 @@ export function Section({
   if (image) {
     return (
       <section
+        id={id}
         className={`py-24 sm:py-32 ${s.bg}${className ? ` ${className}` : ""}`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -118,6 +122,7 @@ export function Section({
 
   return (
     <section
+      id={id}
       className={`py-24 sm:py-32 ${s.bg}${className ? ` ${className}` : ""}`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
