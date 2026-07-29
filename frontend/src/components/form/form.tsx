@@ -65,7 +65,8 @@ export interface FormProps<T extends FieldValues> {
  *   defaultValues={{ email: "", password: "" }}
  * >
  *   <FormField name="email" label="Email" type="email" rules={{ required: true }} />
- *   <FormField name="password" label="Password" type="password" />
+ *   <PasswordField name="password" label="Password" placeholder="Enter your password"
+ *    rules={{required: "Password is required" }} />
  * </Form>
  * ```
  */

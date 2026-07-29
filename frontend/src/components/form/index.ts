@@ -19,6 +19,8 @@ export type { FormProps } from "./form";
 export { Form } from "./form";
 export type { FormFieldProps } from "./form-field";
 export { FormField } from "./form-field";
+export type { PasswordFieldProps } from "./password-field";
+export { PasswordField } from "./password-field";
 export type { RadioGroupFieldProps } from "./radio-group-field";
 export { RadioGroupField } from "./radio-group-field";
 export type { SelectFieldProps } from "./select-field";

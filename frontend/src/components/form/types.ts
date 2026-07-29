@@ -7,7 +7,6 @@
 export type FieldType =
   | "text"
   | "email"
-  | "password"
   | "number"
   | "date"
   | "tel"

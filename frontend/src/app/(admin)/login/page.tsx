@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { ErrorText } from "@/components/error-text";
-import { Form, FormField } from "@/components/form";
+import { Form, FormField, PasswordField } from "@/components/form";
 import { Logo } from "@/components/logo";
 
 interface LoginFormData {
@@ -55,10 +55,9 @@ export default function LoginPage() {
           placeholder="name@example.com"
           rules={{ required: "Email is required" }}
         />
-        <FormField
+        <PasswordField
           name="password"
           label="Password"
-          type="password"
           placeholder="Enter your password"
           rules={{ required: "Password is required" }}
         />
