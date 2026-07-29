@@ -5,6 +5,7 @@ type LogoProps = {
   href?: string;
   onClick?: () => void;
   variant?: "light" | "dark";
+  as?: "link" | "button" | "span";
 };
 
 const textStyles = {
@@ -41,7 +42,18 @@ function logoContent(variant: "light" | "dark") {
   );
 }
 
-export function Logo({ href = "/", onClick, variant = "light" }: LogoProps) {
+export function Logo({
+  href = "/",
+  onClick,
+  variant = "light",
+  as,
+}: LogoProps) {
+  if (as === "span") {
+    return (
+      <span className="flex items-center gap-3">{logoContent(variant)}</span>
+    );
+  }
+
   if (onClick) {
     return (
       <button

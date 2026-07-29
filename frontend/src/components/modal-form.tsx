@@ -48,7 +48,7 @@ export function ModalForm({
 
             <div className="overflow-y-auto flex-1 px-6 pb-8 sm:px-10 sm:pb-10">
               <div className="flex flex-col items-center gap-3 pt-6 sm:pt-8">
-                <Logo variant="dark" />
+                <Logo variant="dark" as="span" />
 
                 <Heading
                   as="h2"
