@@ -10,6 +10,7 @@ import { ModalForm } from "@/components/modal-form";
 import { Section } from "@/components/section";
 import { SuccessMessage } from "@/components/success-message";
 import { Text } from "@/components/text";
+import { PLACEHOLDER } from "@/lib/placeholders";
 import { maxLength, validPhone } from "@/lib/validators";
 
 interface ContactFormData {
@@ -131,32 +132,42 @@ export default function ContactPage() {
             name="firstName"
             label="First Name"
             type="text"
+            placeholder={PLACEHOLDER.firstName}
             rules={{ required: true, validate: maxLength(100, "First name") }}
           />
           <FormField
             name="lastName"
             label="Last Name"
             type="text"
+            placeholder={PLACEHOLDER.lastName}
             rules={{ required: true, validate: maxLength(100, "Last name") }}
           />
           <FormField
             name="email"
             label="Email"
             type="email"
+            placeholder={PLACEHOLDER.email}
             rules={{ required: true }}
           />
           <FormField
             name="phone"
             label="Phone"
             type="tel"
+            placeholder={PLACEHOLDER.phone}
             rules={{ required: true, validate: validPhone() }}
           />
-          <FormField name="company" label="Company" type="text" />
+          <FormField
+            name="company"
+            label="Company"
+            type="text"
+            placeholder={PLACEHOLDER.company}
+          />
           <FormField
             name="message"
             label="Message"
             type="textarea"
             rows={8}
+            placeholder={PLACEHOLDER.message}
             rules={{ required: true, validate: maxLength(2000, "Message") }}
           />
 

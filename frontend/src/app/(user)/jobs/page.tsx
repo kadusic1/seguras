@@ -19,6 +19,7 @@ import { Section } from "@/components/section";
 import { SuccessMessage } from "@/components/success-message";
 import { Text } from "@/components/text";
 import { jobs } from "@/features/jobs/data";
+import { PLACEHOLDER } from "@/lib/placeholders";
 import {
   dateInPast,
   inRange,
@@ -176,6 +177,7 @@ export default function JobsPage() {
             name="firstName"
             label="First Name"
             type="text"
+            placeholder={PLACEHOLDER.firstName}
             rules={{
               required: true,
               validate: maxLength(100, "Name"),
@@ -185,6 +187,7 @@ export default function JobsPage() {
             name="lastName"
             label="Last Name"
             type="text"
+            placeholder={PLACEHOLDER.lastName}
             rules={{
               required: true,
               validate: maxLength(100, "Last name"),
@@ -207,7 +210,7 @@ export default function JobsPage() {
             name="address"
             label="Address"
             type="text"
-            placeholder="Street, city, postcode"
+            placeholder={PLACEHOLDER.address}
             rules={{
               required: true,
               validate: maxLength(255, "Address"),
@@ -221,14 +224,14 @@ export default function JobsPage() {
             name="email"
             label="Email"
             type="email"
-            placeholder="you@example.com"
+            placeholder={PLACEHOLDER.email}
             rules={{ required: true }}
           />
           <FormField
             name="phone"
             label="Phone"
             type="tel"
-            placeholder="+31 6 12 34 56 78"
+            placeholder={PLACEHOLDER.phone}
             rules={{ required: true, validate: validPhone() }}
           />
 
@@ -239,7 +242,7 @@ export default function JobsPage() {
             name="hoursAvailable"
             label="Hours Available per Week"
             type="number"
-            placeholder="e.g. 40"
+            placeholder={PLACEHOLDER.hoursAvailable}
             rules={{
               required: true,
               validate: {
