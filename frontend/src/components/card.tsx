@@ -16,6 +16,8 @@ type CardShared = {
   meta?: { label: string; value: string }[];
   bgScheme?: ColorScheme;
   clickable?: boolean;
+  ctaVariant?: "link" | "primary";
+  ctaCentered?: boolean;
 };
 
 type CardWithHref = CardShared & { href: string; onClick?: undefined };
@@ -43,19 +45,23 @@ export function Card({
   meta,
   bgScheme = "red",
   clickable = true,
+  ctaVariant = "link",
+  ctaCentered = false,
 }: CardProps) {
   const isListing = variant === "listing";
   const s = schemes[bgScheme];
 
-  const cardClasses = `group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}${clickable ? " cursor-pointer" : ""}`;
+  const cardClasses = `group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}${clickable ? " cursor-pointer" : ""}${ctaCentered ? " text-center" : ""}`;
 
   const content = (
     <>
       {HeroIcon && (
-        <HeroIcon
-          className={`mb-4 h-12 w-12 transition-colors ${s.accent}`}
-          strokeWidth={1.5}
-        />
+        <div className={ctaCentered ? "flex justify-center" : ""}>
+          <HeroIcon
+            className={`mb-4 h-12 w-12 transition-colors ${s.accent}`}
+            strokeWidth={1.5}
+          />
+        </div>
       )}
       <Heading
         as="h3"
@@ -79,7 +85,7 @@ export function Card({
       )}
       {isListing && meta && meta.length > 0 && (
         <div
-          className={`mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm ${s.text.muted}`}
+          className={`mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm ${s.text.muted}${ctaCentered ? " justify-center" : ""}`}
         >
           {meta.map((m) => (
             <span key={m.label}>
@@ -99,14 +105,23 @@ export function Card({
           {buttonLabel ?? "Learn more"}
         </Button>
       )}
-      {(href || onClick) && clickable && (
-        <span
-          className={`inline-flex items-center gap-1 text-sm font-semibold transition-colors ${buttonVariantStyles.link[bgScheme]} mt-4`}
-        >
-          {buttonLabel ?? "Learn more"}
-          <ArrowRight className="h-4 w-4" />
-        </span>
-      )}
+      {(href || onClick) &&
+        clickable &&
+        (ctaVariant === "primary" ? (
+          <span
+            className={`mt-4 inline-flex items-center gap-1 rounded-md px-5 py-2.5 text-xs font-semibold shadow-sm transition-colors sm:px-6 sm:py-3 sm:text-sm ${buttonVariantStyles.primary[s.buttonScheme]}`}
+          >
+            {buttonLabel ?? "Learn more"}
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        ) : (
+          <span
+            className={`inline-flex items-center gap-1 text-sm font-semibold transition-colors ${buttonVariantStyles.link[bgScheme]} mt-4`}
+          >
+            {buttonLabel ?? "Learn more"}
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        ))}
     </>
   );
 
@@ -122,7 +137,7 @@ export function Card({
     return (
       <button
         type="button"
-        className={`${cardClasses} text-start`}
+        className={`${cardClasses}${ctaCentered ? "" : " text-start"}`}
         onClick={onClick}
       >
         {content}
