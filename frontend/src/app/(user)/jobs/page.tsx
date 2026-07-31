@@ -134,6 +134,7 @@ export default function JobsPage() {
               onClick={() =>
                 openModal(j.badge?.toLowerCase() as "security" | "service")
               }
+              ctaVariant="primary"
             />
           ))}
         </Grid>
