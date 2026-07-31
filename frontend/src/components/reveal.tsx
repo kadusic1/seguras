@@ -3,13 +3,7 @@
 import { motion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
-export type RevealAnimation =
-  | "slideUp"
-  | "slideDown"
-  | "zoomIn"
-  | "zoomOut"
-  | "zoomIn"
-  | "zoomOut";
+export type RevealAnimation = "slideUp" | "zoomIn" | "zoomOut";
 
 interface RevealProps {
   children: ReactNode;
@@ -23,10 +17,6 @@ interface RevealProps {
 const variants: Record<RevealAnimation, Variants> = {
   slideUp: {
     hidden: { y: 40 },
-    visible: { y: 0 },
-  },
-  slideDown: {
-    hidden: { y: -40 },
     visible: { y: 0 },
   },
   zoomIn: {

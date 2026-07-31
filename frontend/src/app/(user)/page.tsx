@@ -64,7 +64,7 @@ export default function Home() {
         bgScheme="black"
         ctaLabel="View All Openings"
         ctaHref="/jobs"
-        animation="slideDown"
+        animation="slideUp"
         image={{
           src: "/hero/hero-1.webp",
           alt: "Seguras security team member",

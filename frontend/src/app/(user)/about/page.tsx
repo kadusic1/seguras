@@ -131,7 +131,7 @@ export default function AboutPage() {
         ctaLabel="Contact Us"
         ctaHref="/contact"
         ctaIconRight={<ArrowRight size={16} />}
-        animation="slideDown"
+        animation="slideUp"
       >
         <Grid cols={3}>
           {trustedCompanies.map((c, i) => (
