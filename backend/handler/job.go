@@ -2,11 +2,9 @@ package handler
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
+	"log"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
@@ -36,35 +34,12 @@ func NewJobHandler(
 }
 
 func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseMultipartForm(10 << 20); err != nil {
+	var req domain.SubmitJobApplicationRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		util.WriteError(
-			w, http.StatusBadRequest, "invalid form data", "BAD_REQUEST",
+			w, http.StatusBadRequest, "invalid JSON body", "BAD_REQUEST",
 		)
 		return
-	}
-
-	hoursStr := r.FormValue("hours_available")
-	hoursAvailable, convErr := strconv.Atoi(hoursStr)
-	if convErr != nil {
-		util.WriteError(
-			w,
-			http.StatusBadRequest,
-			"hours_available must be a valid number",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	req := domain.SubmitJobApplicationRequest{
-		FirstName:      r.FormValue("first_name"),
-		LastName:       r.FormValue("last_name"),
-		DateOfBirth:    r.FormValue("date_of_birth"),
-		Address:        r.FormValue("address"),
-		Email:          r.FormValue("email"),
-		Phone:          r.FormValue("phone"),
-		HoursAvailable: hoursAvailable,
-		ClothingSize:   domain.ClothingSize(r.FormValue("clothing_size")),
-		EmploymentType: domain.EmploymentType(r.FormValue("employment_type")),
 	}
 
 	req.FirstName = strings.TrimSpace(req.FirstName)
@@ -73,6 +48,7 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 	req.Address = strings.TrimSpace(req.Address)
 	req.Email = strings.TrimSpace(req.Email)
 	req.Phone = strings.TrimSpace(req.Phone)
+	req.CVKey = strings.TrimSpace(req.CVKey)
 
 	if req.FirstName == "" || req.LastName == "" || req.DateOfBirth == "" ||
 		req.Address == "" || req.Email == "" ||
@@ -175,6 +151,7 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		HoursAvailable: req.HoursAvailable,
 		ClothingSize:   req.ClothingSize,
 		EmploymentType: req.EmploymentType,
+		CVKey:          req.CVKey,
 	}
 
 	if err := h.jobStore.Create(r.Context(), &app); err != nil {
@@ -186,61 +163,25 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// The CV, if any, was already uploaded straight to B2 via a presigned
+	// URL obtained from UploadCV. We just fetch it back here so it can be
+	// attached to the notification email; a failure here shouldn't fail
+	// the whole submission since the application is already saved.
 	var (
-		fileKey     string
 		fileName    string
 		fileData    []byte
 		contentType string
 	)
 
-	file, header, fileErr := r.FormFile("cv")
-	switch {
-	case fileErr == nil:
-		defer func() { _ = file.Close() }()
-
-		data, readErr := io.ReadAll(file)
-		if readErr != nil {
-			util.WriteError(
-				w, http.StatusBadRequest,
-				"failed to read CV file",
-				"BAD_REQUEST",
-			)
-			return
-		}
-
-		if len(data) > 0 {
-			fileKey = fmt.Sprintf("cv/%d_%s", app.ID, header.Filename)
-			fileName = header.Filename
+	if app.CVKey != "" {
+		data, ct, err := h.b2Service.GetObject(r.Context(), app.CVKey)
+		if err != nil {
+			log.Printf("failed to fetch cv %q from b2: %v", app.CVKey, err)
+		} else {
+			fileName = app.CVKey
 			fileData = data
-			contentType = header.Header.Get("Content-Type")
-			if contentType == "" {
-				contentType = "application/octet-stream"
-			}
-
-			if err := h.jobStore.UpdateCVKey(
-				r.Context(), app.ID, fileKey,
-			); err != nil {
-				util.WriteError(
-					w, http.StatusInternalServerError,
-					"failed to save cv",
-					"SERVER_ERROR",
-				)
-				return
-			}
-
-			h.b2Service.UploadFileAsync(fileKey, fileData, contentType)
+			contentType = ct
 		}
-
-	case errors.Is(fileErr, http.ErrMissingFile):
-		// No CV provided. This is allowed — proceed without one.
-
-	default:
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"failed to read CV file",
-			"BAD_REQUEST",
-		)
-		return
 	}
 
 	h.emailService.SendJobApplicationNotification(&app, fileName, fileData, contentType)

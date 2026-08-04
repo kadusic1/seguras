@@ -19,14 +19,19 @@ func NewJobStore(db *sql.DB) *JobStore {
 
 // Create inserts a new job application row and populates app.ID with the generated ID.
 func (s *JobStore) Create(ctx context.Context, app *domain.JobApplication) error {
+	var cvKey any
+	if app.CVKey != "" {
+		cvKey = app.CVKey
+	}
+
 	res, err := s.db.ExecContext(ctx,
 		`INSERT INTO job_applications
 		 (first_name, last_name, date_of_birth, address, email, phone,
-		  hours_available, clothing_size, employment_type)
-		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		  hours_available, clothing_size, employment_type, cv_key)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 		app.FirstName, app.LastName, app.DateOfBirth, app.Address,
 		app.Email, app.Phone, app.HoursAvailable,
-		app.ClothingSize, app.EmploymentType,
+		app.ClothingSize, app.EmploymentType, cvKey,
 	)
 	if err != nil {
 		return err
@@ -37,12 +42,4 @@ func (s *JobStore) Create(ctx context.Context, app *domain.JobApplication) error
 	}
 	app.ID = int(id)
 	return nil
-}
-
-func (s *JobStore) UpdateCVKey(ctx context.Context, id int, cvKey string) error {
-	_, err := s.db.ExecContext(ctx,
-		`UPDATE job_applications SET cv_key = ? WHERE id = ?`,
-		cvKey, id,
-	)
-	return err
 }

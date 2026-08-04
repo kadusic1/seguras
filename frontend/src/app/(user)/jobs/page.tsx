@@ -39,7 +39,6 @@ interface JobApplicationForm {
   email: string;
   phone: string;
   // bankAccount: string;
-  cv?: File;
   hoursAvailable: number;
   clothingSize: string;
   employmentType: string;
@@ -52,37 +51,86 @@ export default function JobsPage() {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [cvKey, setCvKey] = useState<string | null>(null);
+  const [cvError, setCvError] = useState<string | null>(null);
 
   const openModal = (type: "security" | "service") => {
     setSelectedType(type);
     setSubmitError(null);
+    setCvKey(null);
+    setCvError(null);
     setIsModalOpen(true);
+  };
+
+  const handleCvAdded = async ([file]: File[]) => {
+    if (!file) return;
+    setCvError(null);
+
+    try {
+      const res = await fetch("/api/jobs/cv", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(file.size),
+      });
+
+      if (!res.ok) {
+        setCvError("Failed to prepare CV upload. Please try again.");
+        return;
+      }
+
+      const { upload_url, key } = await res.json();
+
+      const putRes = await fetch(upload_url, {
+        method: "PUT",
+        headers: { "Content-Type": file.type || "application/octet-stream" },
+        body: file,
+      });
+
+      if (!putRes.ok) {
+        setCvError("Failed to upload CV. Please try again.");
+        return;
+      }
+
+      setCvKey(key);
+    } catch {
+      setCvError("Network error while uploading CV.");
+    }
+  };
+
+  const handleCvRemoved = async () => {
+    const key = cvKey;
+    setCvKey(null);
+    setCvError(null);
+    if (!key) return;
+
+    await fetch("/api/jobs/cv", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(key),
+    });
   };
 
   const handleSubmit = async (data: JobApplicationForm) => {
     setSubmitError(null);
 
-    const formData = new FormData();
-    formData.append("first_name", data.firstName);
-    formData.append("last_name", data.lastName);
-    formData.append("date_of_birth", data.dateOfBirth);
-    // formData.append("bsn", data.bsn);
-    formData.append("address", data.address);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    // formData.append("bank_account", data.bankAccount);
-    formData.append("hours_available", String(data.hoursAvailable));
-    formData.append("clothing_size", data.clothingSize);
-    formData.append("employment_type", data.employmentType);
-
-    if (data.cv) {
-      formData.append("cv", data.cv);
-    }
+    const payload = {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      date_of_birth: data.dateOfBirth,
+      address: data.address,
+      email: data.email,
+      phone: data.phone,
+      hours_available: data.hoursAvailable,
+      clothing_size: data.clothingSize,
+      employment_type: data.employmentType,
+      cv_key: cvKey ?? "",
+    };
 
     try {
       const res = await fetch("/api/jobs/apply", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
@@ -289,9 +337,18 @@ export default function JobsPage() {
             name="cv"
             label="Upload CV"
             accept=".pdf,.doc,.docx"
-            onFilesAdded={() => {}}
-            onFileRemoved={() => {}}
+            onFilesAdded={handleCvAdded}
+            onFileRemoved={handleCvRemoved}
           />
+          {cvError && (
+            <Text
+              variant="sm"
+              bgScheme="white"
+              className="text-red-500 lowercase first-letter:uppercase"
+            >
+              {cvError}
+            </Text>
+          )}
 
           {submitError && (
             <Text

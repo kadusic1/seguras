@@ -50,6 +50,7 @@ type SubmitJobApplicationRequest struct {
 	HoursAvailable int            `json:"hours_available"`
 	ClothingSize   ClothingSize   `json:"clothing_size"`
 	EmploymentType EmploymentType `json:"employment_type"`
+	CVKey          string         `json:"cv_key"`
 }
 
 // JobApplicationResponse is the JSON envelope returned for a job application.
