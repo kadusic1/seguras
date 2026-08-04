@@ -34,9 +34,13 @@ func NewEmailService() (*EmailService, error) {
 	return &EmailService{cfg: *cfg}, nil
 }
 
-func (s *EmailService) Send(payload EmailPayload) {
+func (s *EmailService) Send(payload EmailPayload) error {
+	return s.send(payload)
+}
+
+func (s *EmailService) SendAsync(payload EmailPayload) {
 	go func() {
-		if err := s.send(payload); err != nil {
+		if err := s.Send(payload); err != nil {
 			log.Printf("email send failed: %v", err)
 		}
 	}()
@@ -47,8 +51,8 @@ func (s *EmailService) SendJobApplicationNotification(
 	cvFilename string,
 	cvData []byte,
 	cvContentType string,
-) {
-	s.Send(EmailPayload{
+) error {
+	return s.Send(EmailPayload{
 		To:                    s.cfg.NotificationEmail,
 		Subject:               "New Job Application",
 		Body:                  s.buildJobNotificationBody(app),
@@ -59,7 +63,7 @@ func (s *EmailService) SendJobApplicationNotification(
 }
 
 func (s *EmailService) SendContactNotification(msg *domain.ContactMessage) {
-	s.Send(EmailPayload{
+	s.SendAsync(EmailPayload{
 		To:      s.cfg.NotificationEmail,
 		Subject: "New Contact Message",
 		Body:    s.buildContactNotificationBody(msg),

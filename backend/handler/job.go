@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -164,27 +165,36 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// The CV, if any, was already uploaded straight to B2 via a presigned
-	// URL obtained from UploadCV. We just fetch it back here so it can be
-	// attached to the notification email; a failure here shouldn't fail
+	// URL obtained from UploadCV. We fetch it back in a goroutine so it can
+	// be attached to the notification email; a failure here shouldn't fail
 	// the whole submission since the application is already saved.
-	var (
-		fileName    string
-		fileData    []byte
-		contentType string
-	)
+	go func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
 
-	if app.CVKey != "" {
-		data, ct, err := h.b2Service.GetObject(r.Context(), app.CVKey)
-		if err != nil {
-			log.Printf("failed to fetch cv %q from b2: %v", app.CVKey, err)
-		} else {
-			fileName = app.CVKey
-			fileData = data
-			contentType = ct
+		var (
+			fileName    string
+			fileData    []byte
+			contentType string
+		)
+
+		if app.CVKey != "" {
+			data, ct, err := h.b2Service.GetObject(ctx, app.CVKey)
+			if err != nil {
+				log.Printf("failed to fetch cv %q from b2: %v", app.CVKey, err)
+			} else {
+				fileName = app.CVKey
+				fileData = data
+				contentType = ct
+			}
 		}
-	}
 
-	h.emailService.SendJobApplicationNotification(&app, fileName, fileData, contentType)
+		if err := h.emailService.SendJobApplicationNotification(
+			&app, fileName, fileData, contentType,
+		); err != nil {
+			log.Printf("failed to send job application email: %v", err)
+		}
+	}()
 
 	util.WriteJSON(w, http.StatusCreated, domain.JobApplicationResponse{
 		ID:             app.ID,
