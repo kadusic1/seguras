@@ -66,3 +66,8 @@ type JobApplicationResponse struct {
 	EmploymentType EmploymentType `json:"employment_type"`
 	CreatedAt      time.Time      `json:"created_at"`
 }
+
+type CVUploadResponse struct {
+	UploadURL string `json:"upload_url"`
+	Key       string `json:"key"`
+}
