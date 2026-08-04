@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { Spinner } from "@/components/spinner";
 import { schemes } from "@/lib/colours";
 import { CloseButton } from "../close-button";
-import { FormCtx, useFormBusy } from "./context";
+import { ColorSchemeCtx, useFormBusy } from "./context";
 import { FieldChrome } from "./field-chrome";
 
 /**
@@ -106,7 +106,7 @@ function FilePreview({
  * thumbnail previews of the current selection, each removable via the shared
  * {@link CloseButton}.
  *
- * Reads the colour scheme from {@link FormCtx} (set by a parent {@link Form}).
+ * Reads the colour scheme from {@link ColorSchemeCtx} (set by a parent {@link Form}).
  * Because native file inputs can't be set programmatically, the field is
  * controlled through `useController` instead of `register`: the value is a
  * single `File` (default) or `File[]` (when `multiple`), collapsing back to
@@ -132,7 +132,7 @@ export function FileInputField({
 }: FileInputFieldProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [busy, setBusy] = useState(false);
-  const bgScheme = useContext(FormCtx);
+  const bgScheme = useContext(ColorSchemeCtx);
   const { runTask } = useFormBusy();
   const s = schemes[bgScheme];
 

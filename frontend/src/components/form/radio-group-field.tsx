@@ -8,7 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { schemes } from "@/lib/colours";
-import { FormCtx } from "./context";
+import { ColorSchemeCtx } from "./context";
 import { FieldChrome } from "./field-chrome";
 
 /**
@@ -42,7 +42,7 @@ export function RadioGroupField<T extends FieldValues>({
   options,
   rules,
 }: RadioGroupFieldProps<T>) {
-  const bgScheme = useContext(FormCtx);
+  const bgScheme = useContext(ColorSchemeCtx);
   const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
 

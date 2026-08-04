@@ -9,7 +9,7 @@ import type { NeutralColorScheme } from "@/lib/colours";
  *
  * @internal
  */
-export const FormCtx = createContext<NeutralColorScheme>("white");
+export const ColorSchemeCtx = createContext<NeutralColorScheme>("white");
 
 export interface FormBusyValue {
   /** True while at least one async field task is running. */

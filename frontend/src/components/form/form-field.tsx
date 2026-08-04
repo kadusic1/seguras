@@ -8,7 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { schemes } from "@/lib/colours";
-import { FormCtx } from "./context";
+import { ColorSchemeCtx } from "./context";
 import { FieldChrome } from "./field-chrome";
 import { DEFAULT_RULES } from "./rules";
 import type { FieldType } from "./types";
@@ -45,7 +45,7 @@ export interface FormFieldProps<T extends FieldValues> {
 /**
  * Single-line text, email, password, or number input field.
  *
- * Reads the colour scheme from {@link FormCtx} (set by a parent {@link Form})
+ * Reads the colour scheme from {@link ColorSchemeCtx} (set by a parent {@link Form})
  * and registers itself with react-hook-form via `useFormContext`.
  *
  * @example
@@ -63,7 +63,7 @@ export function FormField<T extends FieldValues>({
   pattern,
   rows,
 }: FormFieldProps<T>) {
-  const bgScheme = useContext(FormCtx);
+  const bgScheme = useContext(ColorSchemeCtx);
   const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
   const effectiveRules = {

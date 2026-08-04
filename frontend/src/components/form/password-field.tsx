@@ -9,7 +9,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { schemes } from "@/lib/colours";
-import { FormCtx } from "./context";
+import { ColorSchemeCtx } from "./context";
 import { FieldChrome } from "./field-chrome";
 
 /**
@@ -31,7 +31,7 @@ export interface PasswordFieldProps<T extends FieldValues> {
 /**
  * Password input field with a show/hide toggle.
  *
- * Reads the colour scheme from {@link FormCtx} and registers itself with
+ * Reads the colour scheme from {@link ColorSchemeCtx} and registers itself with
  * react-hook-form via `useFormContext`, mirroring {@link FormField} but
  * adding a local `visible` state that switches the native input between
  * `type="password"` and `type="text"`.
@@ -47,7 +47,7 @@ export function PasswordField<T extends FieldValues>({
   placeholder,
   rules,
 }: PasswordFieldProps<T>) {
-  const bgScheme = useContext(FormCtx);
+  const bgScheme = useContext(ColorSchemeCtx);
   const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
   const [visible, setVisible] = useState(false);

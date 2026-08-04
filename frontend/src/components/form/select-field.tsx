@@ -8,7 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { schemes } from "@/lib/colours";
-import { FormCtx } from "./context";
+import { ColorSchemeCtx } from "./context";
 import { FieldChrome } from "./field-chrome";
 
 /**
@@ -33,7 +33,7 @@ export interface SelectFieldProps<T extends FieldValues> {
  * Dropdown / select field that registers with react-hook-form.
  *
  * Renders a disabled placeholder option as the first item. Reads the colour
- * scheme from {@link FormCtx} (set by a parent {@link Form}).
+ * scheme from {@link ColorSchemeCtx} (set by a parent {@link Form}).
  *
  * @example
  * ```tsx
@@ -55,7 +55,7 @@ export function SelectField<T extends FieldValues>({
   placeholder,
   rules,
 }: SelectFieldProps<T>) {
-  const bgScheme = useContext(FormCtx);
+  const bgScheme = useContext(ColorSchemeCtx);
   const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
 

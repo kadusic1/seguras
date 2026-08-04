@@ -14,7 +14,7 @@ import { schemes } from "@/lib/colours";
 import { Button } from "../button";
 import { Heading } from "../heading";
 import { Text } from "../text";
-import { FormBusyCtx, FormCtx } from "./context";
+import { ColorSchemeCtx, FormBusyCtx } from "./context";
 
 /**
  * Props for the {@link Form} component.
@@ -54,7 +54,7 @@ export interface FormProps<T extends FieldValues> {
 /**
  * Accessible, themeable form wrapper built on react-hook-form.
  *
- * Sets up a `FormProvider` and `FormCtx` so that child field components
+ * Sets up a `FormProvider` and `ColorSchemeCtx` so that child field components
  * ({@link FormField}, {@link SelectField}, {@link CheckboxGroupField}) can
  * register themselves and inherit the colour scheme.
  *
@@ -104,7 +104,7 @@ export function Form<T extends FieldValues>({
 
   return (
     <FormBusyCtx.Provider value={{ isBusy, runTask }}>
-      <FormCtx.Provider value={bgScheme}>
+      <ColorSchemeCtx.Provider value={bgScheme}>
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit((data) => {
@@ -147,7 +147,7 @@ export function Form<T extends FieldValues>({
             </div>
           </form>
         </FormProvider>
-      </FormCtx.Provider>
+      </ColorSchemeCtx.Provider>
     </FormBusyCtx.Provider>
   );
 }

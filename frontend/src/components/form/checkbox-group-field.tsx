@@ -8,7 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { schemes } from "@/lib/colours";
-import { FormCtx } from "./context";
+import { ColorSchemeCtx } from "./context";
 import { FieldChrome } from "./field-chrome";
 
 /**
@@ -31,7 +31,7 @@ export interface CheckboxGroupFieldProps<T extends FieldValues> {
  * Multi-checkbox group rendered as a `<fieldset>` with a `<legend>`.
  *
  * All checkboxes share the same `name` so react-hook-form collects values as an
- * array. Reads the colour scheme from {@link FormCtx} (set by a parent
+ * array. Reads the colour scheme from {@link ColorSchemeCtx} (set by a parent
  * {@link Form}).
  *
  * @example
@@ -57,7 +57,7 @@ export function CheckboxGroupField<T extends FieldValues>({
   options,
   rules,
 }: CheckboxGroupFieldProps<T>) {
-  const bgScheme = useContext(FormCtx);
+  const bgScheme = useContext(ColorSchemeCtx);
   const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
 
