@@ -2,14 +2,7 @@
 
 import { File as FileIcon } from "lucide-react";
 import Image from "next/image";
-import { useContext, useEffect, useMemo, useState } from "react";
-import {
-  type FieldPath,
-  type FieldValues,
-  type RegisterOptions,
-  useController,
-  useFormContext,
-} from "react-hook-form";
+import { useContext, useEffect, useState } from "react";
 import { schemes } from "@/lib/colours";
 import { CloseButton } from "../close-button";
 import { FormCtx } from "./context";
@@ -20,29 +13,19 @@ import { FieldChrome } from "./field-chrome";
  *
  * @typeParam T - Shape of the form data.
  */
-export interface FileInputFieldProps<T extends FieldValues> {
+export interface FileInputFieldProps {
   /** Field path registered with react-hook-form. */
-  name: FieldPath<T>;
+  name: string;
   /** Visible label text. */
   label: string;
   /** `accept` attribute forwarded to the native file input (e.g. `"image/*"`). */
   accept?: string;
   /** Allow selecting/accumulating more than one file. Defaults to `false`. */
   multiple?: boolean;
-  /**
-   * Validation rules passed to `useController`.
-   *
-   * The field value is `undefined` when no files are selected (never an empty
-   * array), so `rules={{ required: "..." }}` works the same as on any other
-   * field.
-   */
-  rules?: RegisterOptions<T>;
-}
-
-/** Normalizes a controller value into a plain array for rendering. */
-function toFileArray(value: unknown): File[] {
-  if (!value) return [];
-  return Array.isArray(value) ? value : [value as File];
+  /** Called with the newly picked files. */
+  onFilesAdded: (files: File[]) => void;
+  /** Called when the files are removed. */
+  onFileRemoved: (index: number) => void;
 }
 
 /**
@@ -127,44 +110,36 @@ function FilePreview({
  *   label="Attachments"
  *   accept="image/*,.pdf"
  *   multiple
- *   rules={{ required: "Attach at least one file" }}
  * />
  * ```
  */
-export function FileInputField<T extends FieldValues>({
+export function FileInputField({
   name,
   label,
   accept,
   multiple = false,
-  rules,
-}: FileInputFieldProps<T>) {
+  onFilesAdded,
+  onFileRemoved,
+}: FileInputFieldProps) {
+  const [files, setFiles] = useState<File[]>([]);
   const bgScheme = useContext(FormCtx);
-  const { control } = useFormContext<T>();
   const s = schemes[bgScheme];
-  const {
-    field: { value, onChange },
-  } = useController({ name, control, rules });
-
-  const files = useMemo(() => toFileArray(value), [value]);
 
   const addFiles = (list: FileList | null) => {
     if (!list || list.length === 0) return;
-    const next = multiple ? [...files, ...Array.from(list)] : [list[0]];
-    onChange(multiple ? next : next[0]);
+    const picked = multiple ? Array.from(list) : [list[0]];
+    const next = multiple ? [...files, ...picked] : picked;
+    setFiles(next);
+    onFilesAdded?.(picked);
   };
 
   const removeFile = (index: number) => {
-    const next = files.filter((_, i) => i !== index);
-    onChange(multiple ? (next.length ? next : undefined) : undefined);
+    setFiles(files.filter((_, i) => i !== index));
+    onFileRemoved?.(index);
   };
 
   return (
-    <FieldChrome
-      name={name}
-      label={label}
-      required={!!rules?.required}
-      bgScheme={bgScheme}
-    >
+    <FieldChrome name={name} label={label} required={false} bgScheme={bgScheme}>
       <label
         htmlFor={name}
         className={`flex cursor-pointer items-center justify-center rounded-md border border-dashed px-3 py-6 text-sm transition-colors hover:opacity-80 aria-invalid:border-red-500 ${s.input}`}

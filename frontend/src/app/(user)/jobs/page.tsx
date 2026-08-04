@@ -289,6 +289,8 @@ export default function JobsPage() {
             name="cv"
             label="Upload CV"
             accept=".pdf,.doc,.docx"
+            onFilesAdded={() => {}}
+            onFileRemoved={() => {}}
           />
 
           {submitError && (
