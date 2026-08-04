@@ -2,6 +2,7 @@
 
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { useState } from "react";
 import {
   type DefaultValues,
   type FieldValues,
@@ -13,7 +14,7 @@ import { schemes } from "@/lib/colours";
 import { Button } from "../button";
 import { Heading } from "../heading";
 import { Text } from "../text";
-import { FormCtx } from "./context";
+import { FormBusyCtx, FormCtx } from "./context";
 
 /**
  * Props for the {@link Form} component.
@@ -90,48 +91,63 @@ export function Form<T extends FieldValues>({
     formState: { isSubmitting },
   } = methods;
   const s = schemes[bgScheme];
+  const [busyCount, setBusyCount] = useState(0);
+  const isBusy = busyCount > 0;
+  const runTask = async (task: () => void | Promise<void>) => {
+    setBusyCount((c) => c + 1);
+    try {
+      await task();
+    } finally {
+      setBusyCount((c) => c - 1);
+    }
+  };
 
   return (
-    <FormCtx.Provider value={bgScheme}>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate
-          className={`rounded-lg p-6 sm:p-8 ${s.bg}${className ? ` ${className}` : ""}`}
-        >
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Heading
-                as="h2"
-                size="md"
-                bgScheme={bgScheme}
-                icon={headerIcon}
-                iconPosition={headerIconPosition}
+    <FormBusyCtx.Provider value={{ isBusy, runTask }}>
+      <FormCtx.Provider value={bgScheme}>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit((data) => {
+              if (isBusy) return;
+              return onSubmit(data);
+            })}
+            noValidate
+            className={`rounded-lg p-6 sm:p-8 ${s.bg}${className ? ` ${className}` : ""}`}
+          >
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Heading
+                  as="h2"
+                  size="md"
+                  bgScheme={bgScheme}
+                  icon={headerIcon}
+                  iconPosition={headerIconPosition}
+                >
+                  {header}
+                </Heading>
+                {subtitle && (
+                  <Text variant="base" bgScheme={bgScheme}>
+                    {subtitle}
+                  </Text>
+                )}
+              </div>
+              {children}
+              <Button
+                type="submit"
+                disabled={isSubmitting || isBusy}
+                bgScheme={s.buttonScheme}
+                {...(submitIcon
+                  ? submitIconPosition === "left"
+                    ? { iconLeft: submitIcon }
+                    : { iconRight: submitIcon }
+                  : {})}
               >
-                {header}
-              </Heading>
-              {subtitle && (
-                <Text variant="base" bgScheme={bgScheme}>
-                  {subtitle}
-                </Text>
-              )}
+                {submitLabel}
+              </Button>
             </div>
-            {children}
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              bgScheme={s.buttonScheme}
-              {...(submitIcon
-                ? submitIconPosition === "left"
-                  ? { iconLeft: submitIcon }
-                  : { iconRight: submitIcon }
-                : {})}
-            >
-              {submitLabel}
-            </Button>
-          </div>
-        </form>
-      </FormProvider>
-    </FormCtx.Provider>
+          </form>
+        </FormProvider>
+      </FormCtx.Provider>
+    </FormBusyCtx.Provider>
   );
 }

@@ -3,9 +3,10 @@
 import { File as FileIcon } from "lucide-react";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
+import { Spinner } from "@/components/spinner";
 import { schemes } from "@/lib/colours";
 import { CloseButton } from "../close-button";
-import { FormCtx } from "./context";
+import { FormCtx, useFormBusy } from "./context";
 import { FieldChrome } from "./field-chrome";
 
 /**
@@ -22,10 +23,10 @@ export interface FileInputFieldProps {
   accept?: string;
   /** Allow selecting/accumulating more than one file. Defaults to `false`. */
   multiple?: boolean;
-  /** Called with the newly picked files. */
-  onFilesAdded: (files: File[]) => void;
-  /** Called when the files are removed. */
-  onFileRemoved: (index: number) => void;
+  /** Called with the newly picked files. May be async; submission is blocked until it resolves. */
+  onFilesAdded?: (files: File[]) => void | Promise<void>;
+  /** Called when the files are removed. May be async; submission is blocked until it resolves. */
+  onFileRemoved?: (index: number) => void | Promise<void>;
 }
 
 /**
@@ -38,10 +39,12 @@ export interface FileInputFieldProps {
  */
 function FilePreview({
   file,
+  busy,
   onRemove,
   bgScheme,
 }: {
   file: File;
+  busy: boolean;
   onRemove: () => void;
   bgScheme: "black" | "white";
 }) {
@@ -84,8 +87,14 @@ function FilePreview({
           </div>
         )}
       </button>
+      {busy && (
+        <div className="absolute inset-0 flex items-center justify-center rounded-md bg-white/60">
+          <Spinner size={16} label="Uploading" />
+        </div>
+      )}
       <CloseButton
         onClick={onRemove}
+        disabled={busy}
         className="absolute -top-2 -right-2 rounded-full bg-white shadow"
       />
     </div>
@@ -122,36 +131,56 @@ export function FileInputField({
   onFileRemoved,
 }: FileInputFieldProps) {
   const [files, setFiles] = useState<File[]>([]);
+  const [busy, setBusy] = useState(false);
   const bgScheme = useContext(FormCtx);
+  const { runTask } = useFormBusy();
   const s = schemes[bgScheme];
 
-  const addFiles = (list: FileList | null) => {
+  const addFiles = async (list: FileList | null) => {
     if (!list || list.length === 0) return;
     const picked = multiple ? Array.from(list) : [list[0]];
     const next = multiple ? [...files, ...picked] : picked;
     setFiles(next);
-    onFilesAdded?.(picked);
+    setBusy(true);
+    try {
+      await runTask(() => onFilesAdded?.(picked));
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const removeFile = (index: number) => {
+  const removeFile = async (index: number) => {
     setFiles(files.filter((_, i) => i !== index));
-    onFileRemoved?.(index);
+    setBusy(true);
+    try {
+      await runTask(() => onFileRemoved?.(index));
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
     <FieldChrome name={name} label={label} required={false} bgScheme={bgScheme}>
       <label
         htmlFor={name}
-        className={`flex cursor-pointer items-center justify-center rounded-md border border-dashed px-3 py-6 text-sm transition-colors hover:opacity-80 aria-invalid:border-red-500 ${s.input}`}
+        aria-busy={busy}
+        className={`flex cursor-pointer items-center justify-center rounded-md border border-dashed px-3 py-6 text-sm transition-colors hover:opacity-80 aria-invalid:border-red-500 ${s.input}${busy ? " pointer-events-none opacity-60" : ""}`}
       >
-        Click to upload {multiple ? "files" : "a file"}
+        {busy ? (
+          <span className="flex items-center gap-2">
+            <Spinner size={16} label="Uploading" />
+            Uploading...
+          </span>
+        ) : (
+          <>Click to upload {multiple ? "files" : "a file"}</>
+        )}
         <input
           id={name}
           type="file"
           accept={accept}
           multiple={multiple}
           onChange={(e) => {
-            addFiles(e.target.files);
+            void addFiles(e.target.files);
             e.target.value = "";
           }}
           className="sr-only"
@@ -163,6 +192,7 @@ export function FileInputField({
             <FilePreview
               key={`${file.name}-${file.size}-${file.lastModified}`}
               file={file}
+              busy={busy}
               bgScheme={bgScheme}
               onRemove={() => removeFile(i)}
             />
