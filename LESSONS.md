@@ -25,3 +25,11 @@ Context: Moved biome.json to `frontend/biome.json` during monorepo migration. Pr
 When a lefthook `run` command does `cd subdir && ...`, the `{staged_files}` variable still contains paths relative to the git root. Using them directly after `cd` produces wrong paths (e.g. `frontend/frontend/file.ts`).
 
 Fix: use `git -C .. add {staged_files}` to reference the repo root from the subdirectory.
+
+## React Hook Form submit values are strings, even for `type="number"`
+
+RHF never coerces field values unless `valueAsNumber: true` is set. A `<FormField type="number">` (or `type="text"` with `inputMode="numeric"`) submits `hours_available` as the string `"5"`, which Go's `encoding/json` rejects when the target struct field is `int` (400 "invalid json body"). Also note the browser sanitizes non-numeric input in `type="number"` to an empty string, which is why custom validation messages never fire for garbage input.
+
+Fix: convert at the payload boundary in the submit handler, e.g. `hours_available: Number(data.hoursAvailable)`. Do not change the backend contract to accept strings.
+
+Context: Switching the jobs form's hours field from `type="number"` to `type="text"` + `inputMode="numeric"` exposed that submission sent a string, which the Go backend rejected. The latent bug existed with `type="number"` too, since RHF does not coerce by default.

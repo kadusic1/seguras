@@ -120,7 +120,7 @@ export default function JobsPage() {
       address: data.address,
       email: data.email,
       phone: data.phone,
-      hours_available: data.hoursAvailable,
+      hours_available: Number(data.hoursAvailable),
       clothing_size: data.clothingSize,
       employment_type: data.employmentType,
       cv_key: cvKey ?? "",
@@ -290,10 +290,12 @@ export default function JobsPage() {
           <FormField
             name="hoursAvailable"
             label="Hours Available per Week"
-            type="number"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             placeholder={PLACEHOLDER.hoursAvailable}
             rules={{
-              required: true,
+              required: "Hours available is required",
               validate: {
                 isNumeric: isNumeric("Hours available"),
                 inRange: inRange(1, 168, "Hours available"),

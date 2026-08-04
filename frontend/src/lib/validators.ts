@@ -100,7 +100,7 @@ export function validIBAN() {
 export function isNumeric(label: string) {
   return (value: string) => {
     if (value === "" || value == null) return true;
-    if (!/^\d+$/.test(value)) return `${label} must only contain digits.`;
+    if (!/^-?\d+$/.test(value)) return `${label} must only contain digits.`;
     return true;
   };
 }

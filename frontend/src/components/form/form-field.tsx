@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "react";
+import { type InputHTMLAttributes, useContext } from "react";
 import {
   type FieldPath,
   type FieldValues,
@@ -34,6 +34,10 @@ export interface FormFieldProps<T extends FieldValues> {
    * - `"textarea"` — renders a multi-line `<textarea>` instead of `<input>`
    */
   type?: FieldType;
+  /** Numeric keyboard hint for mobile. Forwarded to the `<input>`. */
+  inputMode?: InputHTMLAttributes<HTMLInputElement>["inputMode"];
+  /** Native pattern hint for mobile keyboards. Forwarded to the `<input>`. */
+  pattern?: string;
   /** Number of visible rows when `type` is `"textarea"`. */
   rows?: number;
 }
@@ -55,6 +59,8 @@ export function FormField<T extends FieldValues>({
   placeholder,
   rules,
   type = "text",
+  inputMode,
+  pattern,
   rows,
 }: FormFieldProps<T>) {
   const bgScheme = useContext(FormCtx);
@@ -84,6 +90,8 @@ export function FormField<T extends FieldValues>({
         <input
           id={name}
           type={type}
+          inputMode={inputMode}
+          pattern={pattern}
           placeholder={placeholder}
           className={`w-full rounded-md border px-3 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-red-500 aria-invalid:border-red-500 ${s.input}`}
           {...register(name, effectiveRules)}
