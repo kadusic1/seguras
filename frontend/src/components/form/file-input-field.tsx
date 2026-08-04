@@ -89,7 +89,7 @@ function FilePreview({
       </button>
       {busy && (
         <div className="absolute inset-0 flex items-center justify-center rounded-md bg-white/60">
-          <Spinner size={16} label="Uploading" />
+          <Spinner size={16} label="Processing" />
         </div>
       )}
       <CloseButton
@@ -168,8 +168,8 @@ export function FileInputField({
       >
         {busy ? (
           <span className="flex items-center gap-2">
-            <Spinner size={16} label="Uploading" />
-            Uploading...
+            <Spinner size={16} label="Processing" />
+            Processing...
           </span>
         ) : (
           <>Click to upload {multiple ? "files" : "a file"}</>

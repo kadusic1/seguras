@@ -13,6 +13,7 @@ import type { NeutralColorScheme } from "@/lib/colours";
 import { schemes } from "@/lib/colours";
 import { Button } from "../button";
 import { Heading } from "../heading";
+import { Spinner } from "../spinner";
 import { Text } from "../text";
 import { ColorSchemeCtx, FormBusyCtx } from "./context";
 
@@ -132,6 +133,8 @@ export function Form<T extends FieldValues>({
                 )}
               </div>
               {children}
+              {/* Unclickable while submitting or while a FileInputField
+                  upload/remove is in flight. */}
               <Button
                 type="submit"
                 disabled={isSubmitting || isBusy}
@@ -142,7 +145,19 @@ export function Form<T extends FieldValues>({
                     : { iconRight: submitIcon }
                   : {})}
               >
-                {submitLabel}
+                {isBusy ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner size={16} label="Processing" />
+                    Processing...
+                  </span>
+                ) : isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner size={16} label="Submitting" />
+                    Submitting...
+                  </span>
+                ) : (
+                  submitLabel
+                )}
               </Button>
             </div>
           </form>

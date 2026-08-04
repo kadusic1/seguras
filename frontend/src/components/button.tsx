@@ -26,7 +26,7 @@ type ButtonAsButton = ButtonShared &
 type ButtonProps = ButtonAsLink | ButtonAsButton;
 
 const pillBase =
-  "inline-flex cursor-pointer items-center justify-center rounded-md px-5 py-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-red-500 sm:px-6 sm:py-3 sm:text-sm";
+  "inline-flex cursor-pointer items-center justify-center rounded-md px-5 py-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-red-500 disabled:cursor-not-allowed disabled:opacity-60 sm:px-6 sm:py-3 sm:text-sm";
 
 const variantBaseClass: Record<ButtonVariant, string> = {
   primary: pillBase,
