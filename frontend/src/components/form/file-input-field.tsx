@@ -39,12 +39,12 @@ export interface FileInputFieldProps {
  */
 function FilePreview({
   file,
-  busy,
+  busyOp,
   onRemove,
   bgScheme,
 }: {
   file: File;
-  busy: boolean;
+  busyOp: "add" | "remove" | null;
   onRemove: () => void;
   bgScheme: "black" | "white";
 }) {
@@ -87,14 +87,17 @@ function FilePreview({
           </div>
         )}
       </button>
-      {busy && (
+      {busyOp && (
         <div className="absolute inset-0 flex items-center justify-center rounded-md bg-white/60">
-          <Spinner size={16} label="Processing" />
+          <Spinner
+            size={16}
+            label={busyOp === "add" ? "Uploading" : "Removing"}
+          />
         </div>
       )}
       <CloseButton
         onClick={onRemove}
-        disabled={busy}
+        disabled={!!busyOp}
         className="absolute -top-2 -right-2 rounded-full bg-white shadow"
       />
     </div>
@@ -131,31 +134,32 @@ export function FileInputField({
   onFileRemoved,
 }: FileInputFieldProps) {
   const [files, setFiles] = useState<File[]>([]);
-  const [busy, setBusy] = useState(false);
+  const [busyOp, setBusyOp] = useState<"add" | "remove" | null>(null);
   const bgScheme = useContext(ColorSchemeCtx);
   const { runTask } = useFormBusy();
   const s = schemes[bgScheme];
+  const busy = busyOp !== null;
 
   const addFiles = async (list: FileList | null) => {
     if (!list || list.length === 0) return;
     const picked = multiple ? Array.from(list) : [list[0]];
     const next = multiple ? [...files, ...picked] : picked;
     setFiles(next);
-    setBusy(true);
+    setBusyOp("add");
     try {
       await runTask(() => onFilesAdded?.(picked));
     } finally {
-      setBusy(false);
+      setBusyOp(null);
     }
   };
 
   const removeFile = async (index: number) => {
     setFiles(files.filter((_, i) => i !== index));
-    setBusy(true);
+    setBusyOp("remove");
     try {
       await runTask(() => onFileRemoved?.(index));
     } finally {
-      setBusy(false);
+      setBusyOp(null);
     }
   };
 
@@ -168,8 +172,11 @@ export function FileInputField({
       >
         {busy ? (
           <span className="flex items-center gap-2">
-            <Spinner size={16} label="Processing" />
-            Processing...
+            <Spinner
+              size={16}
+              label={busyOp === "add" ? "Uploading" : "Removing"}
+            />
+            {busyOp === "add" ? "Uploading..." : "Removing..."}
           </span>
         ) : (
           <>Click to upload {multiple ? "files" : "a file"}</>
@@ -192,7 +199,7 @@ export function FileInputField({
             <FilePreview
               key={`${file.name}-${file.size}-${file.lastModified}`}
               file={file}
-              busy={busy}
+              busyOp={busyOp}
               bgScheme={bgScheme}
               onRemove={() => removeFile(i)}
             />

@@ -134,7 +134,8 @@ export function Form<T extends FieldValues>({
               </div>
               {children}
               {/* Unclickable while submitting or while a FileInputField
-                  upload/remove is in flight. */}
+                  upload/remove is in flight (shown dimmed); the spinner
+                  appears only while actually submitting. */}
               <Button
                 type="submit"
                 disabled={isSubmitting || isBusy}
@@ -145,12 +146,7 @@ export function Form<T extends FieldValues>({
                     : { iconRight: submitIcon }
                   : {})}
               >
-                {isBusy ? (
-                  <span className="flex items-center gap-2">
-                    <Spinner size={16} label="Processing" />
-                    Processing...
-                  </span>
-                ) : isSubmitting ? (
+                {isSubmitting ? (
                   <span className="flex items-center gap-2">
                     <Spinner size={16} label="Submitting" />
                     Submitting...
