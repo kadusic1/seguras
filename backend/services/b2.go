@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"time"
 
@@ -98,4 +99,51 @@ func (s *B2Service) DeleteFile(ctx context.Context, key string) error {
 		return fmt.Errorf("delete file %q: %w", key, err)
 	}
 	return nil
+}
+
+// PresignPutURL generates a presigned URL that allows a client to upload an
+// object directly to the given key via HTTP PUT, valid for the given expiry.
+func (s *B2Service) PresignPutURL(
+	ctx context.Context, key string, expiry time.Duration,
+) (string, error) {
+	presignClient := s3.NewPresignClient(s.client)
+
+	req, err := presignClient.PresignPutObject(ctx, &s3.PutObjectInput{
+		Bucket: aws.String(s.bucket),
+		Key:    aws.String(key),
+	}, s3.WithPresignExpires(expiry))
+	if err != nil {
+		return "", fmt.Errorf("presign put url %q: %w", key, err)
+	}
+
+	return req.URL, nil
+}
+
+// GetObject retrieves the object at the given key from the configured
+// bucket, returning its body and content type.
+func (s *B2Service) GetObject(
+	ctx context.Context, key string,
+) ([]byte, string, error) {
+	out, err := s.client.GetObject(ctx, &s3.GetObjectInput{
+		Bucket: aws.String(s.bucket),
+		Key:    aws.String(key),
+	})
+	if err != nil {
+		return nil, "", fmt.Errorf("get object %q: %w", key, err)
+	}
+	defer func() {
+		_ = out.Body.Close()
+	}()
+
+	data, err := io.ReadAll(out.Body)
+	if err != nil {
+		return nil, "", fmt.Errorf("read object %q: %w", key, err)
+	}
+
+	contentType := ""
+	if out.ContentType != nil {
+		contentType = *out.ContentType
+	}
+
+	return data, contentType, nil
 }
