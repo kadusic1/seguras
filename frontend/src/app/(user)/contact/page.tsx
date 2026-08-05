@@ -67,7 +67,7 @@ export default function ContactPage() {
       setIsModalOpen(false);
       setShowSuccess(true);
     } catch {
-      setSubmitError("Network error. Please try again.");
+      setSubmitError("Check your internet connection and try again.");
     }
   };
 

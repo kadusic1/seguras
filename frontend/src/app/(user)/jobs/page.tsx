@@ -96,7 +96,7 @@ export default function JobsPage() {
       setCvKey(key);
       return true;
     } catch {
-      setCvError("Network error while uploading CV.");
+      setCvError("Check your internet connection and try again.");
       return false;
     }
   };
@@ -144,7 +144,7 @@ export default function JobsPage() {
       setIsModalOpen(false);
       setShowSuccess(true);
     } catch {
-      setSubmitError("Network error. Please try again.");
+      setSubmitError("Check your internet connection and try again.");
     }
   };
 
