@@ -71,7 +71,12 @@ func NewRouter(
 	}
 
 	r.Get("/news", newsHandler.List)
-	r.With(auth.AuthMiddleware(jwtSvc)).Post("/news", newsHandler.Create)
+
+	r.Group(func(r chi.Router) {
+		r.Use(auth.AuthMiddleware(jwtSvc))
+		r.Post("/news", newsHandler.Create)
+		r.Delete("/news/{id}", newsHandler.Delete)
+	})
 
 	contactStore := database.NewContactStore(db)
 	contactHandler, err := NewContactHandler(contactStore, emailService)

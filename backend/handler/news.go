@@ -1,12 +1,15 @@
 package handler
 
 import (
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/domain"
 	"github.com/kadusic1/seguras/backend/services"
@@ -207,6 +210,39 @@ func (h *NewsHandler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	util.WriteJSON(w, http.StatusCreated, resp)
+}
+
+// Delete removes a news article and its images, triggering non-blocking
+// cleanup of the image objects in B2.
+func (h *NewsHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil || id < 1 {
+		util.WriteError(
+			w, http.StatusBadRequest, "invalid news id", "BAD_REQUEST",
+		)
+		return
+	}
+
+	imageKeys, err := h.newsStore.Delete(r.Context(), id)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			util.WriteError(
+				w, http.StatusNotFound, "news not found", "NOT_FOUND",
+			)
+			return
+		}
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to delete news", "SERVER_ERROR",
+		)
+		return
+	}
+
+	for _, key := range imageKeys {
+		h.b2Service.DeleteFileAsync(key)
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // parsePositiveInt parses s as an int, returning def when s is empty and

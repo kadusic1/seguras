@@ -166,3 +166,40 @@ func (s *NewsStore) List(
 
 	return items, total, nil
 }
+
+// Delete removes a news article and its image rows (cascade), returning
+// the B2 image keys so the caller can clean up object storage. Returns
+// sql.ErrNoRows when no news with the given id exists.
+func (s *NewsStore) Delete(ctx context.Context, id int) ([]string, error) {
+	rows, err := s.db.QueryContext(ctx,
+		`SELECT image_key FROM news_images WHERE news_id = ?`, id)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = rows.Close() }()
+
+	var keys []string
+	for rows.Next() {
+		var key string
+		if err := rows.Scan(&key); err != nil {
+			return nil, err
+		}
+		keys = append(keys, key)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	res, err := s.db.ExecContext(ctx, `DELETE FROM news WHERE id = ?`, id)
+	if err != nil {
+		return nil, err
+	}
+	n, err := res.RowsAffected()
+	if err != nil {
+		return nil, err
+	}
+	if n == 0 {
+		return nil, sql.ErrNoRows
+	}
+	return keys, nil
+}
