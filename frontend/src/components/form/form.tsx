@@ -94,10 +94,10 @@ export function Form<T extends FieldValues>({
   const s = schemes[bgScheme];
   const [busyCount, setBusyCount] = useState(0);
   const isBusy = busyCount > 0;
-  const runTask = async (task: () => void | Promise<void>) => {
+  const runTask = async <T,>(task: () => T | Promise<T>) => {
     setBusyCount((c) => c + 1);
     try {
-      await task();
+      return await task();
     } finally {
       setBusyCount((c) => c - 1);
     }

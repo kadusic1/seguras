@@ -23,8 +23,10 @@ export interface FileInputFieldProps {
   accept?: string;
   /** Allow selecting/accumulating more than one file. Defaults to `false`. */
   multiple?: boolean;
-  /** Called with the newly picked files. May be async; submission is blocked until it resolves. */
-  onFilesAdded?: (files: File[]) => void | Promise<void>;
+  /** Called with the newly picked files. May be async; submission is blocked until it resolves. Return `false` to reject the files (the preview is removed again). */
+  onFilesAdded?: (
+    files: File[],
+  ) => boolean | undefined | Promise<boolean | undefined>;
   /** Called when the files are removed. May be async; submission is blocked until it resolves. */
   onFileRemoved?: (index: number) => void | Promise<void>;
 }
@@ -147,7 +149,10 @@ export function FileInputField({
     setFiles(next);
     setBusyOp("add");
     try {
-      await runTask(() => onFilesAdded?.(picked));
+      const accepted = await runTask(() => onFilesAdded?.(picked));
+      if (accepted === false) setFiles(files);
+    } catch {
+      setFiles(files);
     } finally {
       setBusyOp(null);
     }

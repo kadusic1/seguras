@@ -15,7 +15,7 @@ export interface FormBusyValue {
   /** True while at least one async field task is running. */
   isBusy: boolean;
   /** Runs a task while marking the form as busy; always clears on completion. */
-  runTask: (task: () => void | Promise<void>) => Promise<void>;
+  runTask: <T>(task: () => T | Promise<T>) => Promise<T | undefined>;
 }
 
 /**

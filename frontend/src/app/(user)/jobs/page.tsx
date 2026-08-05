@@ -62,8 +62,8 @@ export default function JobsPage() {
     setIsModalOpen(true);
   };
 
-  const handleCvAdded = async ([file]: File[]) => {
-    if (!file) return;
+  const handleCvAdded = async ([file]: File[]): Promise<boolean> => {
+    if (!file) return false;
     setCvError(null);
 
     try {
@@ -82,7 +82,7 @@ export default function JobsPage() {
         const msg =
           err.error ?? "Failed to prepare CV upload. Please try again.";
         setCvError(msg.charAt(0).toUpperCase() + msg.slice(1));
-        return;
+        return false;
       }
 
       const { upload_url, key } = await res.json();
@@ -95,12 +95,14 @@ export default function JobsPage() {
 
       if (!putRes.ok) {
         setCvError("Failed to upload CV. Please try again.");
-        return;
+        return false;
       }
 
       setCvKey(key);
+      return true;
     } catch {
       setCvError("Network error while uploading CV.");
+      return false;
     }
   };
 
