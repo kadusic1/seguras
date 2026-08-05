@@ -78,7 +78,10 @@ export default function JobsPage() {
       });
 
       if (!res.ok) {
-        setCvError("Failed to prepare CV upload. Please try again.");
+        const err = await res.json();
+        const msg =
+          err.error ?? "Failed to prepare CV upload. Please try again.";
+        setCvError(msg.charAt(0).toUpperCase() + msg.slice(1));
         return;
       }
 
@@ -348,7 +351,7 @@ export default function JobsPage() {
             <Text
               variant="sm"
               bgScheme="white"
-              className="text-red-500 lowercase first-letter:uppercase"
+              className="text-red-500 first-letter:uppercase"
             >
               {cvError}
             </Text>
@@ -358,7 +361,7 @@ export default function JobsPage() {
             <Text
               variant="sm"
               bgScheme="white"
-              className="text-red-500 lowercase first-letter:uppercase"
+              className="text-red-500 first-letter:uppercase"
             >
               {submitError}
             </Text>
