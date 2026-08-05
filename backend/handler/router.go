@@ -71,6 +71,7 @@ func NewRouter(
 	}
 
 	r.Get("/news", newsHandler.List)
+	r.With(auth.AuthMiddleware(jwtSvc)).Post("/news", newsHandler.Create)
 
 	contactStore := database.NewContactStore(db)
 	contactHandler, err := NewContactHandler(contactStore, emailService)

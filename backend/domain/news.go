@@ -49,3 +49,32 @@ type NewsListResponse struct {
 	Page    int                `json:"page"`
 	PerPage int                `json:"per_page"`
 }
+
+// CreateNewsImageRequest is a single image reference in a create request.
+type CreateNewsImageRequest struct {
+	ImageKey     string `json:"image_key"`
+	DisplayOrder int    `json:"display_order"`
+}
+
+// CreateNewsRequest is the expected JSON body for creating a news article.
+type CreateNewsRequest struct {
+	Heading string                   `json:"heading"`
+	Text    string                   `json:"text"`
+	Images  []CreateNewsImageRequest `json:"images"`
+}
+
+// CreateNewsImageResponse is an image as stored, carrying its key.
+type CreateNewsImageResponse struct {
+	ID           int    `json:"id"`
+	ImageKey     string `json:"image_key"`
+	DisplayOrder int    `json:"display_order"`
+}
+
+// CreateNewsResponse is the JSON envelope returned for a created news article.
+type CreateNewsResponse struct {
+	ID        int                      `json:"id"`
+	Heading   string                   `json:"heading"`
+	Text      string                   `json:"text"`
+	CreatedAt time.Time                `json:"created_at"`
+	Images    []CreateNewsImageResponse `json:"images"`
+}
