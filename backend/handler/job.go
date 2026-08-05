@@ -3,13 +3,11 @@ package handler
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/domain"
 	"github.com/kadusic1/seguras/backend/services"
@@ -209,85 +207,4 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		EmploymentType: app.EmploymentType,
 		CreatedAt:      time.Now(),
 	})
-}
-
-func (h *JobHandler) UploadCV(w http.ResponseWriter, r *http.Request) {
-	var size int64
-	if err := json.NewDecoder(r.Body).Decode(&size); err != nil {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"invalid JSON body",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	if size <= 0 {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"invalid CV file size",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	// Max size is 10 MB and max filename length is 255 characters
-	if size > 10<<20 {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"CV file size must not exceed 10 MB",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	fileName := uuid.New().String() + ".pdf"
-	presignedURL, err := h.b2Service.PresignPutURL(
-		r.Context(), fileName, 15*time.Minute,
-	)
-	if err != nil {
-		util.WriteError(
-			w, http.StatusInternalServerError,
-			"failed to generate presigned URL",
-			"SERVER_ERROR",
-		)
-		return
-	}
-
-	util.WriteJSON(w, http.StatusOK, domain.CVUploadResponse{
-		UploadURL: presignedURL,
-		Key:       fileName,
-	})
-}
-
-func (h *JobHandler) DeleteCV(w http.ResponseWriter, r *http.Request) {
-	var cvKey string
-	if err := json.NewDecoder(r.Body).Decode(&cvKey); err != nil {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"invalid JSON body",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	if cvKey == "" {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"cv_key is required",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	if err := h.b2Service.DeleteFile(r.Context(), cvKey); err != nil {
-		util.WriteError(
-			w, http.StatusInternalServerError,
-			fmt.Sprintf("failed to delete CV: %v", err),
-			"SERVER_ERROR",
-		)
-		return
-	}
-
-	w.WriteHeader(http.StatusNoContent)
 }

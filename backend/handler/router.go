@@ -59,8 +59,10 @@ func NewRouter(
 	}
 
 	r.Post("/jobs/apply", jobHandler.Submit)
-	r.Post("/jobs/cv", jobHandler.UploadCV)
-	r.Delete("/jobs/cv", jobHandler.DeleteCV)
+
+	fileHandler := NewFileHandler(b2Service)
+	r.Post("/files/presign", fileHandler.PresignUpload)
+	r.Delete("/files/{key}", fileHandler.Delete)
 
 	contactStore := database.NewContactStore(db)
 	contactHandler, err := NewContactHandler(contactStore, emailService)
