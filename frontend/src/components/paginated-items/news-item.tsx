@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Carousel } from "@/components/blocks";
 import { Heading, Text } from "@/components/ui";
@@ -22,11 +24,22 @@ export interface NewsItemData {
 interface NewsItemProps {
   item: NewsItemData;
   bgScheme?: ColorScheme;
+  showDeleteButton?: boolean;
+  onDeleteButtonClick?: () => void;
 }
 
-export function NewsItem({ item, bgScheme = "white" }: NewsItemProps) {
+export function NewsItem({
+  item,
+  bgScheme = "white",
+  showDeleteButton = false,
+  onDeleteButtonClick,
+}: NewsItemProps) {
   return (
-    <ItemCommon bgScheme={bgScheme}>
+    <ItemCommon
+      bgScheme={bgScheme}
+      showDeleteButton={showDeleteButton}
+      onDeleteButtonClick={onDeleteButtonClick}
+    >
       {(surface, s) => (
         <>
           <header className="flex items-center gap-3">
