@@ -25,3 +25,27 @@ type NewsWithImages struct {
 	News
 	Images []NewsImage
 }
+
+// NewsImageResponse is an image with a presigned URL for downloading it.
+type NewsImageResponse struct {
+	ID           int    `json:"id"`
+	URL          string `json:"url"`
+	DisplayOrder int    `json:"display_order"`
+}
+
+// NewsItemResponse is a news article with its images' presigned URLs.
+type NewsItemResponse struct {
+	ID        int                 `json:"id"`
+	Heading   string              `json:"heading"`
+	Text      string              `json:"text"`
+	CreatedAt time.Time           `json:"created_at"`
+	Images    []NewsImageResponse `json:"images"`
+}
+
+// NewsListResponse is the JSON envelope returned for a page of news.
+type NewsListResponse struct {
+	Items   []NewsItemResponse `json:"items"`
+	Total   int                `json:"total"`
+	Page    int                `json:"page"`
+	PerPage int                `json:"per_page"`
+}

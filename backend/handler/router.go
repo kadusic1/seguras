@@ -64,6 +64,14 @@ func NewRouter(
 	r.Post("/files/presign", fileHandler.PresignUpload)
 	r.Delete("/files/{key}", fileHandler.Delete)
 
+	newsStore := database.NewNewsStore(db)
+	newsHandler, err := NewNewsHandler(newsStore, b2Service)
+	if err != nil {
+		return nil, fmt.Errorf("news handler: %w", err)
+	}
+
+	r.Get("/news", newsHandler.List)
+
 	contactStore := database.NewContactStore(db)
 	contactHandler, err := NewContactHandler(contactStore, emailService)
 	if err != nil {
