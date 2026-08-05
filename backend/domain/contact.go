@@ -14,8 +14,8 @@ type ContactMessage struct {
 }
 
 type SubmitContactRequest struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
 	Phone     string `json:"phone"`
 	Company   string `json:"company"`
@@ -24,11 +24,11 @@ type SubmitContactRequest struct {
 
 type ContactResponse struct {
 	ID        int       `json:"id"`
-	FirstName string    `json:"firstName"`
-	LastName  string    `json:"lastName"`
+	FirstName string    `json:"first_name"`
+	LastName  string    `json:"last_name"`
 	Email     string    `json:"email"`
 	Phone     string    `json:"phone"`
 	Company   string    `json:"company"`
 	Message   string    `json:"message"`
-	CreatedAt time.Time `json:"createdAt"`
+	CreatedAt time.Time `json:"created_at"`
 }
