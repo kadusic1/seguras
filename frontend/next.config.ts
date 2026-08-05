@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
   },
   images: {
     qualities: [75, 85],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.backblazeb2.com",
+      },
+    ],
   },
 };
 
