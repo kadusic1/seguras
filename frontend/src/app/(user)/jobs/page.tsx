@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { Card } from "@/components/card";
+import { Card, Hero, Section } from "@/components/blocks";
 import {
   FileInputField,
   Form,
@@ -11,13 +11,8 @@ import {
   RadioGroupField,
   SelectField,
 } from "@/components/form";
-import { Grid } from "@/components/grid";
-import { Heading } from "@/components/heading";
-import { Hero } from "@/components/hero";
-import { ModalForm } from "@/components/modal-form";
-import { Section } from "@/components/section";
-import { SuccessMessage } from "@/components/success-message";
-import { Text } from "@/components/text";
+import { ModalForm, SuccessMessage } from "@/components/overlay";
+import { Grid, Heading, Text } from "@/components/ui";
 import { jobs } from "@/features/jobs/data";
 import { PLACEHOLDER } from "@/lib/placeholders";
 import {

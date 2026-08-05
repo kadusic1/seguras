@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/button";
-import { Heading } from "@/components/heading";
-import { Separator } from "@/components/separator";
-import { Text } from "@/components/text";
+import { Button, Heading, Separator, Text } from "@/components/ui";
 import type { HeroSlideType } from "../types";
 
 interface HeroSlideProps {

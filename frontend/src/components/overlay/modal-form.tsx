@@ -2,10 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import type { ReactNode } from "react";
-import { CloseButton } from "@/components/close-button";
-import { Heading } from "@/components/heading";
-import { Logo } from "@/components/logo";
-import { Text } from "@/components/text";
+import { CloseButton, Heading, Logo, Text } from "@/components/ui";
 
 /**
  * Props for the {@link ModalForm} component.

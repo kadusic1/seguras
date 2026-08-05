@@ -1,9 +1,6 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
-import { Card } from "@/components/card";
-import { Grid } from "@/components/grid";
-import { Hero } from "@/components/hero";
-import { Section } from "@/components/section";
-import { WaveDivider } from "@/components/wave-divider";
+import { Card, Hero, Section } from "@/components/blocks";
+import { Grid, WaveDivider } from "@/components/ui";
 import { services } from "@/features/services/data";
 
 export default function ServicesPage() {

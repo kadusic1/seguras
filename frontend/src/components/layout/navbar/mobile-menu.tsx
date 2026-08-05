@@ -2,7 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui";
 import { NavbarLinks } from "./navbar-links";
 
 function MenuIcon({ open }: { open: boolean }) {

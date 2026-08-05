@@ -1,9 +1,7 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { Button, Heading, Text } from "@/components/ui";
 import { schemes } from "@/lib/colours";
-import { Button } from "./button";
-import { Heading } from "./heading";
-import { Text } from "./text";
 
 interface HeroProps {
   headline: string;

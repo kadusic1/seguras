@@ -3,8 +3,8 @@
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
-import { Logo } from "@/components/logo";
-import { Modal } from "@/components/modal";
+import { Modal } from "@/components/overlay";
+import { Logo } from "@/components/ui";
 
 export function NavbarSignOut() {
   const [open, setOpen] = useState(false);

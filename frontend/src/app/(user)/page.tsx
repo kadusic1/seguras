@@ -1,10 +1,7 @@
 import { TrendingUp } from "lucide-react";
 import Image from "next/image";
-import { Card } from "@/components/card";
-import { Carousel } from "@/components/carousel";
-import { Grid } from "@/components/grid";
-import { Section } from "@/components/section";
-import { WaveDivider } from "@/components/wave-divider";
+import { Card, Carousel, Section } from "@/components/blocks";
+import { Grid, WaveDivider } from "@/components/ui";
 import { HeroCarousel } from "@/features/hero/_components/HeroCarousel";
 import { heroSlides } from "@/features/hero/data";
 import { jobs } from "@/features/jobs/data";

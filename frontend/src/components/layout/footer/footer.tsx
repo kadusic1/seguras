@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { Logo } from "@/components/logo";
-import { navLinks } from "@/components/navbar/navbar-data";
-import { Text } from "@/components/text";
+import { navLinks } from "@/components/layout/navbar/navbar-data";
+import { Logo, Text } from "@/components/ui";
 import { contactInfo } from "./footer-data";
 
 export function Footer() {

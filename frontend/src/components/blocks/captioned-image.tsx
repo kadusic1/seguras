@@ -1,9 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
+import { Button, Heading, Text } from "@/components/ui";
 import { type ColorScheme, schemes } from "@/lib/colours";
-import { Button } from "./button";
-import { Heading } from "./heading";
-import { Text } from "./text";
 
 export interface CaptionedImageCaption {
   heading: string;

@@ -1,11 +1,14 @@
 import Image from "next/image";
 import type { ReactElement, ReactNode } from "react";
+import {
+  Button,
+  Heading,
+  Reveal,
+  type RevealAnimation,
+  Text,
+} from "@/components/ui";
 import { type ColorScheme, schemes } from "@/lib/colours";
-import { Button } from "./button";
 import { CaptionedImage, type CaptionedImageCaption } from "./captioned-image";
-import { Heading } from "./heading";
-import { Reveal, type RevealAnimation } from "./reveal";
-import { Text } from "./text";
 
 interface SectionProps {
   title?: string;

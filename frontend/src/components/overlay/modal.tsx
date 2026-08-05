@@ -2,7 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import type { LucideIcon } from "lucide-react";
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui";
 import { type NeutralColorScheme, schemes } from "@/lib/colours";
 
 interface ModalProps {

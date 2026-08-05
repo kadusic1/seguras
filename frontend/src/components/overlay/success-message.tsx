@@ -2,7 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { CheckCircle } from "lucide-react";
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui";
 
 interface SuccessMessageProps {
   open: boolean;

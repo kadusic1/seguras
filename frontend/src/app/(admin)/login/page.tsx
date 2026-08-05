@@ -4,9 +4,8 @@ import { ArrowRight, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { ErrorText } from "@/components/error-text";
 import { Form, FormField, PasswordField } from "@/components/form";
-import { Logo } from "@/components/logo";
+import { ErrorText, Logo } from "@/components/ui";
 
 interface LoginFormData {
   email: string;

@@ -1,9 +1,7 @@
 import { ArrowRight, type LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { Button, Heading, Text } from "@/components/ui";
 import { buttonVariantStyles, type ColorScheme, schemes } from "@/lib/colours";
-import { Button } from "./button";
-import { Heading } from "./heading";
-import { Text } from "./text";
 
 type CardShared = {
   variant?: "icon" | "listing";

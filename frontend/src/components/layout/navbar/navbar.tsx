@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { auth } from "@/auth";
-import { Button } from "@/components/button";
-import { Logo } from "@/components/logo";
+import { Button, Logo } from "@/components/ui";
 import { MobileMenu } from "./mobile-menu";
 import { NavbarLinks } from "./navbar-links";
 import { NavbarSignOut } from "./navbar-signout";

@@ -9,13 +9,8 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
-import { Card } from "@/components/card";
-import { Grid } from "@/components/grid";
-import { Heading } from "@/components/heading";
-import { Hero } from "@/components/hero";
-import { Section } from "@/components/section";
-import { Text } from "@/components/text";
-import { WaveDivider } from "@/components/wave-divider";
+import { Card, Hero, Section } from "@/components/blocks";
+import { Grid, Heading, Text, WaveDivider } from "@/components/ui";
 import { trustedCompanies } from "@/features/trusted-companies/data";
 
 const missionValues = [

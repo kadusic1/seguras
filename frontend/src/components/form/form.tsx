@@ -9,12 +9,9 @@ import {
   FormProvider,
   useForm,
 } from "react-hook-form";
+import { Button, Heading, Spinner, Text } from "@/components/ui";
 import type { NeutralColorScheme } from "@/lib/colours";
 import { schemes } from "@/lib/colours";
-import { Button } from "../button";
-import { Heading } from "../heading";
-import { Spinner } from "../spinner";
-import { Text } from "../text";
 import { ColorSchemeCtx, FormBusyCtx } from "./context";
 
 /**

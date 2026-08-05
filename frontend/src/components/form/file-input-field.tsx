@@ -3,9 +3,8 @@
 import { File as FileIcon } from "lucide-react";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import { Spinner } from "@/components/spinner";
+import { CloseButton, Spinner } from "@/components/ui";
 import { schemes } from "@/lib/colours";
-import { CloseButton } from "../close-button";
 import { ColorSchemeCtx, useFormBusy } from "./context";
 import { FieldChrome } from "./field-chrome";
 
