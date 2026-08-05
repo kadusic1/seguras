@@ -1,3 +1,4 @@
+export { ItemCommon } from "./item-common";
 export type { NewsImageData, NewsItemData } from "./news-item";
 export { NewsItem } from "./news-item";
 export { PageNumber } from "./page-number";
