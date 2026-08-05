@@ -67,10 +67,14 @@ export default function JobsPage() {
     setCvError(null);
 
     try {
-      const res = await fetch("/api/jobs/cv", {
+      const res = await fetch("/api/files", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(file.size),
+        body: JSON.stringify({
+          size: file.size,
+          content_type: file.type || "application/octet-stream",
+          filename: file.name,
+        }),
       });
 
       if (!res.ok) {
@@ -103,10 +107,8 @@ export default function JobsPage() {
     setCvError(null);
     if (!key) return;
 
-    await fetch("/api/jobs/cv", {
+    await fetch(`/api/files/${key}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(key),
     });
   };
 
