@@ -1,4 +1,11 @@
-export { AddButton, Button, DeleteButton, EditButton } from "./button";
+export {
+  AddButton,
+  Button,
+  DeleteButton,
+  EditButton,
+  NextPageButton,
+  PreviousPageButton,
+} from "./button";
 export { CloseButton } from "./close-button";
 export { ErrorText } from "./error-text";
 export { Grid } from "./grid";

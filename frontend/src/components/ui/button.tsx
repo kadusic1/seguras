@@ -1,4 +1,4 @@
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import {
@@ -79,14 +79,14 @@ type IconButtonProps = Omit<
 >;
 
 const iconButtonBase =
-  "inline-flex cursor-pointer items-center justify-center rounded-md p-2.5 transition-colors focus-visible:outline-2 focus-visible:outline-red-500 disabled:cursor-not-allowed disabled:opacity-60";
+  "text-white shadow-sm inline-flex cursor-pointer items-center justify-center rounded-md p-2.5 transition-colors focus-visible:outline-2 focus-visible:outline-red-500 disabled:cursor-not-allowed disabled:opacity-60";
 
 export function AddButton(props: IconButtonProps) {
   return (
     <button
       type="button"
       aria-label="Add"
-      className={`${iconButtonBase} bg-green-600 text-white shadow-sm hover:bg-green-700`}
+      className={`${iconButtonBase} bg-green-600 hover:bg-green-700`}
       {...props}
     >
       <Plus className="size-5" />
@@ -99,7 +99,7 @@ export function DeleteButton(props: IconButtonProps) {
     <button
       type="button"
       aria-label="Delete"
-      className={`${iconButtonBase} bg-red-600 text-white shadow-sm hover:bg-red-700`}
+      className={`${iconButtonBase} bg-red-600 hover:bg-red-700`}
       {...props}
     >
       <Trash2 className="size-5" />
@@ -112,10 +112,36 @@ export function EditButton(props: IconButtonProps) {
     <button
       type="button"
       aria-label="Edit"
-      className={`${iconButtonBase} bg-blue-600 text-white shadow-sm hover:bg-blue-700`}
+      className={`${iconButtonBase} bg-blue-600 hover:bg-blue-700`}
       {...props}
     >
       <Pencil className="size-5" />
+    </button>
+  );
+}
+
+export function PreviousPageButton(props: IconButtonProps) {
+  return (
+    <button
+      type="button"
+      aria-label="Previous page"
+      className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
+      {...props}
+    >
+      <ArrowLeft className="size-5" />
+    </button>
+  );
+}
+
+export function NextPageButton(props: IconButtonProps) {
+  return (
+    <button
+      type="button"
+      aria-label="Next page"
+      className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
+      {...props}
+    >
+      <ArrowRight className="size-5" />
     </button>
   );
 }
