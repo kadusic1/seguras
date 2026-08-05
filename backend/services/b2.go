@@ -18,8 +18,9 @@ import (
 // B2Service uploads and deletes objects in a Backblaze B2 bucket using the
 // AWS SDK for Go v2
 type B2Service struct {
-	client *s3.Client
-	bucket string
+	client        *s3.Client
+	presignClient *s3.PresignClient
+	bucket        string
 }
 
 // NewB2Service creates a B2Service wrapping an S3 client configured for
@@ -45,7 +46,11 @@ func NewB2Service(ctx context.Context) (*B2Service, error) {
 		o.UsePathStyle = true
 	})
 
-	return &B2Service{client: client, bucket: cfg.Bucket}, nil
+	presignClient := s3.NewPresignClient(client)
+
+	return &B2Service{
+		client: client, presignClient: presignClient, bucket: cfg.Bucket,
+	}, nil
 }
 
 // UploadFile uploads data to the given key (object path) in the configured
@@ -106,9 +111,7 @@ func (s *B2Service) DeleteFile(ctx context.Context, key string) error {
 func (s *B2Service) PresignPutURL(
 	ctx context.Context, key string, expiry time.Duration,
 ) (string, error) {
-	presignClient := s3.NewPresignClient(s.client)
-
-	req, err := presignClient.PresignPutObject(ctx, &s3.PutObjectInput{
+	req, err := s.presignClient.PresignPutObject(ctx, &s3.PutObjectInput{
 		Bucket: aws.String(s.bucket),
 		Key:    aws.String(key),
 	}, s3.WithPresignExpires(expiry))
@@ -146,4 +149,20 @@ func (s *B2Service) GetObject(
 	}
 
 	return data, contentType, nil
+}
+
+// PresignGetURL generates a presigned URL that allows downloading an
+// object directly from the given key via HTTP GET, valid for the given expiry.
+func (s *B2Service) PresignGetURL(
+	ctx context.Context, key string, expiry time.Duration,
+) (string, error) {
+	req, err := s.presignClient.PresignGetObject(ctx, &s3.GetObjectInput{
+		Bucket: aws.String(s.bucket),
+		Key:    aws.String(key),
+	}, s3.WithPresignExpires(expiry))
+	if err != nil {
+		return "", fmt.Errorf("presign get url %q: %w", key, err)
+	}
+
+	return req.URL, nil
 }
