@@ -3,23 +3,11 @@
 import Image from "next/image";
 import { Carousel } from "@/components/blocks";
 import { Heading, Text } from "@/components/ui";
+import type { NewsItemData } from "@/features/news/types";
 import type { ColorScheme } from "@/lib/colours";
 import { ItemCommon } from "./item-common";
 
-export interface NewsImageData {
-  id: number;
-  url: string;
-  display_order: number;
-}
-
-export interface NewsItemData {
-  id: number;
-  heading: string;
-  text: string;
-  created_at: string;
-  time_ago: string;
-  images: NewsImageData[];
-}
+export type { NewsImageData, NewsItemData } from "@/features/news/types";
 
 interface NewsItemProps {
   item: NewsItemData;

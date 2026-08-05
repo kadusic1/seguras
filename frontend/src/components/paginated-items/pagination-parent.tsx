@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AddButton, NextPageButton, PreviousPageButton } from "@/components/ui";
 import { PageNumber } from "./page-number";
 
@@ -18,6 +18,8 @@ interface PaginationParentProps<T> {
   renderItem: (item: T, index: number) => ReactNode;
   showAddButton?: boolean;
   onAddButtonClick?: () => void;
+  /** Increment to refetch the current page (e.g. after add/delete). */
+  refreshToken?: number;
 }
 
 export function PaginationParent<T>({
@@ -26,12 +28,33 @@ export function PaginationParent<T>({
   renderItem,
   showAddButton = false,
   onAddButtonClick,
+  refreshToken,
 }: PaginationParentProps<T>) {
   const [data, setData] = useState(initialData);
 
   const page = data.page;
   const perPage = Math.max(data.per_page, 1);
   const totalPages = Math.ceil(data.total / perPage);
+
+  const pageRef = useRef(page);
+  useEffect(() => {
+    pageRef.current = page;
+  }, [page]);
+
+  useEffect(() => {
+    if (!refreshToken) return;
+    void (async () => {
+      try {
+        const res = await fetch(
+          `${url}?page=${pageRef.current}&per_page=${perPage}`,
+        );
+        if (!res.ok) return;
+        setData((await res.json()) as PaginatedResponse<T>);
+      } catch {
+        // network or JSON error: keep the current page
+      }
+    })();
+  }, [refreshToken, url, perPage]);
 
   async function goToPage(nextPage: number) {
     if (nextPage < 1 || nextPage > totalPages) return;
