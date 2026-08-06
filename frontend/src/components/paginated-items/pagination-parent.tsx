@@ -80,7 +80,7 @@ export function PaginationParent<T>({
       )}
       <div className="mt-4">
         {data.items.length === 0 && page === 1 ? (
-          <EmptyState />
+          <EmptyState message="No news found yet." />
         ) : (
           data.items.map((item, index) => renderItem(item, index))
         )}
