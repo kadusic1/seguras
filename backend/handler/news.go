@@ -17,24 +17,26 @@ import (
 )
 
 const (
-	defaultNewsPerPage = 10
-	maxNewsPerPage     = 100
-	presignExpiry      = 15 * time.Minute
+	maxNewsPerPage = 100
+	presignExpiry  = 15 * time.Minute
 )
 
 // NewsHandler serves news articles and their images.
 type NewsHandler struct {
-	newsStore *database.NewsStore
-	b2Service *services.B2Service
+	newsStore      *database.NewsStore
+	b2Service      *services.B2Service
+	defaultPerPage int
 }
 
 func NewNewsHandler(
 	newsStore *database.NewsStore,
 	b2Service *services.B2Service,
+	defaultPerPage int,
 ) (*NewsHandler, error) {
 	return &NewsHandler{
-		newsStore: newsStore,
-		b2Service: b2Service,
+		newsStore:      newsStore,
+		b2Service:      b2Service,
+		defaultPerPage: defaultPerPage,
 	}, nil
 }
 
@@ -50,7 +52,7 @@ func (h *NewsHandler) List(w http.ResponseWriter, r *http.Request) {
 	}
 
 	perPage, err := parsePositiveInt(
-		r.URL.Query().Get("per_page"), defaultNewsPerPage,
+		r.URL.Query().Get("per_page"), h.defaultPerPage,
 	)
 	if err != nil {
 		util.WriteError(

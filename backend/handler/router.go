@@ -19,6 +19,7 @@ func NewRouter(
 	db *sql.DB,
 	emailService *services.EmailService,
 	b2Service *services.B2Service,
+	itemsPerPage int,
 ) (*chi.Mux, error) {
 	userStore := database.NewUserStore(db)
 
@@ -65,7 +66,7 @@ func NewRouter(
 	r.Delete("/files/{key}", fileHandler.Delete)
 
 	newsStore := database.NewNewsStore(db)
-	newsHandler, err := NewNewsHandler(newsStore, b2Service)
+	newsHandler, err := NewNewsHandler(newsStore, b2Service, itemsPerPage)
 	if err != nil {
 		return nil, fmt.Errorf("news handler: %w", err)
 	}

@@ -54,12 +54,20 @@ func main() {
 		log.Fatalf("b2 service: %v", err)
 	}
 
-	r, err := handler.NewRouter(db, emailService, b2Service)
+	serverCfg := config.LoadServer()
+
+	paginationCfg, err := config.LoadPagination()
+	if err != nil {
+		log.Fatalf("config: %v", err)
+	}
+
+	r, err := handler.NewRouter(
+		db, emailService, b2Service, paginationCfg.ItemsPerPage,
+	)
 	if err != nil {
 		log.Fatalf("router: %v", err)
 	}
 
-	serverCfg := config.LoadServer()
 	log.Printf("server starting on :%s", serverCfg.Port)
 	if err := http.ListenAndServe(":"+serverCfg.Port, r); err != nil {
 		log.Fatalf("server failed: %v", err)
