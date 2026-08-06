@@ -42,6 +42,19 @@ export function PaginationParent<T>({
     pageRef.current = page;
   }, [page]);
 
+  const listRef = useRef<HTMLDivElement>(null);
+  const pendingScrollPageRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (pendingScrollPageRef.current !== data.page) return;
+    pendingScrollPageRef.current = null;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }, [data]);
+
   const fetchPage = useCallback(
     async (nextPage: number) => {
       try {
@@ -68,6 +81,7 @@ export function PaginationParent<T>({
 
   async function goToPage(nextPage: number) {
     if (nextPage < 1 || nextPage > totalPages) return;
+    pendingScrollPageRef.current = nextPage;
     await fetchPage(nextPage);
   }
 
@@ -78,7 +92,7 @@ export function PaginationParent<T>({
           <AddButton type="button" onClick={onAddButtonClick} />
         </div>
       )}
-      <div className="mt-4">
+      <div ref={listRef} className="mt-4 scroll-mt-24">
         {data.items.length === 0 && page === 1 ? (
           <EmptyState message="No news found yet." />
         ) : (
