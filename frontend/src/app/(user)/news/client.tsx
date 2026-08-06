@@ -122,7 +122,6 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
             <div key={item.id} className="mb-6">
               <NewsItem
                 item={item}
-                bgScheme="white"
                 showDeleteButton={isAdmin}
                 onDeleteButtonClick={() => {
                   setDeleteTarget(item);
