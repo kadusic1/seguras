@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AddButton, NextPageButton, PreviousPageButton } from "@/components/ui";
 import { PageNumber } from "./page-number";
 
@@ -41,31 +41,33 @@ export function PaginationParent<T>({
     pageRef.current = page;
   }, [page]);
 
-  useEffect(() => {
-    if (!refreshToken) return;
-    void (async () => {
+  const fetchPage = useCallback(
+    async (nextPage: number) => {
       try {
-        const res = await fetch(
-          `${url}?page=${pageRef.current}&per_page=${perPage}`,
-        );
+        const res = await fetch(`${url}?page=${nextPage}&per_page=${perPage}`);
         if (!res.ok) return;
-        setData((await res.json()) as PaginatedResponse<T>);
+        const result = (await res.json()) as PaginatedResponse<T>;
+        const lastPage = Math.max(
+          1,
+          Math.ceil(result.total / Math.max(result.per_page, 1)),
+        );
+        if (nextPage > lastPage) return fetchPage(lastPage);
+        setData(result);
       } catch {
         // network or JSON error: keep the current page
       }
-    })();
-  }, [refreshToken, url, perPage]);
+    },
+    [url, perPage],
+  );
+
+  useEffect(() => {
+    if (!refreshToken) return;
+    void fetchPage(pageRef.current);
+  }, [refreshToken, fetchPage]);
 
   async function goToPage(nextPage: number) {
     if (nextPage < 1 || nextPage > totalPages) return;
-
-    try {
-      const res = await fetch(`${url}?page=${nextPage}&per_page=${perPage}`);
-      if (!res.ok) return;
-      setData((await res.json()) as PaginatedResponse<T>);
-    } catch {
-      // network or JSON error: keep the current page
-    }
+    await fetchPage(nextPage);
   }
 
   return (
