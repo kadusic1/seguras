@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AddButton, NextPageButton, PreviousPageButton } from "@/components/ui";
+import { EmptyState } from "./empty-state";
 import { PageNumber } from "./page-number";
 
 export interface PaginatedResponse<T> {
@@ -78,7 +79,11 @@ export function PaginationParent<T>({
         </div>
       )}
       <div className="mt-4">
-        {data.items.map((item, index) => renderItem(item, index))}
+        {data.items.length === 0 && page === 1 ? (
+          <EmptyState />
+        ) : (
+          data.items.map((item, index) => renderItem(item, index))
+        )}
       </div>
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-center gap-2">
