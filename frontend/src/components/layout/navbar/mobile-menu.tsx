@@ -83,6 +83,7 @@ export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
               wrapperClassName="flex flex-col gap-4"
               onLinkClick={() => setIsOpen(false)}
               isLoggedIn={isLoggedIn}
+              variant="mobile"
             />
           </nav>
 
