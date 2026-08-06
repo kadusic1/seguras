@@ -1,13 +1,14 @@
 import "server-only";
 
 import type { PaginatedResponse } from "@/components/paginated-items";
+import { ITEMS_PER_PAGE } from "@/lib/pagination";
 import type { NewsItemData } from "./types";
 
 const EMPTY_PAGE: PaginatedResponse<NewsItemData> = {
   items: [],
   total: 0,
   page: 1,
-  per_page: 10,
+  per_page: ITEMS_PER_PAGE,
 };
 
 export async function getNewsPage(

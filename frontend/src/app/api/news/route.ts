@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
+import { ITEMS_PER_PAGE } from "@/lib/pagination";
 
 export async function GET(request: NextRequest) {
   const apiUrl = process.env.API_URL;
@@ -12,7 +13,8 @@ export async function GET(request: NextRequest) {
 
   const params = new URLSearchParams({
     page: request.nextUrl.searchParams.get("page") ?? "1",
-    per_page: request.nextUrl.searchParams.get("per_page") ?? "10",
+    per_page:
+      request.nextUrl.searchParams.get("per_page") ?? String(ITEMS_PER_PAGE),
   });
 
   const res = await fetch(`${apiUrl}/news?${params}`, {
