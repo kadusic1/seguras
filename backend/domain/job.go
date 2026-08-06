@@ -67,3 +67,19 @@ type JobApplicationResponse struct {
 	EmploymentType EmploymentType `json:"employment_type"`
 	CreatedAt      time.Time      `json:"created_at"`
 }
+
+// JobListItemResponse is a job application in a list response, including a
+// presigned URL to download the CV when one was submitted.
+type JobListItemResponse struct {
+	JobApplicationResponse
+	CVURL string `json:"cv_url,omitempty"`
+}
+
+// JobListResponse is the JSON envelope returned for a page of job
+// applications.
+type JobListResponse struct {
+	Items   []JobListItemResponse `json:"items"`
+	Total   int                   `json:"total"`
+	Page    int                   `json:"page"`
+	PerPage int                   `json:"per_page"`
+}

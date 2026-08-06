@@ -2,33 +2,42 @@ package handler
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/domain"
 	"github.com/kadusic1/seguras/backend/services"
 	"github.com/kadusic1/seguras/backend/util"
 )
 
+const maxJobsPerPage = 100
+
 type JobHandler struct {
-	jobStore     *database.JobStore
-	emailService *services.EmailService
-	b2Service    *services.B2Service
+	jobStore       *database.JobStore
+	emailService   *services.EmailService
+	b2Service      *services.B2Service
+	defaultPerPage int
 }
 
 func NewJobHandler(
 	jobStore *database.JobStore,
 	emailService *services.EmailService,
 	b2Service *services.B2Service,
+	defaultPerPage int,
 ) (*JobHandler, error) {
 	return &JobHandler{
-		jobStore:     jobStore,
-		emailService: emailService,
-		b2Service:    b2Service,
+		jobStore:       jobStore,
+		emailService:   emailService,
+		b2Service:      b2Service,
+		defaultPerPage: defaultPerPage,
 	}, nil
 }
 
@@ -207,4 +216,120 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		EmploymentType: app.EmploymentType,
 		CreatedAt:      time.Now(),
 	})
+}
+
+// List returns one page of job applications with presigned URLs for the CVs.
+func (h *JobHandler) List(w http.ResponseWriter, r *http.Request) {
+	page, err := parsePositiveInt(r.URL.Query().Get("page"), 1)
+	if err != nil {
+		util.WriteError(
+			w, http.StatusBadRequest, "page must be a positive integer",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	perPage, err := parsePositiveInt(
+		r.URL.Query().Get("per_page"), h.defaultPerPage,
+	)
+	if err != nil {
+		util.WriteError(
+			w, http.StatusBadRequest,
+			"per_page must be a positive integer",
+			"BAD_REQUEST",
+		)
+		return
+	}
+	if perPage > maxJobsPerPage {
+		util.WriteError(
+			w, http.StatusBadRequest,
+			"per_page must not exceed 100",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	items, total, err := h.jobStore.List(r.Context(), page, perPage)
+	if err != nil {
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to list job applications", "SERVER_ERROR",
+		)
+		return
+	}
+
+	resp := domain.JobListResponse{
+		Items:   make([]domain.JobListItemResponse, 0, len(items)),
+		Total:   total,
+		Page:    page,
+		PerPage: perPage,
+	}
+	for _, item := range items {
+		jobItem := domain.JobListItemResponse{
+			JobApplicationResponse: domain.JobApplicationResponse{
+				ID:             item.ID,
+				FirstName:      item.FirstName,
+				LastName:       item.LastName,
+				DateOfBirth:    item.DateOfBirth,
+				Address:        item.Address,
+				Email:          item.Email,
+				Phone:          item.Phone,
+				HoursAvailable: item.HoursAvailable,
+				ClothingSize:   item.ClothingSize,
+				EmploymentType: item.EmploymentType,
+				CreatedAt:      item.CreatedAt,
+			},
+		}
+		if item.CVKey != "" {
+			url, err := h.b2Service.PresignGetURL(
+				r.Context(), item.CVKey, presignExpiry,
+			)
+			if err != nil {
+				util.WriteError(
+					w, http.StatusInternalServerError,
+					"failed to generate CV URL", "SERVER_ERROR",
+				)
+				return
+			}
+			jobItem.CVURL = url
+		}
+		resp.Items = append(resp.Items, jobItem)
+	}
+
+	util.WriteJSON(w, http.StatusOK, resp)
+}
+
+// Delete removes a job application, triggering non-blocking cleanup of its
+// CV in B2.
+func (h *JobHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil || id < 1 {
+		util.WriteError(
+			w, http.StatusBadRequest, "invalid job application id",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	cvKey, err := h.jobStore.Delete(r.Context(), id)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			util.WriteError(
+				w, http.StatusNotFound, "job application not found",
+				"NOT_FOUND",
+			)
+			return
+		}
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to delete job application", "SERVER_ERROR",
+		)
+		return
+	}
+
+	if cvKey != "" {
+		h.b2Service.DeleteFileAsync(cvKey)
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }

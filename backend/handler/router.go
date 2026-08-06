@@ -54,7 +54,7 @@ func NewRouter(
 	})
 
 	jobStore := database.NewJobStore(db)
-	jobHandler, err := NewJobHandler(jobStore, emailService, b2Service)
+	jobHandler, err := NewJobHandler(jobStore, emailService, b2Service, itemsPerPage)
 	if err != nil {
 		return nil, fmt.Errorf("job handler: %w", err)
 	}
@@ -75,6 +75,8 @@ func NewRouter(
 
 	r.Group(func(r chi.Router) {
 		r.Use(auth.AuthMiddleware(jwtSvc))
+		r.Get("/jobs", jobHandler.List)
+		r.Delete("/jobs/{id}", jobHandler.Delete)
 		r.Post("/news", newsHandler.Create)
 		r.Delete("/news/{id}", newsHandler.Delete)
 	})
