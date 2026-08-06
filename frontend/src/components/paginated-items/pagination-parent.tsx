@@ -71,13 +71,15 @@ export function PaginationParent<T>({
   }
 
   return (
-    <div>
+    <div className="pt-4">
       {showAddButton && (
         <div className="flex justify-end">
           <AddButton type="button" onClick={onAddButtonClick} />
         </div>
       )}
-      <div>{data.items.map((item, index) => renderItem(item, index))}</div>
+      <div className="mt-4">
+        {data.items.map((item, index) => renderItem(item, index))}
+      </div>
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-center gap-2">
           <PreviousPageButton
