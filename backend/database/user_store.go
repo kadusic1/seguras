@@ -22,9 +22,9 @@ func NewUserStore(db *sql.DB) *UserStore {
 func (s *UserStore) GetByEmail(ctx context.Context, email string) (*domain.User, error) {
 	u := &domain.User{}
 	err := s.db.QueryRowContext(ctx,
-		`SELECT id, name, last_name, email, password, created_at, updated_at
+		`SELECT id, name, last_name, email, password, created_at
 		 FROM users WHERE email = ?`, email,
-	).Scan(&u.ID, &u.Name, &u.LastName, &u.Email, &u.Password, &u.CreatedAt, &u.UpdatedAt)
+	).Scan(&u.ID, &u.Name, &u.LastName, &u.Email, &u.Password, &u.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -35,9 +35,9 @@ func (s *UserStore) GetByEmail(ctx context.Context, email string) (*domain.User,
 func (s *UserStore) GetByID(ctx context.Context, id int) (*domain.User, error) {
 	u := &domain.User{}
 	err := s.db.QueryRowContext(ctx,
-		`SELECT id, name, last_name, email, password, created_at, updated_at
+		`SELECT id, name, last_name, email, password, created_at
 		 FROM users WHERE id = ?`, id,
-	).Scan(&u.ID, &u.Name, &u.LastName, &u.Email, &u.Password, &u.CreatedAt, &u.UpdatedAt)
+	).Scan(&u.ID, &u.Name, &u.LastName, &u.Email, &u.Password, &u.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
