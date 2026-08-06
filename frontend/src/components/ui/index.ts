@@ -14,6 +14,7 @@ export { Logo } from "./logo";
 export type { RevealAnimation } from "./reveal";
 export { Reveal } from "./reveal";
 export { Separator } from "./separator";
+export { Skeleton } from "./skeleton";
 export { Spinner } from "./spinner";
 export { Text } from "./text";
 export { WaveDivider } from "./wave-divider";

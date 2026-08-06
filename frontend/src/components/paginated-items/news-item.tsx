@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { Carousel } from "@/components/blocks";
-import { Heading, Text } from "@/components/ui";
+import { Heading, Skeleton, Text } from "@/components/ui";
 import type { NewsItemData } from "@/features/news/types";
 import { ItemCommon } from "./item-common";
 
@@ -12,6 +13,25 @@ interface NewsItemProps {
   item: NewsItemData;
   showDeleteButton?: boolean;
   onDeleteButtonClick?: () => void;
+}
+
+function NewsSlideImage({ src }: { src: string }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+      <Skeleton className="absolute inset-0 h-full w-full rounded-lg" />
+      <Image
+        src={src}
+        alt=""
+        fill
+        className={`object-cover transition-opacity duration-500 ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+        sizes="(max-width: 768px) 100vw, 672px"
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
 }
 
 export function NewsItem({
@@ -54,17 +74,7 @@ export function NewsItem({
           slideClassName="min-w-0 flex-[0_0_100%]"
           slides={item.images.map((image) => ({
             id: String(image.id),
-            content: (
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                <Image
-                  src={image.url}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 672px"
-                />
-              </div>
-            ),
+            content: <NewsSlideImage src={image.url} />,
           }))}
         />
       )}
