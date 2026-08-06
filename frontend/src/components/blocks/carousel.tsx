@@ -70,6 +70,8 @@ export function Carousel({
   slideClassName,
 }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(true);
+  const [canScrollNext, setCanScrollNext] = useState(true);
   const baseId = useId();
 
   const dotColors =
@@ -95,6 +97,8 @@ export function Carousel({
 
   const onSelect = useCallback((api: EmblaCarouselType) => {
     setCurrentIndex(api.selectedScrollSnap());
+    setCanScrollPrev(api.canScrollPrev());
+    setCanScrollNext(api.canScrollNext());
   }, []);
 
   useEffect(() => {
@@ -124,11 +128,11 @@ export function Carousel({
           <>
             <CarouselPrevArrow
               onClick={() => emblaApi?.scrollPrev()}
-              disabled={!emblaApi?.canScrollPrev()}
+              disabled={!canScrollPrev}
             />
             <CarouselNextArrow
               onClick={() => emblaApi?.scrollNext()}
-              disabled={!emblaApi?.canScrollNext()}
+              disabled={!canScrollNext}
             />
           </>
         )}
