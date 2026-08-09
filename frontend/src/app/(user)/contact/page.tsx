@@ -82,18 +82,13 @@ export default function ContactPage() {
         headline="Let's Talk"
         subtitle="Have a question or want to work together? We'd love to hear from you."
         ctaLabel="Send Us a Message"
-        onCtaClick={() =>
-          document
-            .getElementById("contact-info")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
+        onCtaClick={openModal}
         imageSrc="/contact/contact-hero.webp"
         imageAlt="Seguras team"
         iconRight={<ArrowRight size={16} />}
       />
 
       <Section
-        id="contact-info"
         title="Get in Touch"
         subtitle="Reach out anytime. Click any card to open our contact form."
         bgScheme="white"
