@@ -1,11 +1,15 @@
 package handler
 
 import (
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/kadusic1/seguras/backend/database"
 	"github.com/kadusic1/seguras/backend/domain"
 	"github.com/kadusic1/seguras/backend/services"
@@ -13,17 +17,20 @@ import (
 )
 
 type ContactHandler struct {
-	contactStore *database.ContactStore
-	emailService *services.EmailService
+	contactStore   *database.ContactStore
+	emailService   *services.EmailService
+	defaultPerPage int
 }
 
 func NewContactHandler(
 	contactStore *database.ContactStore,
 	emailService *services.EmailService,
+	defaultPerPage int,
 ) (*ContactHandler, error) {
 	return &ContactHandler{
-		contactStore: contactStore,
-		emailService: emailService,
+		contactStore:   contactStore,
+		emailService:   emailService,
+		defaultPerPage: defaultPerPage,
 	}, nil
 }
 
@@ -128,4 +135,65 @@ func (h *ContactHandler) Submit(w http.ResponseWriter, r *http.Request) {
 		Message:   msg.Message,
 		CreatedAt: time.Now(),
 	})
+}
+
+// List returns one page of contact messages.
+func (h *ContactHandler) List(w http.ResponseWriter, r *http.Request) {
+	page, perPage, ok := parsePageParams(w, r, h.defaultPerPage)
+	if !ok {
+		return
+	}
+
+	items, total, err := h.contactStore.List(r.Context(), page, perPage)
+	if err != nil {
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to list contact messages", "SERVER_ERROR",
+		)
+		return
+	}
+
+	resp := domain.PaginatedResponse[domain.ContactListItemResponse]{
+		Items:   make([]domain.ContactListItemResponse, 0, len(items)),
+		Total:   total,
+		Page:    page,
+		PerPage: perPage,
+	}
+	for _, item := range items {
+		resp.Items = append(resp.Items, domain.ContactListItemResponse{
+			ContactResponse: domain.ContactResponse(item),
+			TimeAgo:         util.TimeAgo(item.CreatedAt),
+		})
+	}
+
+	util.WriteJSON(w, http.StatusOK, resp)
+}
+
+// Delete removes a contact message.
+func (h *ContactHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil || id < 1 {
+		util.WriteError(
+			w, http.StatusBadRequest, "invalid contact message id",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	if err := h.contactStore.Delete(r.Context(), id); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			util.WriteError(
+				w, http.StatusNotFound, "contact message not found",
+				"NOT_FOUND",
+			)
+			return
+		}
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to delete contact message", "SERVER_ERROR",
+		)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }

@@ -32,3 +32,8 @@ type ContactResponse struct {
 	Message   string    `json:"message"`
 	CreatedAt time.Time `json:"created_at"`
 }
+
+type ContactListItemResponse struct {
+	ContactResponse
+	TimeAgo string `json:"time_ago"`
+}

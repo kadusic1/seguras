@@ -73,19 +73,23 @@ func NewRouter(
 
 	r.Get("/news", newsHandler.List)
 
+	contactStore := database.NewContactStore(db)
+	contactHandler, err := NewContactHandler(
+		contactStore, emailService, itemsPerPage,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("contact handler: %w", err)
+	}
+
 	r.Group(func(r chi.Router) {
 		r.Use(auth.AuthMiddleware(jwtSvc))
 		r.Get("/jobs", jobHandler.List)
 		r.Delete("/jobs/{id}", jobHandler.Delete)
 		r.Post("/news", newsHandler.Create)
 		r.Delete("/news/{id}", newsHandler.Delete)
+		r.Get("/contact", contactHandler.List)
+		r.Delete("/contact/{id}", contactHandler.Delete)
 	})
-
-	contactStore := database.NewContactStore(db)
-	contactHandler, err := NewContactHandler(contactStore, emailService)
-	if err != nil {
-		return nil, fmt.Errorf("contact handler: %w", err)
-	}
 
 	r.Post("/contact", contactHandler.Submit)
 
