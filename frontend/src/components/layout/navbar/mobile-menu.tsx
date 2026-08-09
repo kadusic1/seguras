@@ -58,7 +58,7 @@ export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="relative z-50 flex h-10 w-10 items-center justify-center text-white transition-colors hover:text-red-500"
+        className="relative z-50 flex h-10 w-10 cursor-pointer items-center justify-center text-white transition-colors hover:text-red-500"
         aria-label={isOpen ? "Close menu" : "Open menu"}
       >
         <MenuIcon open={isOpen} />
