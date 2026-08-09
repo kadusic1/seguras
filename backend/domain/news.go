@@ -65,9 +65,9 @@ type CreateNewsImageResponse struct {
 
 // CreateNewsResponse is the JSON envelope returned for a created news article.
 type CreateNewsResponse struct {
-	ID        int                      `json:"id"`
-	Heading   string                   `json:"heading"`
-	Text      string                   `json:"text"`
-	CreatedAt time.Time                `json:"created_at"`
+	ID        int                       `json:"id"`
+	Heading   string                    `json:"heading"`
+	Text      string                    `json:"text"`
+	CreatedAt time.Time                 `json:"created_at"`
 	Images    []CreateNewsImageResponse `json:"images"`
 }
