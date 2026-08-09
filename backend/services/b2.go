@@ -12,6 +12,7 @@ import (
 	awsconfig "github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/kadusic1/seguras/backend/config"
 )
 
@@ -51,6 +52,73 @@ func NewB2Service(ctx context.Context) (*B2Service, error) {
 	return &B2Service{
 		client: client, presignClient: presignClient, bucket: cfg.Bucket,
 	}, nil
+}
+
+// B2Object describes an object stored in the bucket.
+type B2Object struct {
+	Key          string
+	LastModified time.Time
+}
+
+// ListObjects returns every object currently in the bucket, paginating
+// through the list API until the bucket is exhausted.
+func (s *B2Service) ListObjects(
+	ctx context.Context,
+) ([]B2Object, error) {
+	var objects []B2Object
+	var token *string
+
+	for {
+		out, err := s.client.ListObjectsV2(ctx, &s3.ListObjectsV2Input{
+			Bucket:            aws.String(s.bucket),
+			ContinuationToken: token,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("list objects: %w", err)
+		}
+
+		for _, obj := range out.Contents {
+			objects = append(objects, B2Object{
+				Key:          aws.ToString(obj.Key),
+				LastModified: aws.ToTime(obj.LastModified),
+			})
+		}
+
+		if !aws.ToBool(out.IsTruncated) {
+			return objects, nil
+		}
+		token = out.NextContinuationToken
+	}
+}
+
+// DeleteObjects removes the given keys from the bucket in batches, since
+// DeleteObjects accepts at most 1000 keys per request.
+func (s *B2Service) DeleteObjects(
+	ctx context.Context, keys []string,
+) error {
+	const batchSize = 1000
+
+	for start := 0; start < len(keys); start += batchSize {
+		end := min(start+batchSize, len(keys))
+		identifiers := make([]types.ObjectIdentifier, 0, end-start)
+		for _, key := range keys[start:end] {
+			identifiers = append(identifiers, types.ObjectIdentifier{
+				Key: aws.String(key),
+			})
+		}
+
+		_, err := s.client.DeleteObjects(ctx, &s3.DeleteObjectsInput{
+			Bucket: aws.String(s.bucket),
+			Delete: &types.Delete{
+				Objects: identifiers,
+				Quiet:   aws.Bool(true),
+			},
+		})
+		if err != nil {
+			return fmt.Errorf("delete objects: %w", err)
+		}
+	}
+	return nil
 }
 
 // UploadFile uploads data to the given key (object path) in the configured
