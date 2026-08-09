@@ -26,7 +26,7 @@ export function Hero({
   iconRight,
   onCtaClick,
 }: HeroProps) {
-  const s = schemes["red"];
+  const s = schemes.red;
 
   return (
     <section className={`relative overflow-hidden ${s.bg}`}>
