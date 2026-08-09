@@ -70,15 +70,7 @@ func (s *NewsStore) Create(
 func (s *NewsStore) List(
 	ctx context.Context, page, perPage int,
 ) ([]domain.NewsWithImages, int, error) {
-	if page < 1 {
-		page = 1
-	}
-	if perPage < 1 {
-		perPage = 10
-	}
-	if perPage > 100 {
-		perPage = 100
-	}
+	page, perPage = clampPagination(page, perPage)
 
 	var total int
 	if err := s.db.QueryRowContext(

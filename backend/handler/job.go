@@ -18,8 +18,6 @@ import (
 	"github.com/kadusic1/seguras/backend/util"
 )
 
-const maxJobsPerPage = 100
-
 type JobHandler struct {
 	jobStore       *database.JobStore
 	emailService   *services.EmailService
@@ -220,32 +218,8 @@ func (h *JobHandler) Submit(w http.ResponseWriter, r *http.Request) {
 
 // List returns one page of job applications with presigned URLs for the CVs.
 func (h *JobHandler) List(w http.ResponseWriter, r *http.Request) {
-	page, err := parsePositiveInt(r.URL.Query().Get("page"), 1)
-	if err != nil {
-		util.WriteError(
-			w, http.StatusBadRequest, "page must be a positive integer",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	perPage, err := parsePositiveInt(
-		r.URL.Query().Get("per_page"), h.defaultPerPage,
-	)
-	if err != nil {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"per_page must be a positive integer",
-			"BAD_REQUEST",
-		)
-		return
-	}
-	if perPage > maxJobsPerPage {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"per_page must not exceed 100",
-			"BAD_REQUEST",
-		)
+	page, perPage, ok := parsePageParams(w, r, h.defaultPerPage)
+	if !ok {
 		return
 	}
 
@@ -258,7 +232,7 @@ func (h *JobHandler) List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := domain.JobListResponse{
+	resp := domain.PaginatedResponse[domain.JobListItemResponse]{
 		Items:   make([]domain.JobListItemResponse, 0, len(items)),
 		Total:   total,
 		Page:    page,

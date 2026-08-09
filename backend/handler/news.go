@@ -16,10 +16,7 @@ import (
 	"github.com/kadusic1/seguras/backend/util"
 )
 
-const (
-	maxNewsPerPage = 100
-	presignExpiry  = 15 * time.Minute
-)
+const presignExpiry = 15 * time.Minute
 
 // NewsHandler serves news articles and their images.
 type NewsHandler struct {
@@ -42,32 +39,8 @@ func NewNewsHandler(
 
 // List returns one page of news with presigned URLs for all images.
 func (h *NewsHandler) List(w http.ResponseWriter, r *http.Request) {
-	page, err := parsePositiveInt(r.URL.Query().Get("page"), 1)
-	if err != nil {
-		util.WriteError(
-			w, http.StatusBadRequest, "page must be a positive integer",
-			"BAD_REQUEST",
-		)
-		return
-	}
-
-	perPage, err := parsePositiveInt(
-		r.URL.Query().Get("per_page"), h.defaultPerPage,
-	)
-	if err != nil {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"per_page must be a positive integer",
-			"BAD_REQUEST",
-		)
-		return
-	}
-	if perPage > maxNewsPerPage {
-		util.WriteError(
-			w, http.StatusBadRequest,
-			"per_page must not exceed 100",
-			"BAD_REQUEST",
-		)
+	page, perPage, ok := parsePageParams(w, r, h.defaultPerPage)
+	if !ok {
 		return
 	}
 
@@ -80,7 +53,7 @@ func (h *NewsHandler) List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := domain.NewsListResponse{
+	resp := domain.PaginatedResponse[domain.NewsItemResponse]{
 		Items:   make([]domain.NewsItemResponse, 0, len(items)),
 		Total:   total,
 		Page:    page,
@@ -245,17 +218,4 @@ func (h *NewsHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusNoContent)
-}
-
-// parsePositiveInt parses s as an int, returning def when s is empty and
-// an error when s is present but not a positive integer.
-func parsePositiveInt(s string, def int) (int, error) {
-	if s == "" {
-		return def, nil
-	}
-	n, err := strconv.Atoi(s)
-	if err != nil || n < 1 {
-		return 0, err
-	}
-	return n, nil
 }

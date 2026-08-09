@@ -74,12 +74,3 @@ type JobListItemResponse struct {
 	JobApplicationResponse
 	CVURL string `json:"cv_url,omitempty"`
 }
-
-// JobListResponse is the JSON envelope returned for a page of job
-// applications.
-type JobListResponse struct {
-	Items   []JobListItemResponse `json:"items"`
-	Total   int                   `json:"total"`
-	Page    int                   `json:"page"`
-	PerPage int                   `json:"per_page"`
-}

@@ -50,15 +50,7 @@ func (s *JobStore) Create(ctx context.Context, app *domain.JobApplication) error
 func (s *JobStore) List(
 	ctx context.Context, page, perPage int,
 ) ([]domain.JobApplication, int, error) {
-	if page < 1 {
-		page = 1
-	}
-	if perPage < 1 {
-		perPage = 10
-	}
-	if perPage > 100 {
-		perPage = 100
-	}
+	page, perPage = clampPagination(page, perPage)
 
 	var total int
 	if err := s.db.QueryRowContext(

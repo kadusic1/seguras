@@ -43,14 +43,6 @@ type NewsItemResponse struct {
 	Images    []NewsImageResponse `json:"images"`
 }
 
-// NewsListResponse is the JSON envelope returned for a page of news.
-type NewsListResponse struct {
-	Items   []NewsItemResponse `json:"items"`
-	Total   int                `json:"total"`
-	Page    int                `json:"page"`
-	PerPage int                `json:"per_page"`
-}
-
 // CreateNewsImageRequest is a single image reference in a create request.
 type CreateNewsImageRequest struct {
 	ImageKey     string `json:"image_key"`
