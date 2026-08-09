@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { navLinks } from "@/components/layout/navbar/navbar-data";
 import { Logo, Text } from "@/components/ui";
 import { contactInfo } from "./footer-data";
 
@@ -7,7 +5,7 @@ export function Footer() {
   return (
     <footer className="border-t-2 border-zinc-600 bg-black">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
           <div className="space-y-4">
             <Logo />
             <Text variant="base" bgScheme="black" emphasis="primary">
@@ -50,31 +48,6 @@ export function Footer() {
                       </Text>
                     </span>
                   )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <Text variant="lg" bgScheme="black">
-              Quick Links
-            </Text>
-            <ul className="space-y-3">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="block transition-opacity hover:opacity-80"
-                  >
-                    <Text
-                      as="span"
-                      variant="base"
-                      bgScheme="black"
-                      emphasis="primary"
-                    >
-                      {link.label}
-                    </Text>
-                  </Link>
                 </li>
               ))}
             </ul>
