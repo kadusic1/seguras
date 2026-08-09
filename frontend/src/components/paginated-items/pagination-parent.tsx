@@ -43,17 +43,17 @@ export function PaginationParent<T>({
   }, [page]);
 
   const listRef = useRef<HTMLDivElement>(null);
-  const pendingScrollPageRef = useRef<number | null>(null);
+  const prevPageRef = useRef(page);
 
   useEffect(() => {
-    if (pendingScrollPageRef.current !== data.page) return;
-    pendingScrollPageRef.current = null;
+    if (prevPageRef.current === data.page) return;
+    prevPageRef.current = data.page;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
-  }, [data]);
+  }, [data.page]);
 
   const fetchPage = useCallback(
     async (nextPage: number) => {
@@ -81,7 +81,6 @@ export function PaginationParent<T>({
 
   async function goToPage(nextPage: number) {
     if (nextPage < 1 || nextPage > totalPages) return;
-    pendingScrollPageRef.current = nextPage;
     await fetchPage(nextPage);
   }
 
