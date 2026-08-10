@@ -111,7 +111,7 @@ export function ApplicationItem({
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-500 hover:text-red-400"
           >
             <Download className="size-4" />
-            Download CV
+            Open CV
           </a>
         </div>
       )}
