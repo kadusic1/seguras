@@ -1,5 +1,7 @@
 export { EmptyState } from "./empty-state";
 export { ItemCommon } from "./item-common";
+export type { MessageItemData } from "./message-item";
+export { MessageItem } from "./message-item";
 export type { NewsImageData, NewsItemData } from "./news-item";
 export { NewsItem } from "./news-item";
 export { PageNumber } from "./page-number";
