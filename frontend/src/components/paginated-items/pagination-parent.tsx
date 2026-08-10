@@ -21,6 +21,8 @@ interface PaginationParentProps<T> {
   onAddButtonClick?: () => void;
   /** Increment to refetch the current page (e.g. after add/delete). */
   refreshToken?: number;
+  /** Empty-state copy. Defaults to EmptyState's own default message. */
+  emptyMessage?: string;
 }
 
 export function PaginationParent<T>({
@@ -30,6 +32,7 @@ export function PaginationParent<T>({
   showAddButton = false,
   onAddButtonClick,
   refreshToken,
+  emptyMessage,
 }: PaginationParentProps<T>) {
   const [data, setData] = useState(initialData);
 
@@ -93,7 +96,7 @@ export function PaginationParent<T>({
       )}
       <div ref={listRef} className="mt-4 scroll-mt-24">
         {data.items.length === 0 && page === 1 ? (
-          <EmptyState message="No news found yet." />
+          <EmptyState message={emptyMessage} />
         ) : (
           data.items.map((item, index) => renderItem(item, index))
         )}

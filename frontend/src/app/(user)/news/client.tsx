@@ -115,6 +115,7 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
         <PaginationParent<NewsItemData>
           initialData={initialData}
           url="/api/news"
+          emptyMessage="No news found yet."
           refreshToken={refreshToken}
           showAddButton={isAdmin}
           onAddButtonClick={openAddModal}
