@@ -3,11 +3,9 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"flag"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
 
@@ -36,7 +34,7 @@ func main() {
 		log.Fatalf("config: %v", err)
 	}
 
-	db, err := sql.Open("mysql", dbCfg.DSN)
+	db, err := config.OpenDB(dbCfg.DSN)
 	if err != nil {
 		log.Fatalf("failed to open database: %v", err)
 	}
