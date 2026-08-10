@@ -18,10 +18,6 @@ import (
 	"github.com/kadusic1/seguras/backend/services"
 )
 
-// orphanGrace is how old an object must be before it can be considered an
-// orphan, protecting uploads still in flight between presign and DB write.
-const orphanGrace = 24 * time.Hour
-
 func main() {
 	dryRun := flag.Bool("dry-run", false,
 		"list objects that would be deleted without deleting them")
@@ -29,6 +25,12 @@ func main() {
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatalf("failed to load .env file: %v", err)
+	}
+
+	grace := config.GetEnv("ORPHAN_GRACE", "24h")
+	orphanGrace, err := time.ParseDuration(grace)
+	if err != nil {
+		log.Fatalf("config: ORPHAN_GRACE invalid: %v", err)
 	}
 
 	dbCfg, err := config.LoadDB()
