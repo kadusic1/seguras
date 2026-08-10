@@ -101,7 +101,7 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
             .getElementById("latest-news")
             ?.scrollIntoView({ behavior: "smooth" })
         }
-        imageSrc="/news/news-hero.webp"
+        imageSrc="/services/services1.webp"
         imageAlt="Seguras news"
         iconRight={<ArrowRight size={16} />}
       />
