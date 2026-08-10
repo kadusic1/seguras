@@ -244,7 +244,7 @@ func (h *JobHandler) List(w http.ResponseWriter, r *http.Request) {
 				ID:             item.ID,
 				FirstName:      item.FirstName,
 				LastName:       item.LastName,
-				DateOfBirth:    item.DateOfBirth,
+				DateOfBirth:    util.FormatDate(item.DateOfBirth),
 				Address:        item.Address,
 				Email:          item.Email,
 				Phone:          item.Phone,
