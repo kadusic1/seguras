@@ -1,4 +1,4 @@
-package config
+package config_test
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/kadusic1/seguras/backend/config"
 	"github.com/kadusic1/seguras/backend/util"
 )
 
@@ -24,7 +25,7 @@ func TestOpenDBReadsTimestampsAsUTC(t *testing.T) {
 		t.Skip("TEST_DB_DSN not set; skipping database integration test")
 	}
 
-	db, err := OpenDB(dsn)
+	db, err := config.OpenDB(dsn)
 	if err != nil {
 		t.Fatalf("OpenDB: %v", err)
 	}
