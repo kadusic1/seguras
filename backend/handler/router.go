@@ -4,6 +4,7 @@ package handler
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -20,6 +21,7 @@ func NewRouter(
 	emailService *services.EmailService,
 	b2Service *services.B2Service,
 	itemsPerPage int,
+	presignExpiry time.Duration,
 ) (*chi.Mux, error) {
 	// Stores
 	userStore := database.NewUserStore(db)
@@ -35,11 +37,15 @@ func NewRouter(
 
 	// Handlers
 	authHandler := NewAuthHandler(userStore, jwtSvc)
-	jobHandler, err := NewJobHandler(jobStore, emailService, b2Service, itemsPerPage)
+	jobHandler, err := NewJobHandler(
+		jobStore, emailService, b2Service, itemsPerPage, presignExpiry,
+	)
 	if err != nil {
 		return nil, fmt.Errorf("job handler: %w", err)
 	}
-	newsHandler, err := NewNewsHandler(newsStore, b2Service, itemsPerPage)
+	newsHandler, err := NewNewsHandler(
+		newsStore, b2Service, itemsPerPage, presignExpiry,
+	)
 	if err != nil {
 		return nil, fmt.Errorf("news handler: %w", err)
 	}
@@ -47,7 +53,7 @@ func NewRouter(
 	if err != nil {
 		return nil, fmt.Errorf("contact handler: %w", err)
 	}
-	fileHandler := NewFileHandler(b2Service)
+	fileHandler := NewFileHandler(b2Service, presignExpiry)
 
 	// Router setup and middleware
 	serverCfg := config.LoadServer()

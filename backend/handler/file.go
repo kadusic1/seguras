@@ -23,11 +23,18 @@ var fileExtRe = regexp.MustCompile(`^[a-z0-9]{1,10}$`)
 // FileHandler serves presigned upload and delete operations for any file a
 // form needs to collect, independent of the feature that form belongs to.
 type FileHandler struct {
-	b2Service *services.B2Service
+	b2Service     *services.B2Service
+	presignExpiry time.Duration
 }
 
-func NewFileHandler(b2Service *services.B2Service) *FileHandler {
-	return &FileHandler{b2Service: b2Service}
+func NewFileHandler(
+	b2Service *services.B2Service,
+	presignExpiry time.Duration,
+) *FileHandler {
+	return &FileHandler{
+		b2Service:     b2Service,
+		presignExpiry: presignExpiry,
+	}
 }
 
 // sanitizeExt returns a lowercase alphanumeric extension (max 10 chars)
@@ -78,7 +85,7 @@ func (h *FileHandler) PresignUpload(w http.ResponseWriter, r *http.Request) {
 
 	key := uuid.New().String() + "." + sanitizeExt(req.Filename)
 	presignedURL, err := h.b2Service.PresignPutURL(
-		r.Context(), key, 15*time.Minute,
+		r.Context(), key, h.presignExpiry,
 	)
 	if err != nil {
 		util.WriteError(

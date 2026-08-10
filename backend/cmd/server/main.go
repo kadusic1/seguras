@@ -59,8 +59,14 @@ func main() {
 		log.Fatalf("config: %v", err)
 	}
 
+	presignCfg, err := config.LoadPresign()
+	if err != nil {
+		log.Fatalf("config: %v", err)
+	}
+
 	r, err := handler.NewRouter(
 		db, emailService, b2Service, paginationCfg.ItemsPerPage,
+		presignCfg.Expiry,
 	)
 	if err != nil {
 		log.Fatalf("router: %v", err)

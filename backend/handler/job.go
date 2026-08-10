@@ -23,6 +23,7 @@ type JobHandler struct {
 	emailService   *services.EmailService
 	b2Service      *services.B2Service
 	defaultPerPage int
+	presignExpiry  time.Duration
 }
 
 func NewJobHandler(
@@ -30,12 +31,14 @@ func NewJobHandler(
 	emailService *services.EmailService,
 	b2Service *services.B2Service,
 	defaultPerPage int,
+	presignExpiry time.Duration,
 ) (*JobHandler, error) {
 	return &JobHandler{
 		jobStore:       jobStore,
 		emailService:   emailService,
 		b2Service:      b2Service,
 		defaultPerPage: defaultPerPage,
+		presignExpiry:  presignExpiry,
 	}, nil
 }
 
@@ -257,7 +260,7 @@ func (h *JobHandler) List(w http.ResponseWriter, r *http.Request) {
 		}
 		if item.CVKey != "" {
 			url, err := h.b2Service.PresignGetURL(
-				r.Context(), item.CVKey, presignExpiry,
+				r.Context(), item.CVKey, h.presignExpiry,
 			)
 			if err != nil {
 				util.WriteError(

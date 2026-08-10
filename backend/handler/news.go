@@ -16,24 +16,25 @@ import (
 	"github.com/kadusic1/seguras/backend/util"
 )
 
-const presignExpiry = 15 * time.Minute
-
 // NewsHandler serves news articles and their images.
 type NewsHandler struct {
 	newsStore      *database.NewsStore
 	b2Service      *services.B2Service
 	defaultPerPage int
+	presignExpiry  time.Duration
 }
 
 func NewNewsHandler(
 	newsStore *database.NewsStore,
 	b2Service *services.B2Service,
 	defaultPerPage int,
+	presignExpiry time.Duration,
 ) (*NewsHandler, error) {
 	return &NewsHandler{
 		newsStore:      newsStore,
 		b2Service:      b2Service,
 		defaultPerPage: defaultPerPage,
+		presignExpiry:  presignExpiry,
 	}, nil
 }
 
@@ -70,7 +71,7 @@ func (h *NewsHandler) List(w http.ResponseWriter, r *http.Request) {
 		}
 		for _, img := range item.Images {
 			url, err := h.b2Service.PresignGetURL(
-				r.Context(), img.ImageKey, presignExpiry,
+				r.Context(), img.ImageKey, h.presignExpiry,
 			)
 			if err != nil {
 				util.WriteError(
