@@ -21,16 +21,36 @@ func NewRouter(
 	b2Service *services.B2Service,
 	itemsPerPage int,
 ) (*chi.Mux, error) {
+	// Stores
 	userStore := database.NewUserStore(db)
+	jobStore := database.NewJobStore(db)
+	newsStore := database.NewNewsStore(db)
+	contactStore := database.NewContactStore(db)
 
+	// Services
 	jwtSvc, err := auth.NewJWTService()
 	if err != nil {
 		return nil, fmt.Errorf("jwt: %w", err)
 	}
+
+	// Handlers
 	authHandler := NewAuthHandler(userStore, jwtSvc)
+	jobHandler, err := NewJobHandler(jobStore, emailService, b2Service, itemsPerPage)
+	if err != nil {
+		return nil, fmt.Errorf("job handler: %w", err)
+	}
+	newsHandler, err := NewNewsHandler(newsStore, b2Service, itemsPerPage)
+	if err != nil {
+		return nil, fmt.Errorf("news handler: %w", err)
+	}
+	contactHandler, err := NewContactHandler(contactStore, emailService, itemsPerPage)
+	if err != nil {
+		return nil, fmt.Errorf("contact handler: %w", err)
+	}
+	fileHandler := NewFileHandler(b2Service)
 
+	// Router setup and middleware
 	serverCfg := config.LoadServer()
-
 	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Logger)
@@ -43,46 +63,30 @@ func NewRouter(
 		MaxAge:           300,
 	}))
 
+	// --- Public routes ---
+	// Auth
 	r.Route("/auth", func(r chi.Router) {
 		r.Post("/login", authHandler.Login)
 		r.Post("/refresh", authHandler.Refresh)
-
-		r.Group(func(r chi.Router) {
-			r.Use(auth.AuthMiddleware(jwtSvc))
-			r.Get("/me", authHandler.Me)
-		})
 	})
 
-	jobStore := database.NewJobStore(db)
-	jobHandler, err := NewJobHandler(jobStore, emailService, b2Service, itemsPerPage)
-	if err != nil {
-		return nil, fmt.Errorf("job handler: %w", err)
-	}
-
+	// Jobs
 	r.Post("/jobs/apply", jobHandler.Submit)
 
-	fileHandler := NewFileHandler(b2Service)
+	// Files
 	r.Post("/files/presign", fileHandler.PresignUpload)
 	r.Delete("/files/{key}", fileHandler.Delete)
 
-	newsStore := database.NewNewsStore(db)
-	newsHandler, err := NewNewsHandler(newsStore, b2Service, itemsPerPage)
-	if err != nil {
-		return nil, fmt.Errorf("news handler: %w", err)
-	}
-
+	// News
 	r.Get("/news", newsHandler.List)
 
-	contactStore := database.NewContactStore(db)
-	contactHandler, err := NewContactHandler(
-		contactStore, emailService, itemsPerPage,
-	)
-	if err != nil {
-		return nil, fmt.Errorf("contact handler: %w", err)
-	}
+	// Contact
+	r.Post("/contact", contactHandler.Submit)
 
+	// --- Protected routes (require auth) ---
 	r.Group(func(r chi.Router) {
 		r.Use(auth.AuthMiddleware(jwtSvc))
+		r.Get("/auth/me", authHandler.Me)
 		r.Get("/jobs", jobHandler.List)
 		r.Delete("/jobs/{id}", jobHandler.Delete)
 		r.Post("/news", newsHandler.Create)
@@ -90,8 +94,6 @@ func NewRouter(
 		r.Get("/contact", contactHandler.List)
 		r.Delete("/contact/{id}", contactHandler.Delete)
 	})
-
-	r.Post("/contact", contactHandler.Submit)
 
 	return r, nil
 }
