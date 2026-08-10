@@ -13,6 +13,9 @@ MYSQL="sudo mariadb -u ${DB_ROOT_USER} --password=${DB_ROOT_PASSWORD:-}"
 
 echo "==> Resetting database ${DB_NAME} and user ${DB_APP_USER}..."
 $MYSQL <<SQL
+-- Store and return timestamps in UTC; the app parses DB times as UTC
+-- (DSN loc=UTC) so wall-clock values must not be shifted to local time.
+SET GLOBAL time_zone = '+00:00';
 DROP DATABASE IF EXISTS ${DB_NAME};
 DROP USER IF EXISTS ${DB_APP_USER}@'%';
 DROP USER IF EXISTS ${DB_APP_USER}@'localhost';
