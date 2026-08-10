@@ -79,7 +79,7 @@ export function ApplicationItem({
 
       <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
         <DetailRow icon={Calendar} label="Born">
-          {new Date(item.date_of_birth).toLocaleDateString()}
+          {item.date_of_birth}
         </DetailRow>
         <DetailRow icon={MapPin} label="Address">
           {item.address}
