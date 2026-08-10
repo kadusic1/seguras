@@ -19,7 +19,7 @@ func FormatDate(dob string) string {
 }
 
 // TimeAgo returns a compact relative time description for display, rounded
-// down to the largest unit: "5m ago", "2h ago", "20d ago", "3m ago", "1y ago".
+// down to the largest unit: "5m ago", "2h ago", "20d ago", "3mo ago", "1y ago".
 // Never compound ("2h 50m ago"). Future timestamps and anything under a
 // minute are reported as "1m ago".
 func TimeAgo(t time.Time) string {
@@ -35,7 +35,7 @@ func TimeAgo(t time.Time) string {
 	case mins < 30*24*60:
 		return fmt.Sprintf("%dd ago", mins/(24*60))
 	case mins < 12*30*24*60:
-		return fmt.Sprintf("%dm ago", mins/(30*24*60))
+		return fmt.Sprintf("%dmo ago", mins/(30*24*60))
 	default:
 		return fmt.Sprintf("%dy ago", mins/(12*30*24*60))
 	}
