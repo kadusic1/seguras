@@ -1,14 +1,12 @@
 export async function deleteApplication(
   id: number,
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; networkError?: boolean }> {
   try {
     const res = await fetch(`/api/jobs/${id}`, { method: "DELETE" });
     if (res.ok) return {};
     const err = await res.json().catch(() => null);
-    return {
-      error: err?.error ?? "Failed to delete application. Please try again.",
-    };
+    return { error: err?.error };
   } catch {
-    return { error: "Check your internet connection and try again." };
+    return { networkError: true };
   }
 }

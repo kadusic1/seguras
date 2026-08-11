@@ -1,12 +1,12 @@
-export async function deleteMessage(id: number): Promise<{ error?: string }> {
+export async function deleteMessage(
+  id: number,
+): Promise<{ error?: string; networkError?: boolean }> {
   try {
     const res = await fetch(`/api/contact/${id}`, { method: "DELETE" });
     if (res.ok) return {};
     const err = await res.json().catch(() => null);
-    return {
-      error: err?.error ?? "Failed to delete message. Please try again.",
-    };
+    return { error: err?.error };
   } catch {
-    return { error: "Check your internet connection and try again." };
+    return { networkError: true };
   }
 }

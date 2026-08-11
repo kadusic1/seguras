@@ -12,6 +12,7 @@ import {
   Shirt,
   UserCheck,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import type { JobApplicationItemData } from "@/features/jobs/types";
 import { ItemCommon } from "./item-common";
@@ -25,9 +26,9 @@ interface ApplicationItemProps {
   onDeleteButtonClick?: () => void;
 }
 
-const employmentTypeLabel: Record<string, string> = {
-  security: "Security",
-  service: "Service",
+const employmentTypeKey: Record<string, string> = {
+  security: "item.employmentType.security",
+  service: "item.employmentType.service",
 };
 
 const employmentTypeIcon: Record<string, LucideIcon> = {
@@ -56,9 +57,11 @@ export function ApplicationItem({
   showDeleteButton = false,
   onDeleteButtonClick,
 }: ApplicationItemProps) {
+  const t = useTranslations("Applications");
   const EmploymentIcon = employmentTypeIcon[item.employment_type] ?? Shield;
-  const employmentLabel =
-    employmentTypeLabel[item.employment_type] ?? item.employment_type;
+  const employmentLabel = employmentTypeKey[item.employment_type]
+    ? t(employmentTypeKey[item.employment_type])
+    : item.employment_type;
 
   return (
     <ItemCommon
@@ -78,10 +81,10 @@ export function ApplicationItem({
       />
 
       <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
-        <DetailRow icon={Calendar} label="Born">
+        <DetailRow icon={Calendar} label={t("item.born")}>
           {item.date_of_birth}
         </DetailRow>
-        <DetailRow icon={MapPin} label="Address">
+        <DetailRow icon={MapPin} label={t("item.address")}>
           {item.address}
         </DetailRow>
         <DetailRow icon={Mail}>
@@ -94,10 +97,10 @@ export function ApplicationItem({
             {item.phone}
           </a>
         </DetailRow>
-        <DetailRow icon={Clock} label="Available">
-          {item.hours_available} h / week
+        <DetailRow icon={Clock} label={t("item.available")}>
+          {t("item.hoursPerWeek", { hours: item.hours_available })}
         </DetailRow>
-        <DetailRow icon={Shirt} label="Size">
+        <DetailRow icon={Shirt} label={t("item.size")}>
           {item.clothing_size}
         </DetailRow>
       </div>
@@ -111,7 +114,7 @@ export function ApplicationItem({
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-500 hover:text-red-400"
           >
             <Download className="size-4" />
-            Open CV
+            {t("item.openCv")}
           </a>
         </div>
       )}

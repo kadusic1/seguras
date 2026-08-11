@@ -1,6 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Section } from "@/components/blocks";
 import { Modal } from "@/components/overlay";
@@ -14,6 +15,7 @@ interface MessagesClientProps {
 }
 
 export function MessagesClient({ initialData }: MessagesClientProps) {
+  const t = useTranslations("Messages");
   const [deleteTarget, setDeleteTarget] = useState<MessageItemData | null>(
     null,
   );
@@ -22,24 +24,28 @@ export function MessagesClient({ initialData }: MessagesClientProps) {
 
   const handleDeleteConfirm = async () => {
     if (!deleteTarget) return;
-    const { error } = await deleteMessage(deleteTarget.id);
-    if (error) {
-      setDeleteError(error);
+    const { error, networkError } = await deleteMessage(deleteTarget.id);
+    if (error || networkError) {
+      setDeleteError(
+        networkError
+          ? t("errors.connectionError")
+          : (error ?? t("errors.deleteFailed")),
+      );
       return;
     }
     setDeleteTarget(null);
     setDeleteError(null);
-    setRefreshToken((t) => t + 1);
+    setRefreshToken((token) => token + 1);
   };
 
   return (
     <>
-      <Section title="Messages" bgScheme="white" animation="slideUp">
+      <Section title={t("section.title")} bgScheme="white" animation="slideUp">
         <PaginationParent<MessageItemData>
           initialData={initialData}
           url="/api/contact"
           showAddButton={false}
-          emptyMessage="No messages found yet."
+          emptyMessage={t("empty")}
           refreshToken={refreshToken}
           renderItem={(item) => (
             <div key={item.id} className="mb-6">
@@ -61,13 +67,10 @@ export function MessagesClient({ initialData }: MessagesClientProps) {
         onOpenChange={(open) => {
           if (!open) setDeleteTarget(null);
         }}
-        title="Delete Message"
-        description={
-          deleteError ??
-          "This message will be permanently removed. This action cannot be undone."
-        }
+        title={t("deleteModal.title")}
+        description={deleteError ?? t("deleteModal.description")}
         icon={Trash2}
-        confirmLabel="Delete"
+        confirmLabel={t("deleteModal.confirmLabel")}
         onConfirm={handleDeleteConfirm}
         bgScheme="white"
       />

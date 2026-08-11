@@ -3,6 +3,7 @@
 import { ArrowRight, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Form, FormField, PasswordField } from "@/components/form";
 import { ErrorText, Logo } from "@/components/ui";
@@ -14,6 +15,7 @@ interface LoginFormData {
 
 export default function LoginPage() {
   const router = useRouter();
+  const t = useTranslations("Login");
   const [error, setError] = useState<string | null>(null);
 
   return (
@@ -22,8 +24,8 @@ export default function LoginPage() {
         <Logo />
       </div>
       <Form<LoginFormData>
-        header="Login"
-        subtitle="Enter your email and password"
+        header={t("form.header")}
+        subtitle={t("form.subtitle")}
         onSubmit={async (data) => {
           setError(null);
           const result = await signIn("credentials", {
@@ -32,7 +34,7 @@ export default function LoginPage() {
             redirect: false,
           });
           if (result?.error) {
-            setError("Invalid email or password.");
+            setError(t("error.invalidCredentials"));
           } else {
             router.push("/");
             router.refresh();
@@ -40,7 +42,7 @@ export default function LoginPage() {
         }}
         defaultValues={{ email: "", password: "" }}
         bgScheme="black"
-        submitLabel="Log In"
+        submitLabel={t("form.submitLabel")}
         submitIcon={<ArrowRight size={16} />}
         submitIconPosition="right"
         headerIcon={Shield}
@@ -49,16 +51,16 @@ export default function LoginPage() {
       >
         <FormField
           name="email"
-          label="Email"
+          label={t("form.emailLabel")}
           type="email"
-          placeholder="name@example.com"
-          rules={{ required: "Email is required" }}
+          placeholder={t("form.emailPlaceholder")}
+          rules={{ required: t("form.emailRequired") }}
         />
         <PasswordField
           name="password"
-          label="Password"
-          placeholder="Enter your password"
-          rules={{ required: "Password is required" }}
+          label={t("form.passwordLabel")}
+          placeholder={t("form.passwordPlaceholder")}
+          rules={{ required: t("form.passwordRequired") }}
         />
         {error && <ErrorText className="mt-2 text-center">{error}</ErrorText>}
       </Form>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Section } from "@/components/blocks";
 import { Modal } from "@/components/overlay";
@@ -17,6 +18,7 @@ interface ApplicationsClientProps {
 }
 
 export function ApplicationsClient({ initialData }: ApplicationsClientProps) {
+  const t = useTranslations("Applications");
   const [deleteTarget, setDeleteTarget] =
     useState<JobApplicationItemData | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -24,24 +26,28 @@ export function ApplicationsClient({ initialData }: ApplicationsClientProps) {
 
   const handleDeleteConfirm = async () => {
     if (!deleteTarget) return;
-    const { error } = await deleteApplication(deleteTarget.id);
-    if (error) {
-      setDeleteError(error);
+    const { error, networkError } = await deleteApplication(deleteTarget.id);
+    if (error || networkError) {
+      setDeleteError(
+        networkError
+          ? t("errors.connectionError")
+          : (error ?? t("errors.deleteFailed")),
+      );
       return;
     }
     setDeleteTarget(null);
     setDeleteError(null);
-    setRefreshToken((t) => t + 1);
+    setRefreshToken((token) => token + 1);
   };
 
   return (
     <>
-      <Section title="Applications" bgScheme="white" animation="slideUp">
+      <Section title={t("section.title")} bgScheme="white" animation="slideUp">
         <PaginationParent<JobApplicationItemData>
           initialData={initialData}
           url="/api/jobs"
           showAddButton={false}
-          emptyMessage="No applications found yet."
+          emptyMessage={t("empty")}
           refreshToken={refreshToken}
           renderItem={(item) => (
             <div key={item.id} className="mb-6">
@@ -63,13 +69,10 @@ export function ApplicationsClient({ initialData }: ApplicationsClientProps) {
         onOpenChange={(open) => {
           if (!open) setDeleteTarget(null);
         }}
-        title="Delete Application"
-        description={
-          deleteError ??
-          "This application and any attached CV will be permanently removed. This action cannot be undone."
-        }
+        title={t("deleteModal.title")}
+        description={deleteError ?? t("deleteModal.description")}
         icon={Trash2}
-        confirmLabel="Delete"
+        confirmLabel={t("deleteModal.confirmLabel")}
         onConfirm={handleDeleteConfirm}
         bgScheme="white"
       />
