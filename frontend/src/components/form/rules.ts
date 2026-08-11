@@ -22,7 +22,7 @@ export const DEFAULT_RULES: Partial<Record<FieldType, RegisterOptions>> = {
   email: {
     pattern: {
       value: EMAIL_PATTERN,
-      message: "Enter a valid email address",
+      message: "",
     },
   },
 };

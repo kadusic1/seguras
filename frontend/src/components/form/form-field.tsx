@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { type InputHTMLAttributes, useContext } from "react";
 import {
   type FieldPath,
@@ -66,10 +67,18 @@ export function FormField<T extends FieldValues>({
   const bgScheme = useContext(ColorSchemeCtx);
   const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
+  const t = useTranslations("Common");
   const effectiveRules = {
     ...(DEFAULT_RULES[type] ?? {}),
     ...rules,
   } as RegisterOptions<T>;
+
+  if (type === "email" && !rules?.pattern && effectiveRules.pattern) {
+    effectiveRules.pattern = {
+      ...effectiveRules.pattern,
+      message: t("validation.invalidEmail"),
+    };
+  }
 
   return (
     <FieldChrome

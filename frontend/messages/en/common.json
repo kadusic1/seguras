@@ -33,6 +33,9 @@
     "open": "Open menu",
     "close": "Close menu"
   },
+  "validation": {
+    "invalidEmail": "Enter a valid email address"
+  },
   "passwordField": {
     "showPassword": "Show password",
     "hidePassword": "Hide password"

@@ -33,6 +33,9 @@
     "open": "Menu openen",
     "close": "Menu sluiten"
   },
+  "validation": {
+    "invalidEmail": "Voer een geldig e-mailadres in"
+  },
   "passwordField": {
     "showPassword": "Wachtwoord tonen",
     "hidePassword": "Wachtwoord verbergen"
