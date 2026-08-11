@@ -5,11 +5,14 @@
     "edit": "Edit",
     "delete": "Delete",
     "cancel": "Cancel",
-    "close": "Close"
+    "close": "Close",
+    "submit": "Submit"
   },
   "pagination": {
     "previousPage": "Previous page",
-    "nextPage": "Next page"
+    "nextPage": "Next page",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide"
   },
   "empty": {
     "noItemsFound": "No items found yet"
@@ -20,6 +23,14 @@
     "uploadingEllipsis": "Uploading...",
     "removing": "Removing",
     "removingEllipsis": "Removing..."
+  },
+  "form": {
+    "submitting": "Submitting",
+    "submittingEllipsis": "Submitting..."
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu"
   },
   "passwordField": {
     "showPassword": "Show password",

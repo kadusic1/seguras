@@ -14,6 +14,9 @@ export default getRequestConfig(async () => {
     placeholders,
     news,
     contact,
+    applications,
+    messages,
+    login,
   ] = await Promise.all([
     import(`../../messages/${locale}/navbar.json`),
     import(`../../messages/${locale}/common.json`),
@@ -25,6 +28,9 @@ export default getRequestConfig(async () => {
     import(`../../messages/${locale}/placeholders.json`),
     import(`../../messages/${locale}/news.json`),
     import(`../../messages/${locale}/contact.json`),
+    import(`../../messages/${locale}/applications.json`),
+    import(`../../messages/${locale}/messages.json`),
+    import(`../../messages/${locale}/login.json`),
   ]);
 
   return {
@@ -40,6 +46,9 @@ export default getRequestConfig(async () => {
       Placeholders: placeholders.default,
       News: news.default,
       Contact: contact.default,
+      Applications: applications.default,
+      Messages: messages.default,
+      Login: login.default,
     },
   };
 });

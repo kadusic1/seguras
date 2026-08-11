@@ -5,11 +5,14 @@
     "edit": "Bewerken",
     "delete": "Verwijderen",
     "cancel": "Annuleren",
-    "close": "Sluiten"
+    "close": "Sluiten",
+    "submit": "Versturen"
   },
   "pagination": {
     "previousPage": "Vorige pagina",
-    "nextPage": "Volgende pagina"
+    "nextPage": "Volgende pagina",
+    "previousSlide": "Vorige dia",
+    "nextSlide": "Volgende dia"
   },
   "empty": {
     "noItemsFound": "Nog geen items gevonden"
@@ -20,6 +23,14 @@
     "uploadingEllipsis": "Uploaden...",
     "removing": "Verwijderen",
     "removingEllipsis": "Verwijderen..."
+  },
+  "form": {
+    "submitting": "Verzenden",
+    "submittingEllipsis": "Verzenden..."
+  },
+  "menu": {
+    "open": "Menu openen",
+    "close": "Menu sluiten"
   },
   "passwordField": {
     "showPassword": "Wachtwoord tonen",

@@ -1,0 +1,16 @@
+{
+  "form": {
+    "header": "Login",
+    "subtitle": "Enter your email and password",
+    "submitLabel": "Log In",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "emailRequired": "Email is required",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "passwordRequired": "Password is required"
+  },
+  "error": {
+    "invalidCredentials": "Invalid email or password."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "section": {
+    "title": "Messages"
+  },
+  "empty": "No messages found yet.",
+  "deleteModal": {
+    "title": "Delete Message",
+    "description": "This message will be permanently removed. This action cannot be undone.",
+    "confirmLabel": "Delete"
+  },
+  "errors": {
+    "connectionError": "Check your internet connection and try again.",
+    "deleteFailed": "Failed to delete message. Please try again."
+  }
+}

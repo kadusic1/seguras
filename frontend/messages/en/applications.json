@@ -1,0 +1,27 @@
+{
+  "section": {
+    "title": "Applications"
+  },
+  "empty": "No applications found yet.",
+  "deleteModal": {
+    "title": "Delete Application",
+    "description": "This application and any attached CV will be permanently removed. This action cannot be undone.",
+    "confirmLabel": "Delete"
+  },
+  "item": {
+    "employmentType": {
+      "security": "Security",
+      "service": "Service"
+    },
+    "born": "Born",
+    "address": "Address",
+    "available": "Available",
+    "size": "Size",
+    "hoursPerWeek": "{hours} h / week",
+    "openCv": "Open CV"
+  },
+  "errors": {
+    "connectionError": "Check your internet connection and try again.",
+    "deleteFailed": "Failed to delete application. Please try again."
+  }
+}

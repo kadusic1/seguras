@@ -1,0 +1,16 @@
+{
+  "form": {
+    "header": "Inloggen",
+    "subtitle": "Vul je e-mailadres en wachtwoord in",
+    "submitLabel": "Inloggen",
+    "emailLabel": "E-mailadres",
+    "emailPlaceholder": "naam@voorbeeld.nl",
+    "emailRequired": "E-mailadres is verplicht",
+    "passwordLabel": "Wachtwoord",
+    "passwordPlaceholder": "Vul je wachtwoord in",
+    "passwordRequired": "Wachtwoord is verplicht"
+  },
+  "error": {
+    "invalidCredentials": "Ongeldig e-mailadres of wachtwoord."
+  }
+}

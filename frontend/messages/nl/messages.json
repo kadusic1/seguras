@@ -1,0 +1,15 @@
+{
+  "section": {
+    "title": "Berichten"
+  },
+  "empty": "Nog geen berichten gevonden.",
+  "deleteModal": {
+    "title": "Bericht verwijderen",
+    "description": "Dit bericht wordt definitief verwijderd. Deze actie kan niet ongedaan worden gemaakt.",
+    "confirmLabel": "Verwijderen"
+  },
+  "errors": {
+    "connectionError": "Controleer je internetverbinding en probeer het opnieuw.",
+    "deleteFailed": "Bericht verwijderen is mislukt. Probeer het opnieuw."
+  }
+}

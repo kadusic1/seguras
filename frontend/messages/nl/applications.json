@@ -1,0 +1,27 @@
+{
+  "section": {
+    "title": "Sollicitaties"
+  },
+  "empty": "Nog geen sollicitaties gevonden.",
+  "deleteModal": {
+    "title": "Sollicitatie verwijderen",
+    "description": "Deze sollicitatie en de bijbehorende cv worden definitief verwijderd. Deze actie kan niet ongedaan worden gemaakt.",
+    "confirmLabel": "Verwijderen"
+  },
+  "item": {
+    "employmentType": {
+      "security": "Beveiliging",
+      "service": "Service"
+    },
+    "born": "Geboren",
+    "address": "Adres",
+    "available": "Beschikbaar",
+    "size": "Maat",
+    "hoursPerWeek": "{hours} uur / week",
+    "openCv": "Open cv"
+  },
+  "errors": {
+    "connectionError": "Controleer je internetverbinding en probeer het opnieuw.",
+    "deleteFailed": "Sollicitatie verwijderen is mislukt. Probeer het opnieuw."
+  }
+}
