@@ -11,6 +11,7 @@
     "passwordRequired": "Password is required"
   },
   "error": {
-    "invalidCredentials": "Invalid email or password."
+    "invalidCredentials": "Invalid email or password.",
+    "rateLimited": "Too many attempts. Please try again later."
   }
 }

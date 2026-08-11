@@ -1,6 +1,10 @@
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
+
+class RateLimitError extends CredentialsSignin {
+  code = "rate_limited";
+}
 
 const signInSchema = z.object({
   email: z.email("Invalid email"),
@@ -32,6 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             body: JSON.stringify({ email, password }),
           });
 
+          if (res.status === 429) throw new RateLimitError();
           if (!res.ok) return null;
 
           const data = await res.json();
@@ -44,7 +49,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             refreshToken: data.refresh_token,
             accessTokenExpiresAt: data.expires_in,
           };
-        } catch {
+        } catch (e) {
+          if (e instanceof CredentialsSignin) throw e;
           return null;
         }
       },

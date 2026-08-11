@@ -11,6 +11,7 @@
     "passwordRequired": "Wachtwoord is verplicht"
   },
   "error": {
-    "invalidCredentials": "Ongeldig e-mailadres of wachtwoord."
+    "invalidCredentials": "Ongeldig e-mailadres of wachtwoord.",
+    "rateLimited": "Te veel pogingen. Probeer het later opnieuw."
   }
 }

@@ -34,7 +34,11 @@ export default function LoginPage() {
             redirect: false,
           });
           if (result?.error) {
-            setError(t("error.invalidCredentials"));
+            if (result.code === "rate_limited") {
+              setError(t("error.rateLimited"));
+            } else {
+              setError(t("error.invalidCredentials"));
+            }
           } else {
             router.push("/");
             router.refresh();
