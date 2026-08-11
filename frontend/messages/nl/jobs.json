@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "headline": "Werken bij Seguras",
+    "subtitle": "Wil je ons team versterken? Bekijk de vacatures hieronder!",
+    "ctaLabel": "Bekijk vacatures"
+  },
+  "positions": {
+    "title": "Openstaande vacatures",
+    "applyButton": "Solliciteer direct",
+    "badgeService": "Service",
+    "badgeSecurity": "Beveiliging"
+  },
+  "modal": {
+    "heading": "Solliciteer bij Seguras",
+    "text": "Vul je gegevens in en we nemen zo snel mogelijk contact op."
+  },
+  "form": {
+    "header": "Jouw sollicitatie",
+    "submitLabel": "Verstuur sollicitatie",
+    "jobTypeHeading": "Functietype",
+    "jobTypeNote": "Let op: voor servicefuncties is geen vooropleiding nodig. Voor beveiligingsfuncties is een ESO-diploma (Event Security Officer) verplicht.",
+    "positionLabel": "Functie",
+    "positionSecurity": "Beveiliger",
+    "positionService": "Service Host",
+    "personalHeading": "Persoonlijke gegevens",
+    "firstNameLabel": "Voornaam",
+    "lastNameLabel": "Achternaam",
+    "dateOfBirthLabel": "Geboortedatum",
+    "addressLabel": "Adres",
+    "contactHeading": "Contact",
+    "emailLabel": "E-mailadres",
+    "phoneLabel": "Telefoonnummer",
+    "availabilityHeading": "Beschikbaarheid",
+    "hoursAvailableLabel": "Aantal uur beschikbaar per week",
+    "clothingSizeLabel": "Kledingmaat",
+    "additionalHeading": "Extra",
+    "cvNote": "Het uploaden van een cv is niet verplicht, maar helpt ons wel om je beter te leren kennen en vergroot je kans op een gesprek.",
+    "cvLabel": "Upload cv",
+    "helpText": "Vragen? <contact>Neem contact op</contact>, bel <phoneLink>{phone}</phoneLink> of mail naar <emailLink>{email}</emailLink>"
+  },
+  "validation": {
+    "requiredPosition": "Kies een functie",
+    "requiredHours": "Aantal uur is verplicht",
+    "notNumericHours": "Aantal uur moet een getal zijn",
+    "rangeHours": "Voer een geldig aantal uur in",
+    "requiredSize": "Kies een kledingmaat",
+    "maxLengthFirstName": "Voornaam is te lang",
+    "maxLengthLastName": "Achternaam is te lang",
+    "maxLengthAddress": "Adres is te lang",
+    "invalidEmail": "Voer een geldig e-mailadres in",
+    "invalidDate": "Voer een geldige datum in",
+    "dateInPast": "Geboortedatum moet in het verleden liggen",
+    "invalidPhone": "Voer een geldig telefoonnummer in"
+  },
+  "errors": {
+    "cvPrepareFailed": "Uploaden van cv voorbereiden mislukt. Probeer het opnieuw.",
+    "cvUploadFailed": "Uploaden van cv mislukt. Probeer het opnieuw.",
+    "connectionError": "Controleer je internetverbinding en probeer het opnieuw.",
+    "submitFailed": "Versturen van sollicitatie mislukt"
+  },
+  "success": {
+    "title": "Sollicitatie ontvangen",
+    "description": "We bekijken je sollicitatie en nemen snel contact met je op."
+  },
+  "footer": {
+    "title": "Werken door heel Nederland",
+    "northToSouth": "Van noord tot zuid",
+    "eastToWest": "Van oost tot west"
+  }
+}

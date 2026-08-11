@@ -1,29 +1,32 @@
-export function maxLength(max: number, label: string) {
+export function maxLength(max: number, message: string) {
   return (value: string) => {
     if (!value) return true;
-    if (value.length > max) return `${label} cannot exceed ${max} characters.`;
+    if (value.length > max) return message;
     return true;
   };
 }
 
-export function dateInPast() {
+export function dateInPast(
+  invalidMsg = "Enter a valid date.",
+  pastMsg = "Date of birth must be in the past.",
+) {
   return (value: string) => {
     if (!value) return true;
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "Enter a valid date.";
-    if (date >= new Date()) return "Date of birth must be in the past.";
+    if (Number.isNaN(date.getTime())) return invalidMsg;
+    if (date >= new Date()) return pastMsg;
     return true;
   };
 }
 
-export function validPhone() {
+export function validPhone(message = "Enter a valid phone number") {
   return (value: string) => {
     if (!value) return true;
     const digitsOnly = value.replace(/\D/g, "");
     const hasValidChars = /^[\d +\-().]+$/.test(value);
     return (
       (hasValidChars && digitsOnly.length >= 5 && digitsOnly.length <= 15) ||
-      "Enter a valid phone number"
+      message
     );
   };
 }
@@ -97,20 +100,19 @@ export function validIBAN() {
   };
 }
 
-export function isNumeric(label: string) {
+export function isNumeric(message: string) {
   return (value: string) => {
     if (value === "" || value == null) return true;
-    if (!/^-?\d+$/.test(value)) return `${label} must only contain digits.`;
+    if (!/^-?\d+$/.test(value)) return message;
     return true;
   };
 }
 
-export function inRange(min: number, max: number, label: string) {
+export function inRange(min: number, max: number, message: string) {
   return (value: string) => {
     const num = Number(value);
-    if (Number.isNaN(num)) return `${label} must be a valid number.`;
-    if (num < min || num > max)
-      return `${label} must be between ${min} and ${max}.`;
+    if (Number.isNaN(num)) return message;
+    if (num < min || num > max) return message;
     return true;
   };
 }

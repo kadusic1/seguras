@@ -12,6 +12,7 @@ import {
   RadioGroupField,
   SelectField,
 } from "@/components/form";
+import { EMAIL_PATTERN } from "@/components/form/rules";
 import { ModalForm, SuccessMessage } from "@/components/overlay";
 import { Grid, Heading, Text } from "@/components/ui";
 import { jobs } from "@/features/jobs/data";
@@ -42,6 +43,7 @@ interface JobApplicationForm {
 
 export default function JobsPage() {
   const tHome = useTranslations("Home");
+  const tJobs = useTranslations("Jobs");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<"security" | "service">(
     "security",
@@ -76,8 +78,7 @@ export default function JobsPage() {
 
       if (!res.ok) {
         const err = await res.json();
-        const msg =
-          err.error ?? "Failed to prepare CV upload. Please try again.";
+        const msg = err.error ?? tJobs("errors.cvPrepareFailed");
         setCvError(msg.charAt(0).toUpperCase() + msg.slice(1));
         return false;
       }
@@ -91,14 +92,14 @@ export default function JobsPage() {
       });
 
       if (!putRes.ok) {
-        setCvError("Failed to upload CV. Please try again.");
+        setCvError(tJobs("errors.cvUploadFailed"));
         return false;
       }
 
       setCvKey(key);
       return true;
     } catch {
-      setCvError("Check your internet connection and try again.");
+      setCvError(tJobs("errors.connectionError"));
       return false;
     }
   };
@@ -139,23 +140,23 @@ export default function JobsPage() {
 
       if (!res.ok) {
         const err = await res.json();
-        setSubmitError(err.error ?? "Failed to submit application");
+        setSubmitError(err.error ?? tJobs("errors.submitFailed"));
         return;
       }
 
       setIsModalOpen(false);
       setShowSuccess(true);
     } catch {
-      setSubmitError("Check your internet connection and try again.");
+      setSubmitError(tJobs("errors.connectionError"));
     }
   };
 
   return (
     <>
       <Hero
-        headline="Work at Seguras"
-        subtitle="Want to join the team? See open positions below!"
-        ctaLabel="See Open Positions"
+        headline={tJobs("hero.headline")}
+        subtitle={tJobs("hero.subtitle")}
+        ctaLabel={tJobs("hero.ctaLabel")}
         onCtaClick={() =>
           document
             .getElementById("open-positions")
@@ -168,7 +169,7 @@ export default function JobsPage() {
 
       <Section
         id="open-positions"
-        title="Open Positions"
+        title={tJobs("positions.title")}
         bgScheme="black"
         animation="zoomIn"
       >
@@ -179,10 +180,10 @@ export default function JobsPage() {
               icon={j.icon}
               title={tHome(j.titleKey)}
               description={tHome(j.descriptionKey)}
-              badge={j.badge}
+              badge={j.badgeKey ? tJobs(j.badgeKey) : undefined}
               variant="listing"
               bgScheme="black"
-              buttonLabel="Apply Now"
+              buttonLabel={tJobs("positions.applyButton")}
               onClick={() =>
                 openModal(j.badge?.toLowerCase() as "security" | "service")
               }
@@ -195,62 +196,67 @@ export default function JobsPage() {
       <ModalForm
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-        heading="Apply to Seguras"
-        text="Fill in your details and we will be in touch."
+        heading={tJobs("modal.heading")}
+        text={tJobs("modal.text")}
       >
         <Form<JobApplicationForm>
           key={selectedType}
-          header="Your Application"
+          header={tJobs("form.header")}
           bgScheme="white"
-          submitLabel="Submit Application"
+          submitLabel={tJobs("form.submitLabel")}
           defaultValues={{ employmentType: selectedType }}
           onSubmit={handleSubmit}
         >
           <Heading as="h3" size="sm" bgScheme="white">
-            Job Type
+            {tJobs("form.jobTypeHeading")}
           </Heading>
           <Text variant="sm" bgScheme="white" className="mb-2">
-            Note: Service positions require no prior exam. Security positions
-            require a passed ESO (Event Security Officer) exam.
+            {tJobs("form.jobTypeNote")}
           </Text>
           <RadioGroupField
             name="employmentType"
-            label="Position"
+            label={tJobs("form.positionLabel")}
             options={[
-              { label: "Security Officer", value: "security" },
-              { label: "Service Host", value: "service" },
+              { label: tJobs("form.positionSecurity"), value: "security" },
+              { label: tJobs("form.positionService"), value: "service" },
             ]}
-            rules={{ required: "Select a position" }}
+            rules={{ required: tJobs("validation.requiredPosition") }}
           />
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
-            Personal Details
+            {tJobs("form.personalHeading")}
           </Heading>
           <FormField
             name="firstName"
-            label="First Name"
+            label={tJobs("form.firstNameLabel")}
             type="text"
             placeholder={PLACEHOLDER.firstName}
             rules={{
               required: true,
-              validate: maxLength(100, "Name"),
+              validate: maxLength(100, tJobs("validation.maxLengthFirstName")),
             }}
           />
           <FormField
             name="lastName"
-            label="Last Name"
+            label={tJobs("form.lastNameLabel")}
             type="text"
             placeholder={PLACEHOLDER.lastName}
             rules={{
               required: true,
-              validate: maxLength(100, "Last name"),
+              validate: maxLength(100, tJobs("validation.maxLengthLastName")),
             }}
           />
           <FormField
             name="dateOfBirth"
-            label="Date of Birth"
+            label={tJobs("form.dateOfBirthLabel")}
             type="date"
-            rules={{ required: true, validate: dateInPast() }}
+            rules={{
+              required: true,
+              validate: dateInPast(
+                tJobs("validation.invalidDate"),
+                tJobs("validation.dateInPast"),
+              ),
+            }}
           />
           {/* <FormField
             name="bsn"
@@ -261,54 +267,63 @@ export default function JobsPage() {
           /> */}
           <FormField
             name="address"
-            label="Address"
+            label={tJobs("form.addressLabel")}
             type="text"
             placeholder={PLACEHOLDER.address}
             rules={{
               required: true,
-              validate: maxLength(255, "Address"),
+              validate: maxLength(255, tJobs("validation.maxLengthAddress")),
             }}
           />
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
-            Contact
+            {tJobs("form.contactHeading")}
           </Heading>
           <FormField
             name="email"
-            label="Email"
+            label={tJobs("form.emailLabel")}
             type="email"
             placeholder={PLACEHOLDER.email}
-            rules={{ required: true }}
+            rules={{
+              required: true,
+              pattern: {
+                value: EMAIL_PATTERN,
+                message: tJobs("validation.invalidEmail"),
+              },
+            }}
           />
           <FormField
             name="phone"
-            label="Phone"
+            label={tJobs("form.phoneLabel")}
             type="tel"
             placeholder={PLACEHOLDER.phone}
-            rules={{ required: true, validate: validPhone() }}
+            rules={{
+              required: true,
+              validate: validPhone(tJobs("validation.invalidPhone")),
+            }}
           />
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
-            Availability
+            {tJobs("form.availabilityHeading")}
           </Heading>
           <FormField
             name="hoursAvailable"
-            label="Hours Available per Week"
+            label={tJobs("form.hoursAvailableLabel")}
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
             placeholder={PLACEHOLDER.hoursAvailable}
             rules={{
-              required: "Hours available is required",
+              required: tJobs("validation.requiredHours"),
               validate: {
-                isNumeric: isNumeric("Hours available"),
-                inRange: inRange(1, 168, "Hours available"),
+                isNumeric: isNumeric(tJobs("validation.notNumericHours")),
+                inRange: inRange(1, 168, tJobs("validation.rangeHours")),
               },
             }}
           />
           <SelectField
             name="clothingSize"
-            label="Clothing Size"
+            label={tJobs("form.clothingSizeLabel")}
             options={[
               { label: "XS", value: "XS" },
               { label: "S", value: "S" },
@@ -318,7 +333,7 @@ export default function JobsPage() {
               { label: "2XL", value: "2XL" },
               { label: "3XL", value: "3XL" },
             ]}
-            rules={{ required: "Select your size" }}
+            rules={{ required: tJobs("validation.requiredSize") }}
           />
 
           {/* <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
@@ -333,15 +348,14 @@ export default function JobsPage() {
           /> */}
 
           <Heading as="h3" size="sm" bgScheme="white" className="mt-6">
-            Additional
+            {tJobs("form.additionalHeading")}
           </Heading>
           <Text variant="sm" bgScheme="white" className="mb-4">
-            CV upload is not mandatory, but it helps us get to know you better
-            and increases your chances of being selected for an interview.
+            {tJobs("form.cvNote")}
           </Text>
           <FileInputField
             name="cv"
-            label="Upload CV"
+            label={tJobs("form.cvLabel")}
             accept=".pdf,.doc,.docx"
             onFilesAdded={handleCvAdded}
             onFileRemoved={handleCvRemoved}
@@ -367,21 +381,31 @@ export default function JobsPage() {
           )}
 
           <Text variant="sm" bgScheme="white" className="text-center">
-            Need more information?{" "}
-            <a href="/contact" className="underline hover:text-red-600">
-              Contact us
-            </a>
-            , call{" "}
-            <a href="tel:+31640989152" className="underline hover:text-red-600">
-              +31 6 409 891 52
-            </a>{" "}
-            or email{" "}
-            <a
-              href="mailto:segurasservicediensten@gmail.com"
-              className="underline hover:text-red-600"
-            >
-              segurasservicediensten@gmail.com
-            </a>
+            {tJobs.rich("form.helpText", {
+              contact: (chunks) => (
+                <a href="/contact" className="underline hover:text-red-600">
+                  {chunks}
+                </a>
+              ),
+              phoneLink: (chunks) => (
+                <a
+                  href="tel:+31640989152"
+                  className="underline hover:text-red-600"
+                >
+                  {chunks}
+                </a>
+              ),
+              emailLink: (chunks) => (
+                <a
+                  href="mailto:segurasservicediensten@gmail.com"
+                  className="underline hover:text-red-600"
+                >
+                  {chunks}
+                </a>
+              ),
+              phone: "+31 6 409 891 52",
+              email: "segurasservicediensten@gmail.com",
+            })}
           </Text>
         </Form>
       </ModalForm>
@@ -389,18 +413,18 @@ export default function JobsPage() {
       <SuccessMessage
         open={showSuccess}
         onOpenChange={setShowSuccess}
-        title="Application Received"
-        description="We will review your application and get back to you soon."
+        title={tJobs("success.title")}
+        description={tJobs("success.description")}
       />
 
       <Section bgScheme="white" animation="slideUp">
         <div className="mx-auto max-w-3xl text-center">
-          <Heading bgScheme="white">Work All Across the Netherlands</Heading>
+          <Heading bgScheme="white">{tJobs("footer.title")}</Heading>
           <Text variant="lg" bgScheme="white" className="mt-4">
-            From north to south
+            {tJobs("footer.northToSouth")}
           </Text>
           <Text variant="lg" bgScheme="white">
-            From east to west
+            {tJobs("footer.eastToWest")}
           </Text>
           <Image
             src="/jobs/netherlands.svg"

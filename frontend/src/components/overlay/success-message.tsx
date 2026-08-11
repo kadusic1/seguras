@@ -2,6 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { CheckCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui";
 
 interface SuccessMessageProps {
@@ -17,6 +18,8 @@ export function SuccessMessage({
   title,
   description,
 }: SuccessMessageProps) {
+  const t = useTranslations("Common");
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -31,7 +34,7 @@ export function SuccessMessage({
               {description}
             </Dialog.Description>
             <Button onClick={() => onOpenChange(false)} bgScheme="red">
-              Close
+              {t("actions.close")}
             </Button>
           </div>
         </Dialog.Content>

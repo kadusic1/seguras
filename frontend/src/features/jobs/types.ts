@@ -6,6 +6,7 @@ export interface Job {
   descriptionKey: string;
   href: string;
   badge?: string;
+  badgeKey?: string;
   meta?: { label: string; value: string }[];
 }
 

@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "headline": "Work at Seguras",
+    "subtitle": "Want to join the team? See open positions below!",
+    "ctaLabel": "See Open Positions"
+  },
+  "positions": {
+    "title": "Open Positions",
+    "applyButton": "Apply Now",
+    "badgeService": "Service",
+    "badgeSecurity": "Security"
+  },
+  "modal": {
+    "heading": "Apply to Seguras",
+    "text": "Fill in your details and we will be in touch."
+  },
+  "form": {
+    "header": "Your Application",
+    "submitLabel": "Submit Application",
+    "jobTypeHeading": "Job Type",
+    "jobTypeNote": "Note: Service positions require no prior exam. Security positions require a passed ESO (Event Security Officer) exam.",
+    "positionLabel": "Position",
+    "positionSecurity": "Security Officer",
+    "positionService": "Service Host",
+    "personalHeading": "Personal Details",
+    "firstNameLabel": "First Name",
+    "lastNameLabel": "Last Name",
+    "dateOfBirthLabel": "Date of Birth",
+    "addressLabel": "Address",
+    "contactHeading": "Contact",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "availabilityHeading": "Availability",
+    "hoursAvailableLabel": "Hours Available per Week",
+    "clothingSizeLabel": "Clothing Size",
+    "additionalHeading": "Additional",
+    "cvNote": "CV upload is not mandatory, but it helps us get to know you better and increases your chances of being selected for an interview.",
+    "cvLabel": "Upload CV",
+    "helpText": "Need more information? <contact>Contact us</contact>, call <phoneLink>{phone}</phoneLink> or email <emailLink>{email}</emailLink>"
+  },
+  "validation": {
+    "requiredPosition": "Select a position",
+    "requiredHours": "Hours available is required",
+    "notNumericHours": "Hours available must only contain digits.",
+    "rangeHours": "Hours available must be between 1 and 168.",
+    "requiredSize": "Select your size",
+    "maxLengthFirstName": "Name cannot exceed 100 characters.",
+    "maxLengthLastName": "Last name cannot exceed 100 characters.",
+    "maxLengthAddress": "Address cannot exceed 255 characters.",
+    "invalidEmail": "Enter a valid email address",
+    "invalidDate": "Enter a valid date.",
+    "dateInPast": "Date of birth must be in the past.",
+    "invalidPhone": "Enter a valid phone number"
+  },
+  "errors": {
+    "cvPrepareFailed": "Failed to prepare CV upload. Please try again.",
+    "cvUploadFailed": "Failed to upload CV. Please try again.",
+    "connectionError": "Check your internet connection and try again.",
+    "submitFailed": "Failed to submit application"
+  },
+  "success": {
+    "title": "Application Received",
+    "description": "We will review your application and get back to you soon."
+  },
+  "footer": {
+    "title": "Work All Across the Netherlands",
+    "northToSouth": "From north to south",
+    "eastToWest": "From east to west"
+  }
+}

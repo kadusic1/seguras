@@ -2,6 +2,7 @@
 
 import { File as FileIcon } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useContext, useEffect, useState } from "react";
 import { CloseButton, Spinner } from "@/components/ui";
 import { schemes } from "@/lib/colours";
@@ -51,6 +52,7 @@ function FilePreview({
 }) {
   const [fileUrl, setFileUrl] = useState<string>();
   const s = schemes[bgScheme];
+  const t = useTranslations("Common");
   const isImage = file.type.startsWith("image/");
 
   // Object URLs must be created/revoked per file to avoid leaking memory.
@@ -92,7 +94,11 @@ function FilePreview({
         <div className="absolute inset-0 flex items-center justify-center rounded-md bg-white/60">
           <Spinner
             size={16}
-            label={busyOp === "add" ? "Uploading" : "Removing"}
+            label={
+              busyOp === "add"
+                ? t("fileInput.uploading")
+                : t("fileInput.removing")
+            }
           />
         </div>
       )}
@@ -139,6 +145,7 @@ export function FileInputField({
   const bgScheme = useContext(ColorSchemeCtx);
   const { runTask } = useFormBusy();
   const s = schemes[bgScheme];
+  const t = useTranslations("Common");
   const busy = busyOp !== null;
 
   const addFiles = async (list: FileList | null) => {
@@ -178,12 +185,18 @@ export function FileInputField({
           <span className="flex items-center gap-2">
             <Spinner
               size={16}
-              label={busyOp === "add" ? "Uploading" : "Removing"}
+              label={
+                busyOp === "add"
+                  ? t("fileInput.uploading")
+                  : t("fileInput.removing")
+              }
             />
-            {busyOp === "add" ? "Uploading..." : "Removing..."}
+            {busyOp === "add"
+              ? t("fileInput.uploadingEllipsis")
+              : t("fileInput.removingEllipsis")}
           </span>
         ) : (
-          <>Click to upload {multiple ? "files" : "a file"}</>
+          t("fileInput.clickToUpload", { count: multiple ? 2 : 1 })
         )}
         <input
           id={name}

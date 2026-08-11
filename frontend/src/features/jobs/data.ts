@@ -8,6 +8,7 @@ export const jobs: Job[] = [
     descriptionKey: "jobs.card_1.description",
     href: "/jobs",
     badge: "Service",
+    badgeKey: "positions.badgeService",
   },
   {
     icon: Shield,
@@ -15,5 +16,6 @@ export const jobs: Job[] = [
     descriptionKey: "jobs.card_2.description",
     href: "/jobs",
     badge: "Security",
+    badgeKey: "positions.badgeSecurity",
   },
 ];
