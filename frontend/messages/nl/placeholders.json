@@ -1,0 +1,10 @@
+{
+  "firstName": "Vul je voornaam in",
+  "lastName": "Vul je achternaam in",
+  "company": "Vul je bedrijfsnaam in",
+  "message": "Vul je bericht in",
+  "address": "Straat, stad, postcode",
+  "hoursAvailable": "bijv. 40",
+  "email": "you@example.com",
+  "phone": "+31 6 12 34 56 78"
+}

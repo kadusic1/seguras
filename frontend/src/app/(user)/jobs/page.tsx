@@ -16,7 +16,6 @@ import { EMAIL_PATTERN } from "@/components/form/rules";
 import { ModalForm, SuccessMessage } from "@/components/overlay";
 import { Grid, Heading, Text } from "@/components/ui";
 import { jobs } from "@/features/jobs/data";
-import { PLACEHOLDER } from "@/lib/placeholders";
 import {
   dateInPast,
   inRange,
@@ -44,6 +43,7 @@ interface JobApplicationForm {
 export default function JobsPage() {
   const tHome = useTranslations("Home");
   const tJobs = useTranslations("Jobs");
+  const tPlaceholders = useTranslations("Placeholders");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<"security" | "service">(
     "security",
@@ -230,7 +230,7 @@ export default function JobsPage() {
             name="firstName"
             label={tJobs("form.firstNameLabel")}
             type="text"
-            placeholder={PLACEHOLDER.firstName}
+            placeholder={tPlaceholders("firstName")}
             rules={{
               required: true,
               validate: maxLength(100, tJobs("validation.maxLengthFirstName")),
@@ -240,7 +240,7 @@ export default function JobsPage() {
             name="lastName"
             label={tJobs("form.lastNameLabel")}
             type="text"
-            placeholder={PLACEHOLDER.lastName}
+            placeholder={tPlaceholders("lastName")}
             rules={{
               required: true,
               validate: maxLength(100, tJobs("validation.maxLengthLastName")),
@@ -269,7 +269,7 @@ export default function JobsPage() {
             name="address"
             label={tJobs("form.addressLabel")}
             type="text"
-            placeholder={PLACEHOLDER.address}
+            placeholder={tPlaceholders("address")}
             rules={{
               required: true,
               validate: maxLength(255, tJobs("validation.maxLengthAddress")),
@@ -283,7 +283,7 @@ export default function JobsPage() {
             name="email"
             label={tJobs("form.emailLabel")}
             type="email"
-            placeholder={PLACEHOLDER.email}
+            placeholder={tPlaceholders("email")}
             rules={{
               required: true,
               pattern: {
@@ -296,7 +296,7 @@ export default function JobsPage() {
             name="phone"
             label={tJobs("form.phoneLabel")}
             type="tel"
-            placeholder={PLACEHOLDER.phone}
+            placeholder={tPlaceholders("phone")}
             rules={{
               required: true,
               validate: validPhone(tJobs("validation.invalidPhone")),
@@ -312,7 +312,7 @@ export default function JobsPage() {
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
-            placeholder={PLACEHOLDER.hoursAvailable}
+            placeholder={tPlaceholders("hoursAvailable")}
             rules={{
               required: tJobs("validation.requiredHours"),
               validate: {

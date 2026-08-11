@@ -3,7 +3,7 @@ import { getRequestConfig } from "next-intl/server";
 export default getRequestConfig(async () => {
   const locale = "en";
 
-  const [navbar, common, footer, home, services, about, jobs] =
+  const [navbar, common, footer, home, services, about, jobs, placeholders] =
     await Promise.all([
       import(`../../messages/${locale}/navbar.json`),
       import(`../../messages/${locale}/common.json`),
@@ -12,6 +12,7 @@ export default getRequestConfig(async () => {
       import(`../../messages/${locale}/services.json`),
       import(`../../messages/${locale}/about.json`),
       import(`../../messages/${locale}/jobs.json`),
+      import(`../../messages/${locale}/placeholders.json`),
     ]);
 
   return {
@@ -24,6 +25,7 @@ export default getRequestConfig(async () => {
       Services: services.default,
       About: about.default,
       Jobs: jobs.default,
+      Placeholders: placeholders.default,
     },
   };
 });
