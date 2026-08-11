@@ -4,6 +4,7 @@ import type { EmblaCarouselType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   type ComponentPropsWithoutRef,
   useCallback,
@@ -23,10 +24,11 @@ const carouselArrowBase =
 type CarouselArrowProps = ComponentPropsWithoutRef<"button">;
 
 export function CarouselPrevArrow(props: CarouselArrowProps) {
+  const t = useTranslations("Common");
   return (
     <button
       type="button"
-      aria-label="Previous slide"
+      aria-label={t("pagination.previousSlide")}
       className={`left-3 ${carouselArrowBase}`}
       {...props}
     >
@@ -36,10 +38,11 @@ export function CarouselPrevArrow(props: CarouselArrowProps) {
 }
 
 export function CarouselNextArrow(props: CarouselArrowProps) {
+  const t = useTranslations("Common");
   return (
     <button
       type="button"
-      aria-label="Next slide"
+      aria-label={t("pagination.nextSlide")}
       className={`right-3 ${carouselArrowBase}`}
       {...props}
     >
@@ -73,6 +76,7 @@ export function Carousel({
   const [canScrollPrev, setCanScrollPrev] = useState(true);
   const [canScrollNext, setCanScrollNext] = useState(true);
   const baseId = useId();
+  const t = useTranslations("Common");
 
   const dotColors =
     dotScheme === "light"
@@ -149,7 +153,7 @@ export function Carousel({
                   ? `w-6 ${dotColors.active}`
                   : `w-2 ${dotColors.inactive}`
               }`}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={t("pagination.goToSlide", { index: index + 1 })}
             />
           ))}
         </div>

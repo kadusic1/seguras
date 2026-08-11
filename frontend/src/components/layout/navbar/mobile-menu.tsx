@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import { NavbarLinks } from "./navbar-links";
 
-function MenuIcon({ open }: { open: boolean }) {
+function MenuIcon({ open, label }: { open: boolean; label: string }) {
   return (
     <svg
       width="24"
@@ -17,7 +17,7 @@ function MenuIcon({ open }: { open: boolean }) {
       strokeWidth="2"
       strokeLinecap="round"
       role="img"
-      aria-label={open ? "Close menu" : "Open menu"}
+      aria-label={label}
       className="transition-transform duration-300"
     >
       {open ? (
@@ -43,6 +43,8 @@ interface MobileMenuProps {
 export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("Navbar");
+  const tCommon = useTranslations("Common");
+  const menuLabel = isOpen ? tCommon("menu.close") : tCommon("menu.open");
 
   useEffect(() => {
     if (isOpen) {
@@ -61,9 +63,9 @@ export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="relative z-50 flex h-10 w-10 cursor-pointer items-center justify-center text-white transition-colors hover:text-red-500"
-        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-label={menuLabel}
       >
-        <MenuIcon open={isOpen} />
+        <MenuIcon open={isOpen} label={menuLabel} />
       </button>
 
       <div

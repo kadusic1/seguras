@@ -12,7 +12,8 @@
     "previousPage": "Previous page",
     "nextPage": "Next page",
     "previousSlide": "Previous slide",
-    "nextSlide": "Next slide"
+    "nextSlide": "Next slide",
+    "goToSlide": "Go to slide {index}"
   },
   "empty": {
     "noItemsFound": "No items found yet"

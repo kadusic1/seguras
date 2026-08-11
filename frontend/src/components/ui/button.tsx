@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import {
   type ButtonVariant,
@@ -82,10 +83,11 @@ const iconButtonBase =
   "text-white shadow-sm inline-flex cursor-pointer items-center justify-center rounded-md p-2.5 transition-colors focus-visible:outline-2 focus-visible:outline-red-500 disabled:cursor-not-allowed disabled:opacity-60";
 
 export function AddButton(props: IconButtonProps) {
+  const t = useTranslations("Common");
   return (
     <button
       type="button"
-      aria-label="Add"
+      aria-label={t("actions.add")}
       className={`${iconButtonBase} bg-green-600 hover:bg-green-700`}
       {...props}
     >
@@ -95,10 +97,11 @@ export function AddButton(props: IconButtonProps) {
 }
 
 export function DeleteButton(props: IconButtonProps) {
+  const t = useTranslations("Common");
   return (
     <button
       type="button"
-      aria-label="Delete"
+      aria-label={t("actions.delete")}
       className={`${iconButtonBase} bg-red-600 hover:bg-red-700`}
       {...props}
     >
@@ -108,10 +111,11 @@ export function DeleteButton(props: IconButtonProps) {
 }
 
 export function EditButton(props: IconButtonProps) {
+  const t = useTranslations("Common");
   return (
     <button
       type="button"
-      aria-label="Edit"
+      aria-label={t("actions.edit")}
       className={`${iconButtonBase} bg-blue-600 hover:bg-blue-700`}
       {...props}
     >
@@ -121,10 +125,11 @@ export function EditButton(props: IconButtonProps) {
 }
 
 export function PreviousPageButton(props: IconButtonProps) {
+  const t = useTranslations("Common");
   return (
     <button
       type="button"
-      aria-label="Previous page"
+      aria-label={t("pagination.previousPage")}
       className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
       {...props}
     >
@@ -134,10 +139,11 @@ export function PreviousPageButton(props: IconButtonProps) {
 }
 
 export function NextPageButton(props: IconButtonProps) {
+  const t = useTranslations("Common");
   return (
     <button
       type="button"
-      aria-label="Next page"
+      aria-label={t("pagination.nextPage")}
       className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
       {...props}
     >

@@ -12,7 +12,8 @@
     "previousPage": "Vorige pagina",
     "nextPage": "Volgende pagina",
     "previousSlide": "Vorige dia",
-    "nextSlide": "Volgende dia"
+    "nextSlide": "Volgende dia",
+    "goToSlide": "Ga naar dia {index}"
   },
   "empty": {
     "noItemsFound": "Nog geen items gevonden"

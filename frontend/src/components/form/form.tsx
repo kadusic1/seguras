@@ -1,6 +1,7 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import {
@@ -74,7 +75,7 @@ export function Form<T extends FieldValues>({
   subtitle,
   onSubmit,
   defaultValues,
-  submitLabel = "Submit",
+  submitLabel,
   bgScheme = "white",
   className,
   headerIcon,
@@ -89,8 +90,10 @@ export function Form<T extends FieldValues>({
     formState: { isSubmitting },
   } = methods;
   const s = schemes[bgScheme];
+  const t = useTranslations("Common");
   const [busyCount, setBusyCount] = useState(0);
   const isBusy = busyCount > 0;
+  const resolvedSubmitLabel = submitLabel ?? t("actions.submit");
   const runTask = async <T,>(task: () => T | Promise<T>) => {
     setBusyCount((c) => c + 1);
     try {
@@ -145,11 +148,11 @@ export function Form<T extends FieldValues>({
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
-                    <Spinner size={16} label="Submitting" />
-                    Submitting...
+                    <Spinner size={16} label={t("form.submitting")} />
+                    {t("form.submittingEllipsis")}
                   </span>
                 ) : (
-                  submitLabel
+                  resolvedSubmitLabel
                 )}
               </Button>
             </div>

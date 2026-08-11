@@ -1,6 +1,7 @@
 "use client";
 
 import { Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useContext, useState } from "react";
 import {
   type FieldPath,
@@ -50,6 +51,7 @@ export function PasswordField<T extends FieldValues>({
   const bgScheme = useContext(ColorSchemeCtx);
   const { register } = useFormContext<T>();
   const s = schemes[bgScheme];
+  const t = useTranslations("Common");
   const [visible, setVisible] = useState(false);
 
   return (
@@ -70,7 +72,11 @@ export function PasswordField<T extends FieldValues>({
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
-          aria-label={visible ? "Hide password" : "Show password"}
+          aria-label={
+            visible
+              ? t("passwordField.hidePassword")
+              : t("passwordField.showPassword")
+          }
           className={`absolute top-1/2 right-3 -translate-y-1/2 hover:cursor-pointer ${s.text.muted}`}
         >
           {visible ? <EyeOff size={18} /> : <Eye size={18} />}
