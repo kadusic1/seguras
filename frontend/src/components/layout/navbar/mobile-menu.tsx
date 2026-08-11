@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import { NavbarLinks } from "./navbar-links";
@@ -41,6 +42,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations("Navbar");
 
   useEffect(() => {
     if (isOpen) {
@@ -95,7 +97,7 @@ export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
               onClick={() => setIsOpen(false)}
               iconRight={<ArrowRight className="size-4" />}
             >
-              Contact
+              {t("contact")}
             </Button>
           </div>
         </div>

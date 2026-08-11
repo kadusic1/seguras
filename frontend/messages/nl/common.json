@@ -1,0 +1,28 @@
+{
+  "card_cta": "Meer informatie",
+  "actions": {
+    "add": "Toevoegen",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "cancel": "Annuleren",
+    "close": "Sluiten"
+  },
+  "pagination": {
+    "previousPage": "Vorige pagina",
+    "nextPage": "Volgende pagina"
+  },
+  "empty": {
+    "noItemsFound": "Nog geen items gevonden"
+  },
+  "fileInput": {
+    "clickToUpload": "Klik om {count, plural, one {een bestand} other {bestanden}} te uploaden",
+    "uploading": "Uploaden",
+    "uploadingEllipsis": "Uploaden...",
+    "removing": "Verwijderen",
+    "removingEllipsis": "Verwijderen..."
+  },
+  "passwordField": {
+    "showPassword": "Wachtwoord tonen",
+    "hidePassword": "Wachtwoord verbergen"
+  }
+}

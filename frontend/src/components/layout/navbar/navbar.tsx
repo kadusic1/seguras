@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { Button, Logo } from "@/components/ui";
 import { MobileMenu } from "./mobile-menu";
@@ -7,6 +8,7 @@ import { NavbarSignOut } from "./navbar-signout";
 
 export async function Navbar() {
   const session = await auth();
+  const t = await getTranslations("Navbar");
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -26,7 +28,7 @@ export async function Navbar() {
               bgScheme="red"
               iconRight={<ArrowRight className="size-4" />}
             >
-              Contact
+              {t("contact")}
             </Button>
           </div>
           <MobileMenu isLoggedIn={!!session} />

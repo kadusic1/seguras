@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { linkClass, sectionLabelClass } from "./navbar-link-styles";
 import type { NavLink } from "./types";
@@ -26,6 +27,7 @@ export function NavDropdown({
   const pathname = usePathname();
   const active = links.some((link) => pathname.startsWith(link.href));
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations("Navbar");
 
   if (variant === "mobile") {
     return (
@@ -45,7 +47,7 @@ export function NavDropdown({
                 {link.icon && (
                   <link.icon className="size-4 shrink-0" aria-hidden="true" />
                 )}
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             </li>
           ))}
@@ -96,7 +98,7 @@ export function NavDropdown({
                 {link.icon && (
                   <link.icon className="size-4 shrink-0" aria-hidden="true" />
                 )}
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             </li>
           ))}

@@ -2,6 +2,7 @@
 
 import { Shield } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { NavDropdown } from "./nav-dropdown";
 import { adminNavLinks, navLinks } from "./navbar-data";
 import { linkClass } from "./navbar-link-styles";
@@ -21,6 +22,7 @@ export function NavbarLinks({
   variant = "desktop",
 }: NavbarLinksProps) {
   const isActive = useIsActivePath();
+  const t = useTranslations("Navbar");
 
   return (
     <ul className={wrapperClassName ?? "flex items-center gap-8"}>
@@ -37,14 +39,14 @@ export function NavbarLinks({
               {link.icon && (
                 <link.icon className="size-4 shrink-0" aria-hidden="true" />
               )}
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           </li>
         );
       })}
       {isLoggedIn && (
         <NavDropdown
-          label="Admin"
+          label={t("admin")}
           icon={Shield}
           links={adminNavLinks}
           variant={variant}

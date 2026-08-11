@@ -1,0 +1,28 @@
+{
+  "card_cta": "Learn More",
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "pagination": {
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
+  },
+  "empty": {
+    "noItemsFound": "No items found yet"
+  },
+  "fileInput": {
+    "clickToUpload": "Click to upload {count, plural, one {a file} other {files}}",
+    "uploading": "Uploading",
+    "uploadingEllipsis": "Uploading...",
+    "removing": "Removing",
+    "removingEllipsis": "Removing..."
+  },
+  "passwordField": {
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  }
+}

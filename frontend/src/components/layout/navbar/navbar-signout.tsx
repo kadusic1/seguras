@@ -2,12 +2,14 @@
 
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Modal } from "@/components/overlay";
 import { Logo } from "@/components/ui";
 
 export function NavbarSignOut() {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("Navbar");
 
   return (
     <>
@@ -15,10 +17,10 @@ export function NavbarSignOut() {
       <Modal
         open={open}
         onOpenChange={setOpen}
-        title="Sign out"
-        description="Are you sure you want to sign out?"
+        title={t("signOut")}
+        description={t("signOutDescription")}
         icon={LogOut}
-        confirmLabel="Sign out"
+        confirmLabel={t("signOut")}
         onConfirm={async () => {
           await signOut({ redirect: false });
           window.location.href = "/";

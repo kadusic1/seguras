@@ -1,0 +1,13 @@
+{
+  "home": "Home",
+  "services": "Services",
+  "about": "About Us",
+  "jobs": "Jobs",
+  "news": "News",
+  "contact": "Contact",
+  "admin": "Admin",
+  "messages": "Messages",
+  "applications": "Applications",
+  "signOut": "Sign out",
+  "signOutDescription": "Are you sure you want to sign out?"
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,7 +31,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-black text-white">
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </SessionProvider>
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import type { LucideIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui";
 import { type NeutralColorScheme, schemes } from "@/lib/colours";
 
@@ -13,7 +14,6 @@ interface ModalProps {
   icon?: LucideIcon;
   confirmLabel: string;
   onConfirm: () => void;
-  cancelLabel?: string;
   bgScheme?: NeutralColorScheme;
 }
 
@@ -25,10 +25,10 @@ export function Modal({
   icon: Icon,
   confirmLabel,
   onConfirm,
-  cancelLabel = "Cancel",
   bgScheme = "white",
 }: ModalProps) {
   const s = schemes[bgScheme];
+  const t = useTranslations("Common");
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -66,7 +66,7 @@ export function Modal({
                 bgScheme={bgScheme === "white" ? "black" : "white"}
                 onClick={() => onOpenChange(false)}
               >
-                {cancelLabel}
+                {t("actions.cancel")}
               </Button>
               <Button variant="primary" bgScheme="red" onClick={onConfirm}>
                 {confirmLabel}

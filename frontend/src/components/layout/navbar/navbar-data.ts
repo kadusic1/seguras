@@ -10,14 +10,14 @@ import {
 import type { NavLink } from "./types";
 
 export const navLinks: NavLink[] = [
-  { href: "/", label: "Home", icon: House },
-  { href: "/services", label: "Services", icon: ShieldCheck },
-  { href: "/about", label: "About Us", icon: Building2 },
-  { href: "/jobs", label: "Jobs", icon: UserPlus },
-  { href: "/news", label: "News", icon: Newspaper },
+  { href: "/", labelKey: "home", icon: House },
+  { href: "/services", labelKey: "services", icon: ShieldCheck },
+  { href: "/about", labelKey: "about", icon: Building2 },
+  { href: "/jobs", labelKey: "jobs", icon: UserPlus },
+  { href: "/news", labelKey: "news", icon: Newspaper },
 ];
 
 export const adminNavLinks: NavLink[] = [
-  { href: "/admin/messages", label: "Messages", icon: Mail },
-  { href: "/admin/applications", label: "Applications", icon: Briefcase },
+  { href: "/admin/messages", labelKey: "messages", icon: Mail },
+  { href: "/admin/applications", labelKey: "applications", icon: Briefcase },
 ];
