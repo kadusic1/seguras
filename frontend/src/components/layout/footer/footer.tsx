@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Logo, Text } from "@/components/ui";
 import { contactInfo } from "./footer-data";
 
@@ -59,7 +60,7 @@ export function Footer() {
       </div>
 
       <div className="border-t-2 border-zinc-800">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex flex-col items-center gap-4">
           <Text
             variant="base"
             bgScheme="black"
@@ -68,6 +69,7 @@ export function Footer() {
           >
             &copy; {new Date().getFullYear()} {t("copyright")}
           </Text>
+          <LanguageSwitcher />
         </div>
       </div>
     </footer>

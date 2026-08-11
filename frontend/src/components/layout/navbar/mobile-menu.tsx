@@ -91,7 +91,7 @@ export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
             />
           </nav>
 
-          <div className="mt-auto px-6 pb-8">
+          <div className="mt-auto flex flex-col gap-4 px-6 pb-8">
             <Button
               href="/contact"
               variant="primary"
