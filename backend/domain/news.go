@@ -39,7 +39,7 @@ type NewsItemResponse struct {
 	Heading   string              `json:"heading"`
 	Text      string              `json:"text"`
 	CreatedAt time.Time           `json:"created_at"`
-	TimeAgo   string              `json:"time_ago"`
+	TimeAgo   time.Time           `json:"time_ago"`
 	Images    []NewsImageResponse `json:"images"`
 }
 

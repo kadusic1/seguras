@@ -1,5 +1,12 @@
 {
   "card_cta": "Meer informatie",
+  "time": {
+    "minute": "{value}m geleden",
+    "hour": "{value}u geleden",
+    "day": "{value}d geleden",
+    "month": "{value}mnd geleden",
+    "year": "{value}j geleden"
+  },
   "actions": {
     "add": "Toevoegen",
     "edit": "Bewerken",

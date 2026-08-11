@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Heading } from "@/components/ui";
+import { RelativeTime } from "./relative-time";
 
 interface ItemAvatarProps {
   children: ReactNode;
@@ -48,7 +49,6 @@ interface ItemHeaderProps {
   name: string;
   badges?: ReactNode;
   timeAgo: string;
-  createdAt: string;
 }
 
 /**
@@ -56,13 +56,7 @@ interface ItemHeaderProps {
  * avatar, name, optional badge(s), and a right-aligned relative timestamp.
  * Wraps on narrow screens so the timestamp can drop to its own line.
  */
-export function ItemHeader({
-  avatar,
-  name,
-  badges,
-  timeAgo,
-  createdAt,
-}: ItemHeaderProps) {
+export function ItemHeader({ avatar, name, badges, timeAgo }: ItemHeaderProps) {
   return (
     <header className="flex flex-wrap items-center gap-3">
       {avatar}
@@ -70,13 +64,7 @@ export function ItemHeader({
         {name}
       </Heading>
       {badges}
-      <time
-        className="ml-auto shrink-0 text-sm text-black/60"
-        dateTime={createdAt}
-        title={new Date(createdAt).toLocaleString()}
-      >
-        {timeAgo}
-      </time>
+      <RelativeTime date={timeAgo} />
     </header>
   );
 }

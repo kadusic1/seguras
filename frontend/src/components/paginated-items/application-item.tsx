@@ -77,7 +77,6 @@ export function ApplicationItem({
         name={`${item.first_name} ${item.last_name}`}
         badges={<ItemBadge variant="solid">{employmentLabel}</ItemBadge>}
         timeAgo={item.time_ago}
-        createdAt={item.created_at}
       />
 
       <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">

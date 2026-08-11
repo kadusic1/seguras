@@ -1,5 +1,12 @@
 {
   "card_cta": "Learn More",
+  "time": {
+    "minute": "{value}m ago",
+    "hour": "{value}h ago",
+    "day": "{value}d ago",
+    "month": "{value}mo ago",
+    "year": "{value}y ago"
+  },
   "actions": {
     "add": "Add",
     "edit": "Edit",

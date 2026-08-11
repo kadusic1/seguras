@@ -66,7 +66,7 @@ func (h *NewsHandler) List(w http.ResponseWriter, r *http.Request) {
 			Heading:   item.Heading,
 			Text:      item.Text,
 			CreatedAt: item.CreatedAt,
-			TimeAgo:   util.TimeAgo(item.CreatedAt),
+			TimeAgo:   item.CreatedAt,
 			Images:    make([]domain.NewsImageResponse, 0, len(item.Images)),
 		}
 		for _, img := range item.Images {

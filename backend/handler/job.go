@@ -256,7 +256,7 @@ func (h *JobHandler) List(w http.ResponseWriter, r *http.Request) {
 				EmploymentType: item.EmploymentType,
 				CreatedAt:      item.CreatedAt,
 			},
-			TimeAgo: util.TimeAgo(item.CreatedAt),
+			TimeAgo: item.CreatedAt,
 		}
 		if item.CVKey != "" {
 			url, err := h.b2Service.PresignGetURL(

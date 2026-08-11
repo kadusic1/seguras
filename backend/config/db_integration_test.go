@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/kadusic1/seguras/backend/config"
-	"github.com/kadusic1/seguras/backend/util"
 )
 
 // TestOpenDBReadsTimestampsAsUTC pins the invariant that every database
@@ -17,8 +16,7 @@ import (
 //
 // On a server whose session timezone is not UTC (e.g. CEST), a connection
 // without the pinned session timezone shifts TIMESTAMP values by the zone
-// offset into the future, which made time.Since() negative and TimeAgo
-// report "1m ago" for every item.
+// offset, breaking the UTC invariant the frontend relies on.
 func TestOpenDBReadsTimestampsAsUTC(t *testing.T) {
 	dsn := os.Getenv("TEST_DB_DSN")
 	if dsn == "" {
@@ -74,22 +72,5 @@ func TestOpenDBReadsTimestampsAsUTC(t *testing.T) {
 	if fresh.Location() != time.UTC {
 		t.Fatalf("fresh created_at parsed in %s, want UTC",
 			fresh.Location())
-	}
-
-	if _, err := conn.ExecContext(ctx,
-		`INSERT INTO tz_probe (id, created_at)
-		 VALUES (2, CURRENT_TIMESTAMP - INTERVAL 2 HOUR)`); err != nil {
-		t.Fatalf("insert two-hour-old row: %v", err)
-	}
-
-	var old time.Time
-	if err := conn.QueryRowContext(ctx,
-		`SELECT created_at FROM tz_probe WHERE id = 2`,
-	).Scan(&old); err != nil {
-		t.Fatalf("scan two-hour-old row: %v", err)
-	}
-
-	if got := util.TimeAgo(old); got != "2h ago" {
-		t.Fatalf("TimeAgo(two-hour-old row) = %q, want %q", got, "2h ago")
 	}
 }

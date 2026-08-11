@@ -6,6 +6,7 @@ import { Carousel } from "@/components/blocks";
 import { Heading, Skeleton, Text } from "@/components/ui";
 import type { NewsItemData } from "@/features/news/types";
 import { ItemCommon } from "./item-common";
+import { RelativeTime } from "./relative-time";
 
 export type { NewsImageData, NewsItemData } from "@/features/news/types";
 
@@ -57,13 +58,7 @@ export function NewsItem({
         <Heading as="h3" size="md" bgScheme="white">
           {item.heading}
         </Heading>
-        <time
-          className="ml-auto shrink-0 text-sm text-black/60"
-          dateTime={item.created_at}
-          title={new Date(item.created_at).toLocaleString()}
-        >
-          {item.time_ago}
-        </time>
+        <RelativeTime date={item.time_ago} />
       </header>
       {item.images.length > 0 && (
         <Carousel

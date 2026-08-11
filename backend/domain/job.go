@@ -72,6 +72,6 @@ type JobApplicationResponse struct {
 // presigned URL to download the CV when one was submitted.
 type JobListItemResponse struct {
 	JobApplicationResponse
-	CVURL   string `json:"cv_url,omitempty"`
-	TimeAgo string `json:"time_ago"`
+	CVURL   string    `json:"cv_url,omitempty"`
+	TimeAgo time.Time `json:"time_ago"`
 }

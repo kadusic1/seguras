@@ -41,7 +41,6 @@ export function MessageItem({
           item.company ? <ItemBadge>{item.company}</ItemBadge> : undefined
         }
         timeAgo={item.time_ago}
-        createdAt={item.created_at}
       />
 
       <div className="mt-3 flex flex-wrap gap-4">

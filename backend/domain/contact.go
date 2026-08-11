@@ -35,5 +35,5 @@ type ContactResponse struct {
 
 type ContactListItemResponse struct {
 	ContactResponse
-	TimeAgo string `json:"time_ago"`
+	TimeAgo time.Time `json:"time_ago"`
 }

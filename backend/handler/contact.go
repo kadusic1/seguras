@@ -162,7 +162,7 @@ func (h *ContactHandler) List(w http.ResponseWriter, r *http.Request) {
 	for _, item := range items {
 		resp.Items = append(resp.Items, domain.ContactListItemResponse{
 			ContactResponse: domain.ContactResponse(item),
-			TimeAgo:         util.TimeAgo(item.CreatedAt),
+			TimeAgo:         item.CreatedAt,
 		})
 	}
 
