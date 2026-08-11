@@ -56,3 +56,12 @@ CREATE TABLE news_images (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (news_id) REFERENCES news(id) ON DELETE CASCADE
 );
+
+-- Serve ORDER BY created_at DESC, id DESC in paginated list queries
+-- without a filesort (job_store.go, contact_store.go, news_store.go).
+CREATE INDEX idx_news_created ON news (created_at, id);
+CREATE INDEX idx_job_created ON job_applications (created_at, id);
+CREATE INDEX idx_contact_created ON contact_messages (created_at, id);
+
+-- Serve ORDER BY news_id, display_order ASC when loading a page's images.
+CREATE INDEX idx_news_images_order ON news_images (news_id, display_order);
