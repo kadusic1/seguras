@@ -6,31 +6,32 @@ import { services } from "@/features/services/data";
 
 export default function ServicesPage() {
   const tHome = useTranslations("Home");
+  const tServices = useTranslations("Services");
 
   return (
     <>
       <Hero
-        headline="Event Security"
-        subtitle="Custom security on any scale. Continuous improvement, complete assurance."
-        ctaLabel="Request Proposal"
+        headline={tServices("hero.headline")}
+        subtitle={tServices("hero.subtitle")}
+        ctaLabel={tServices("hero.ctaLabel")}
         ctaHref="/contact"
         imageSrc="/services/hero-services.webp"
         iconRight={<ArrowRight size={16} />}
         imageAlt=""
       />
       <Section
-        title="Safety Solutions for Any Event"
-        subtitle="From stadiums to festivals - we design security operations around your venue, crowd, and risk profile."
+        title={tServices("intro.title")}
+        subtitle={tServices("intro.subtitle")}
         bgScheme="white"
         animation="slideUp"
         image={{
           src: "/services/services1.webp",
           alt: "Seguras team at an event",
           caption: {
-            heading: "Built for Scale",
+            heading: tServices("intro.caption.heading"),
             icon: ShieldCheck,
-            text: "Whether it's 500 or 50,000 attendees, our approach scales to match. We assess, plan, staff, and monitor every detail so you can focus on running the event.",
-            ctaLabel: "Discuss Your Event",
+            text: tServices("intro.caption.text"),
+            ctaLabel: tServices("intro.caption.ctaLabel"),
             ctaHref: "/contact",
           },
         }}
@@ -50,20 +51,20 @@ export default function ServicesPage() {
         </Grid>
       </Section>
       <Section
-        title="Every Event is Unique"
-        subtitle="Not sure what you need? We'll assess your venue, crowd, and risks - then build a plan around what matters."
+        title={tServices("unique.title")}
+        subtitle={tServices("unique.subtitle")}
         bgScheme="black"
-        ctaLabel="Contact Our Team"
+        ctaLabel={tServices("unique.ctaLabel")}
         ctaHref="/contact"
         ctaIconRight={<ArrowRight size={16} />}
         animation="zoomOut"
       />
       <WaveDivider fillScheme="white" />
       <Section
-        title="Latest in Event Security"
-        subtitle="Read about our newest services, case studies, and industry insights from the Seguras team."
+        title={tServices("news.title")}
+        subtitle={tServices("news.subtitle")}
         bgScheme="white"
-        ctaLabel="View All News"
+        ctaLabel={tServices("news.ctaLabel")}
         ctaHref="/news"
         ctaIconRight={<ArrowRight size={16} />}
         animation="zoomIn"

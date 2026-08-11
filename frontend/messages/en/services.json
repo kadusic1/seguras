@@ -1,0 +1,26 @@
+{
+  "hero": {
+    "headline": "Event Security",
+    "subtitle": "Custom security on any scale. Continuous improvement, complete assurance.",
+    "ctaLabel": "Request Proposal"
+  },
+  "intro": {
+    "title": "Safety Solutions for Any Event",
+    "subtitle": "From stadiums to festivals - we design security operations around your venue, crowd, and risk profile.",
+    "caption": {
+      "heading": "Built for Scale",
+      "text": "Whether it's 500 or 50,000 attendees, our approach scales to match. We assess, plan, staff, and monitor every detail so you can focus on running the event.",
+      "ctaLabel": "Discuss Your Event"
+    }
+  },
+  "unique": {
+    "title": "Every Event is Unique",
+    "subtitle": "Not sure what you need? We'll assess your venue, crowd, and risks - then build a plan around what matters.",
+    "ctaLabel": "Contact Our Team"
+  },
+  "news": {
+    "title": "Latest in Event Security",
+    "subtitle": "Read about our newest services, case studies, and industry insights from the Seguras team.",
+    "ctaLabel": "View All News"
+  }
+}

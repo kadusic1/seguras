@@ -1,0 +1,26 @@
+{
+  "hero": {
+    "headline": "Event Beveiliging",
+    "subtitle": "Maatwerk beveiliging op elke schaal. Altijd scherp, totale zekerheid.",
+    "ctaLabel": "Offerte aanvragen"
+  },
+  "intro": {
+    "title": "Veiligheid voor elk evenement",
+    "subtitle": "Van stadion tot festival: wij stemmen de beveiliging af op uw locatie, publiek en risico's.",
+    "caption": {
+      "heading": "Groot of klein",
+      "text": "Van 500 tot 50.000 bezoekers: onze aanpak groeit mee. Wij regelen de analyse, planning, inzet en bewaking. Zo kunt u zich richten op het evenement.",
+      "ctaLabel": "Bespreek uw evenement"
+    }
+  },
+  "unique": {
+    "title": "Elk evenement is uniek",
+    "subtitle": "Twijfelt u over wat u nodig heeft? Wij kijken naar uw locatie, publiek en risico's en maken een strak plan op maat.",
+    "ctaLabel": "Neem contact op"
+  },
+  "news": {
+    "title": "Nieuws & Inzichten",
+    "subtitle": "Lees het laatste nieuws, inzichten en verhalen uit de praktijk van het Seguras-team.",
+    "ctaLabel": "Bekijk al het nieuws"
+  }
+}
