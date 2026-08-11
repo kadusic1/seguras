@@ -3,17 +3,27 @@ import { getRequestConfig } from "next-intl/server";
 export default getRequestConfig(async () => {
   const locale = "en";
 
-  const [navbar, common, footer, home, services, about, jobs, placeholders] =
-    await Promise.all([
-      import(`../../messages/${locale}/navbar.json`),
-      import(`../../messages/${locale}/common.json`),
-      import(`../../messages/${locale}/footer.json`),
-      import(`../../messages/${locale}/home.json`),
-      import(`../../messages/${locale}/services.json`),
-      import(`../../messages/${locale}/about.json`),
-      import(`../../messages/${locale}/jobs.json`),
-      import(`../../messages/${locale}/placeholders.json`),
-    ]);
+  const [
+    navbar,
+    common,
+    footer,
+    home,
+    services,
+    about,
+    jobs,
+    placeholders,
+    news,
+  ] = await Promise.all([
+    import(`../../messages/${locale}/navbar.json`),
+    import(`../../messages/${locale}/common.json`),
+    import(`../../messages/${locale}/footer.json`),
+    import(`../../messages/${locale}/home.json`),
+    import(`../../messages/${locale}/services.json`),
+    import(`../../messages/${locale}/about.json`),
+    import(`../../messages/${locale}/jobs.json`),
+    import(`../../messages/${locale}/placeholders.json`),
+    import(`../../messages/${locale}/news.json`),
+  ]);
 
   return {
     locale,
@@ -26,6 +36,7 @@ export default getRequestConfig(async () => {
       About: about.default,
       Jobs: jobs.default,
       Placeholders: placeholders.default,
+      News: news.default,
     },
   };
 });

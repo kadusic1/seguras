@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Hero, Section } from "@/components/blocks";
 import { FileInputField, Form, FormField } from "@/components/form";
@@ -28,6 +29,7 @@ interface NewsClientProps {
 }
 
 export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
+  const tNews = useTranslations("News");
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [addFormKey, setAddFormKey] = useState(0);
   const [imageKeys, setImageKeys] = useState<string[]>([]);
@@ -46,9 +48,9 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
   };
 
   const handleImagesAdded = async (files: File[]): Promise<boolean> => {
-    const { keys, error } = await uploadNewsImages(files);
-    if (error) {
-      setUploadError(error);
+    const { keys, failed } = await uploadNewsImages(files);
+    if (failed) {
+      setUploadError(tNews("errors.uploadFailed"));
       return false;
     }
     setImageKeys((prev) => [...prev, ...keys]);
@@ -65,13 +67,17 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
 
   const handleSubmit = async (data: NewsFormData) => {
     setSubmitError(null);
-    const { error } = await createNews({
+    const result = await createNews({
       heading: data.heading,
       text: data.text,
       images: toCreateNewsImages(imageKeys),
     });
-    if (error) {
-      setSubmitError(error);
+    if (!result.ok) {
+      setSubmitError(
+        result.networkError
+          ? tNews("errors.connectionError")
+          : (result.error ?? tNews("errors.createFailed")),
+      );
       return;
     }
     setIsAddOpen(false);
@@ -80,9 +86,13 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
 
   const handleDeleteConfirm = async () => {
     if (!deleteTarget) return;
-    const { error } = await deleteNews(deleteTarget.id);
-    if (error) {
-      setDeleteError(error);
+    const result = await deleteNews(deleteTarget.id);
+    if (!result.ok) {
+      setDeleteError(
+        result.networkError
+          ? tNews("errors.connectionError")
+          : (result.error ?? tNews("errors.deleteFailed")),
+      );
       return;
     }
     setDeleteTarget(null);
@@ -93,9 +103,9 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
   return (
     <>
       <Hero
-        headline="Latest News"
-        subtitle="Stay up to date with the latest from Seguras"
-        ctaLabel="Read Latest"
+        headline={tNews("hero.headline")}
+        subtitle={tNews("hero.subtitle")}
+        ctaLabel={tNews("hero.ctaLabel")}
         onCtaClick={() =>
           document
             .getElementById("latest-news")
@@ -108,14 +118,14 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
 
       <Section
         id="latest-news"
-        title="Latest News"
+        title={tNews("section.title")}
         bgScheme="white"
         animation="slideUp"
       >
         <PaginationParent<NewsItemData>
           initialData={initialData}
           url="/api/news"
-          emptyMessage="No news found yet."
+          emptyMessage={tNews("empty")}
           refreshToken={refreshToken}
           showAddButton={isAdmin}
           onAddButtonClick={openAddModal}
@@ -137,35 +147,41 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
       <ModalForm
         open={isAddOpen}
         onOpenChange={setIsAddOpen}
-        heading="Add News"
-        text="Fill in the article details and attach images."
+        heading={tNews("addModal.heading")}
+        text={tNews("addModal.text")}
       >
         <Form<NewsFormData>
           key={addFormKey}
-          header="News Article"
+          header={tNews("form.header")}
           bgScheme="white"
-          submitLabel="Publish News"
+          submitLabel={tNews("form.submitLabel")}
           defaultValues={{ heading: "", text: "" }}
           onSubmit={handleSubmit}
         >
           <FormField
             name="heading"
-            label="Heading"
+            label={tNews("form.headingLabel")}
             type="text"
-            placeholder="News title"
-            rules={{ required: true, validate: maxLength(255, "Heading") }}
+            placeholder={tNews("form.headingPlaceholder")}
+            rules={{
+              required: true,
+              validate: maxLength(255, tNews("validation.heading")),
+            }}
           />
           <FormField
             name="text"
-            label="Text"
+            label={tNews("form.textLabel")}
             type="textarea"
             rows={6}
-            placeholder="Write the news article..."
-            rules={{ required: true, validate: maxLength(65535, "Text") }}
+            placeholder={tNews("form.textPlaceholder")}
+            rules={{
+              required: true,
+              validate: maxLength(65535, tNews("validation.text")),
+            }}
           />
           <FileInputField
             name="images"
-            label="Images"
+            label={tNews("form.imagesLabel")}
             accept="image/*"
             multiple
             onFilesAdded={handleImagesAdded}
@@ -197,13 +213,10 @@ export function NewsClient({ initialData, isAdmin }: NewsClientProps) {
         onOpenChange={(open) => {
           if (!open) setDeleteTarget(null);
         }}
-        title="Delete News"
-        description={
-          deleteError ??
-          "This news article and its images will be permanently removed. This action cannot be undone."
-        }
+        title={tNews("deleteModal.title")}
+        description={deleteError ?? tNews("deleteModal.description")}
         icon={Trash2}
-        confirmLabel="Delete"
+        confirmLabel={tNews("deleteModal.confirmLabel")}
         onConfirm={handleDeleteConfirm}
         bgScheme="white"
       />

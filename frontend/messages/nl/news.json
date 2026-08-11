@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "headline": "Laatste Nieuws",
+    "subtitle": "Blijf op de hoogte van het laatste nieuws van Seguras",
+    "ctaLabel": "Lees het nieuwste"
+  },
+  "section": {
+    "title": "Laatste Nieuws"
+  },
+  "empty": "Nog geen nieuws gevonden.",
+  "addModal": {
+    "heading": "Nieuws Toevoegen",
+    "text": "Vul de gegevens van het artikel in en voeg afbeeldingen toe."
+  },
+  "form": {
+    "header": "Nieuwsartikel",
+    "submitLabel": "Nieuws Publiceren",
+    "headingLabel": "Titel",
+    "headingPlaceholder": "Nieuwstitel",
+    "textLabel": "Tekst",
+    "textPlaceholder": "Schrijf het nieuwsartikel...",
+    "imagesLabel": "Afbeeldingen"
+  },
+  "deleteModal": {
+    "title": "Nieuws Verwijderen",
+    "description": "Dit nieuwsartikel en de bijbehorende afbeeldingen worden definitief verwijderd. Deze actie kan niet ongedaan worden gemaakt.",
+    "confirmLabel": "Verwijderen"
+  },
+  "validation": {
+    "heading": "Titel",
+    "text": "Tekst"
+  },
+  "errors": {
+    "uploadFailed": "Uploaden van een of meer afbeeldingen is mislukt. Probeer het opnieuw.",
+    "createFailed": "Nieuws toevoegen is mislukt. Probeer het opnieuw.",
+    "deleteFailed": "Nieuws verwijderen is mislukt. Probeer het opnieuw.",
+    "connectionError": "Controleer je internetverbinding en probeer het opnieuw."
+  }
+}

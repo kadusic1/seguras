@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "headline": "Latest News",
+    "subtitle": "Stay up to date with the latest from Seguras",
+    "ctaLabel": "Read Latest"
+  },
+  "section": {
+    "title": "Latest News"
+  },
+  "empty": "No news found yet.",
+  "addModal": {
+    "heading": "Add News",
+    "text": "Fill in the article details and attach images."
+  },
+  "form": {
+    "header": "News Article",
+    "submitLabel": "Publish News",
+    "headingLabel": "Heading",
+    "headingPlaceholder": "News title",
+    "textLabel": "Text",
+    "textPlaceholder": "Write the news article...",
+    "imagesLabel": "Images"
+  },
+  "deleteModal": {
+    "title": "Delete News",
+    "description": "This news article and its images will be permanently removed. This action cannot be undone.",
+    "confirmLabel": "Delete"
+  },
+  "validation": {
+    "heading": "Heading",
+    "text": "Text"
+  },
+  "errors": {
+    "uploadFailed": "Failed to upload one or more images. Please try again.",
+    "createFailed": "Failed to add news. Please try again.",
+    "deleteFailed": "Failed to delete news. Please try again.",
+    "connectionError": "Check your internet connection and try again."
+  }
+}

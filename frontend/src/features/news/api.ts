@@ -3,9 +3,15 @@ import type { CreateNewsImageInput, CreateNewsInput } from "./types";
 
 const FALLBACK_TYPE = "application/octet-stream";
 
+export type NewsMutationResult = {
+  ok: boolean;
+  error?: string;
+  networkError?: boolean;
+};
+
 export async function uploadNewsImages(
   files: File[],
-): Promise<{ keys: string[]; error?: string }> {
+): Promise<{ keys: string[]; failed?: boolean }> {
   const uploads = files.map(async (file): Promise<{ key: string }> => {
     const compressed = await compressImage(file);
     const res = await fetch("/api/files", {
@@ -39,10 +45,7 @@ export async function uploadNewsImages(
     for (const key of keys) {
       void fetch(`/api/files/${key}`, { method: "DELETE" });
     }
-    return {
-      keys: [],
-      error: "Failed to upload one or more images. Please try again.",
-    };
+    return { keys: [], failed: true };
   }
 
   return { keys };
@@ -50,7 +53,7 @@ export async function uploadNewsImages(
 
 export async function createNews(
   input: CreateNewsInput,
-): Promise<{ error?: string }> {
+): Promise<NewsMutationResult> {
   try {
     const res = await fetch("/api/news", {
       method: "POST",
@@ -58,22 +61,22 @@ export async function createNews(
       body: JSON.stringify(input),
     });
 
-    if (res.ok) return {};
+    if (res.ok) return { ok: true };
     const err = await res.json().catch(() => null);
-    return { error: err?.error ?? "Failed to add news. Please try again." };
+    return { ok: false, error: err?.error };
   } catch {
-    return { error: "Check your internet connection and try again." };
+    return { ok: false, networkError: true };
   }
 }
 
-export async function deleteNews(id: number): Promise<{ error?: string }> {
+export async function deleteNews(id: number): Promise<NewsMutationResult> {
   try {
     const res = await fetch(`/api/news/${id}`, { method: "DELETE" });
-    if (res.ok) return {};
+    if (res.ok) return { ok: true };
     const err = await res.json().catch(() => null);
-    return { error: err?.error ?? "Failed to delete news. Please try again." };
+    return { ok: false, error: err?.error };
   } catch {
-    return { error: "Check your internet connection and try again." };
+    return { ok: false, networkError: true };
   }
 }
 
