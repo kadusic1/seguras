@@ -277,6 +277,57 @@ func (h *JobHandler) List(w http.ResponseWriter, r *http.Request) {
 	util.WriteJSON(w, http.StatusOK, resp)
 }
 
+// GetCV streams a job application's CV straight from B2 so the browser
+// never sees the object storage URL.
+func (h *JobHandler) GetCV(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil || id < 1 {
+		util.WriteError(
+			w, http.StatusBadRequest, "invalid job application id",
+			"BAD_REQUEST",
+		)
+		return
+	}
+
+	cvKey, err := h.jobStore.GetCVKey(r.Context(), id)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			util.WriteError(
+				w, http.StatusNotFound, "job application not found",
+				"NOT_FOUND",
+			)
+			return
+		}
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to load job application", "SERVER_ERROR",
+		)
+		return
+	}
+	if cvKey == "" {
+		util.WriteError(
+			w, http.StatusNotFound, "no CV for this application", "NOT_FOUND",
+		)
+		return
+	}
+
+	data, contentType, err := h.b2Service.GetObject(r.Context(), cvKey)
+	if err != nil {
+		util.WriteError(
+			w, http.StatusInternalServerError,
+			"failed to fetch CV", "SERVER_ERROR",
+		)
+		return
+	}
+
+	if contentType == "" {
+		contentType = "application/octet-stream"
+	}
+	w.Header().Set("Content-Type", contentType)
+	w.Header().Set("Content-Disposition", `inline; filename="cv"`)
+	_, _ = w.Write(data)
+}
+
 // Delete removes a job application, triggering non-blocking cleanup of its
 // CV in B2.
 func (h *JobHandler) Delete(w http.ResponseWriter, r *http.Request) {

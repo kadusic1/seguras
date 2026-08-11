@@ -94,6 +94,7 @@ func NewRouter(
 		r.Use(auth.AuthMiddleware(jwtSvc))
 		r.Get("/auth/me", authHandler.Me)
 		r.Get("/jobs", jobHandler.List)
+		r.Get("/jobs/{id}/cv", jobHandler.GetCV)
 		r.Delete("/jobs/{id}", jobHandler.Delete)
 		r.Post("/news", newsHandler.Create)
 		r.Delete("/news/{id}", newsHandler.Delete)

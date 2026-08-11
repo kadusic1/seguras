@@ -94,14 +94,24 @@ func (s *JobStore) List(
 	return items, total, nil
 }
 
-// Delete removes a job application, returning its CV key so the caller can
-// clean up object storage. Returns sql.ErrNoRows when no application with
-// the given id exists.
-func (s *JobStore) Delete(ctx context.Context, id int) (string, error) {
+// GetCVKey returns the CV storage key for a job application, or
+// sql.ErrNoRows when no application with the given id exists.
+func (s *JobStore) GetCVKey(ctx context.Context, id int) (string, error) {
 	var cvKey sql.NullString
 	err := s.db.QueryRowContext(
 		ctx, `SELECT cv_key FROM job_applications WHERE id = ?`, id,
 	).Scan(&cvKey)
+	if err != nil {
+		return "", err
+	}
+	return cvKey.String, nil
+}
+
+// Delete removes a job application, returning its CV key so the caller can
+// clean up object storage. Returns sql.ErrNoRows when no application with
+// the given id exists.
+func (s *JobStore) Delete(ctx context.Context, id int) (string, error) {
+	cvKey, err := s.GetCVKey(ctx, id)
 	if err != nil {
 		return "", err
 	}
@@ -119,5 +129,5 @@ func (s *JobStore) Delete(ctx context.Context, id int) (string, error) {
 	if n == 0 {
 		return "", sql.ErrNoRows
 	}
-	return cvKey.String, nil
+	return cvKey, nil
 }

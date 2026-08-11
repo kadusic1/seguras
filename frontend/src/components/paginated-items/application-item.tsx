@@ -107,7 +107,7 @@ export function ApplicationItem({
       {item.cv_url && (
         <div className="mt-4 border-t border-black/10 pt-4">
           <a
-            href={item.cv_url}
+            href={`/api/jobs/${item.id}/cv`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-500 hover:text-red-400"
