@@ -13,6 +13,7 @@ export default getRequestConfig(async () => {
     jobs,
     placeholders,
     news,
+    contact,
   ] = await Promise.all([
     import(`../../messages/${locale}/navbar.json`),
     import(`../../messages/${locale}/common.json`),
@@ -23,6 +24,7 @@ export default getRequestConfig(async () => {
     import(`../../messages/${locale}/jobs.json`),
     import(`../../messages/${locale}/placeholders.json`),
     import(`../../messages/${locale}/news.json`),
+    import(`../../messages/${locale}/contact.json`),
   ]);
 
   return {
@@ -37,6 +39,7 @@ export default getRequestConfig(async () => {
       Jobs: jobs.default,
       Placeholders: placeholders.default,
       News: news.default,
+      Contact: contact.default,
     },
   };
 });

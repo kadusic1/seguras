@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "headline": "Let's Talk",
+    "subtitle": "Have a question or want to work together? We'd love to hear from you.",
+    "ctaLabel": "Send Us a Message"
+  },
+  "section": {
+    "title": "Get in Touch",
+    "subtitle": "Reach out anytime. Click any card to open our contact form."
+  },
+  "cardButtonLabel": "Contact Us",
+  "details": {
+    "card_1": {
+      "title": "Phone"
+    },
+    "card_2": {
+      "title": "Email"
+    },
+    "card_3": {
+      "title": "Address"
+    }
+  },
+  "modal": {
+    "heading": "Contact Seguras",
+    "text": "Fill in your details and we will be in touch."
+  },
+  "form": {
+    "header": "Send Us a Message",
+    "subtitle": "We'll get back to you as soon as possible.",
+    "submitLabel": "Send Message",
+    "firstNameLabel": "First Name",
+    "lastNameLabel": "Last Name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "companyLabel": "Company",
+    "messageLabel": "Message"
+  },
+  "validation": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Enter a valid phone number",
+    "message": "Message"
+  },
+  "errors": {
+    "submitFailed": "Failed to send message",
+    "connectionError": "Check your internet connection and try again."
+  },
+  "success": {
+    "title": "Message Sent",
+    "description": "We have received your message and will get back to you soon."
+  }
+}

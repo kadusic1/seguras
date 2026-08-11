@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "headline": "Neem contact op",
+    "subtitle": "Vraag of samenwerken? We horen graag van je.",
+    "ctaLabel": "Stuur een bericht"
+  },
+  "section": {
+    "title": "Contact",
+    "subtitle": "Neem gerust contact op. Klik op een kaart om het formulier te openen."
+  },
+  "cardButtonLabel": "Neem contact op",
+  "details": {
+    "card_1": {
+      "title": "Telefoon"
+    },
+    "card_2": {
+      "title": "E-mail"
+    },
+    "card_3": {
+      "title": "Adres"
+    }
+  },
+  "modal": {
+    "heading": "Contact met Seguras",
+    "text": "Vul je gegevens in en we nemen zo snel mogelijk contact op."
+  },
+  "form": {
+    "header": "Stuur een bericht",
+    "subtitle": "We reageren zo snel mogelijk.",
+    "submitLabel": "Verstuur bericht",
+    "firstNameLabel": "Voornaam",
+    "lastNameLabel": "Achternaam",
+    "emailLabel": "E-mailadres",
+    "phoneLabel": "Telefoonnummer",
+    "companyLabel": "Bedrijfsnaam",
+    "messageLabel": "Bericht"
+  },
+  "validation": {
+    "firstName": "Voornaam is verplicht",
+    "lastName": "Achternaam is verplicht",
+    "phone": "Voer een geldig telefoonnummer in",
+    "message": "Bericht is verplicht"
+  },
+  "errors": {
+    "submitFailed": "Versturen van bericht mislukt",
+    "connectionError": "Controleer je internetverbinding en probeer het opnieuw."
+  },
+  "success": {
+    "title": "Bericht verzonden",
+    "description": "We hebben je bericht ontvangen en nemen snel contact op."
+  }
+}

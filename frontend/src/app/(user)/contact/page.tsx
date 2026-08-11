@@ -1,12 +1,13 @@
 "use client";
 
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Card, Hero, Section } from "@/components/blocks";
 import { Form, FormField } from "@/components/form";
 import { ModalForm, SuccessMessage } from "@/components/overlay";
 import { Grid, Text } from "@/components/ui";
-import { PLACEHOLDER } from "@/lib/placeholders";
+import { CONTACT } from "@/lib/contact";
 import { maxLength, validPhone } from "@/lib/validators";
 
 interface ContactFormData {
@@ -18,28 +19,18 @@ interface ContactFormData {
   message: string;
 }
 
-const contactDetails = [
-  {
-    icon: Phone,
-    title: "Phone",
-    label: "+31 6 409 891 52",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    label: "segurasservicediensten@gmail.com",
-  },
-  {
-    icon: MapPin,
-    title: "Address",
-    label: "Westhoven 7, Roermond",
-  },
-];
-
 export default function ContactPage() {
+  const t = useTranslations("Contact");
+  const tPlaceholders = useTranslations("Placeholders");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const contactDetails = [
+    { icon: Phone, title: t("details.card_1.title"), label: CONTACT.phone },
+    { icon: Mail, title: t("details.card_2.title"), label: CONTACT.email },
+    { icon: MapPin, title: t("details.card_3.title"), label: CONTACT.address },
+  ];
 
   const handleSubmit = async (data: ContactFormData) => {
     setSubmitError(null);
@@ -60,14 +51,14 @@ export default function ContactPage() {
 
       if (!res.ok) {
         const err = await res.json();
-        setSubmitError(err.error ?? "Failed to send message");
+        setSubmitError(err.error ?? t("errors.submitFailed"));
         return;
       }
 
       setIsModalOpen(false);
       setShowSuccess(true);
     } catch {
-      setSubmitError("Check your internet connection and try again.");
+      setSubmitError(t("errors.connectionError"));
     }
   };
 
@@ -79,9 +70,9 @@ export default function ContactPage() {
   return (
     <>
       <Hero
-        headline="Let's Talk"
-        subtitle="Have a question or want to work together? We'd love to hear from you."
-        ctaLabel="Send Us a Message"
+        headline={t("hero.headline")}
+        subtitle={t("hero.subtitle")}
+        ctaLabel={t("hero.ctaLabel")}
         onCtaClick={openModal}
         imageSrc="/contact/contact-hero.webp"
         imageAlt="Seguras team"
@@ -89,8 +80,8 @@ export default function ContactPage() {
       />
 
       <Section
-        title="Get in Touch"
-        subtitle="Reach out anytime. Click any card to open our contact form."
+        title={t("section.title")}
+        subtitle={t("section.subtitle")}
         bgScheme="white"
         animation="zoomIn"
       >
@@ -102,7 +93,7 @@ export default function ContactPage() {
               heroIcon={item.icon}
               title={item.title}
               description={item.label}
-              buttonLabel="Contact Us"
+              buttonLabel={t("cardButtonLabel")}
               onClick={openModal}
               bgScheme="white"
               ctaVariant="primary"
@@ -115,58 +106,70 @@ export default function ContactPage() {
       <ModalForm
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-        heading="Contact Seguras"
-        text="Fill in your details and we will be in touch."
+        heading={t("modal.heading")}
+        text={t("modal.text")}
       >
         <Form<ContactFormData>
           key={String(isModalOpen)}
-          header="Send Us a Message"
-          subtitle="We'll get back to you as soon as possible."
+          header={t("form.header")}
+          subtitle={t("form.subtitle")}
           bgScheme="white"
-          submitLabel="Send Message"
+          submitLabel={t("form.submitLabel")}
           onSubmit={handleSubmit}
         >
           <FormField
             name="firstName"
-            label="First Name"
+            label={t("form.firstNameLabel")}
             type="text"
-            placeholder={PLACEHOLDER.firstName}
-            rules={{ required: true, validate: maxLength(100, "First name") }}
+            placeholder={tPlaceholders("firstName")}
+            rules={{
+              required: true,
+              validate: maxLength(100, t("validation.firstName")),
+            }}
           />
           <FormField
             name="lastName"
-            label="Last Name"
+            label={t("form.lastNameLabel")}
             type="text"
-            placeholder={PLACEHOLDER.lastName}
-            rules={{ required: true, validate: maxLength(100, "Last name") }}
+            placeholder={tPlaceholders("lastName")}
+            rules={{
+              required: true,
+              validate: maxLength(100, t("validation.lastName")),
+            }}
           />
           <FormField
             name="email"
-            label="Email"
+            label={t("form.emailLabel")}
             type="email"
-            placeholder={PLACEHOLDER.email}
+            placeholder={tPlaceholders("email")}
             rules={{ required: true }}
           />
           <FormField
             name="phone"
-            label="Phone"
+            label={t("form.phoneLabel")}
             type="tel"
-            placeholder={PLACEHOLDER.phone}
-            rules={{ required: true, validate: validPhone() }}
+            placeholder={tPlaceholders("phone")}
+            rules={{
+              required: true,
+              validate: validPhone(t("validation.phone")),
+            }}
           />
           <FormField
             name="company"
-            label="Company"
+            label={t("form.companyLabel")}
             type="text"
-            placeholder={PLACEHOLDER.company}
+            placeholder={tPlaceholders("company")}
           />
           <FormField
             name="message"
-            label="Message"
+            label={t("form.messageLabel")}
             type="textarea"
             rows={8}
-            placeholder={PLACEHOLDER.message}
-            rules={{ required: true, validate: maxLength(2000, "Message") }}
+            placeholder={tPlaceholders("message")}
+            rules={{
+              required: true,
+              validate: maxLength(2000, t("validation.message")),
+            }}
           />
 
           {submitError && (
@@ -184,8 +187,8 @@ export default function ContactPage() {
       <SuccessMessage
         open={showSuccess}
         onOpenChange={setShowSuccess}
-        title="Message Sent"
-        description="We have received your message and will get back to you soon."
+        title={t("success.title")}
+        description={t("success.description")}
       />
     </>
   );
