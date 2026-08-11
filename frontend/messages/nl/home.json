@@ -1,0 +1,62 @@
+{
+  "hero": {
+    "carousel_1": {
+      "title": "Beveiliging waarop u kunt vertrouwen",
+      "subtitle": "Professionele bescherming voor uw bedrijf, evenementen en eigendommen.",
+      "cta": "Laat u beschermen"
+    },
+    "carousel_2": {
+      "title": "24/7 Bewaking & Respons",
+      "subtitle": "Realtime cameratoezicht, directe actie. Uw veiligheid slaapt nooit.",
+      "cta": "Laat u beschermen"
+    },
+    "carousel_3": {
+      "title": "Evenementenbeveiliging van topniveau",
+      "subtitle": "Van zakelijke bijeenkomsten tot grootschalige openbare evenementen.",
+      "cta": "Onze diensten"
+    },
+    "carousel_4": {
+      "title": "Beveiligingsoplossingen op maat",
+      "subtitle": "Iedere klant is uniek. Dat geldt ook voor onze aanpak.",
+      "cta": "Onze diensten"
+    }
+  },
+  "trusted": {
+    "title": "Vertrouwd door",
+    "subtitle": "Evenementen en organisaties die vertrouwen op Seguras"
+  },
+  "services": {
+    "title": "Veiligheidsoplossingen voor 's werelds grootste evenementen",
+    "cta": "Bekijk alle diensten",
+    "card_1": {
+      "title": "Locatie- en perimetriebeveiliging",
+      "description": "Toegangscontrole, tassencontrole, cameratoezicht en perimeterbeveiliging voor stadions en evenemententerreinen."
+    },
+    "card_2": {
+      "title": "Crowd management & Stewarding",
+      "description": "Gediplomeerde stewards voor publieksstromen, bezoekersveiligheid en het stroomlijnen van de instroom bij concerten, festivals en sportevenementen."
+    },
+    "card_3": {
+      "title": "Veiligheidsplanning voor evenementen",
+      "description": "Risico-inventarisaties vooraf, locat inspecties, berekeningen van de stewardcapaciteit en volledige naleving van lokale veiligheidsnormen."
+    }
+  },
+  "jobs": {
+    "title": "Werken bij ons",
+    "subtitle": "Maak deel uit van een groeiend team dat evenementen in het hele land veilig en gastvrij houdt.",
+    "cta": "Bekijk alle vacatures",
+    "card_1": {
+      "title": "Service Host",
+      "description": "Het vriendelijke gezicht van elk evenement. Verwelkom gasten, controleer kaarten, begeleid bezoekers en zorg voor een vlekkeloze ervaring vanaf het moment dat ze aankomen."
+    },
+    "card_2": {
+      "title": "Beveiligingsbeambte",
+      "description": "Bescherm mensen en locaties met alertheid en professionaliteit. Toegangscontrole, publieksbewaking en snelle respons bij grote evenementen."
+    },
+    "banner": {
+      "title": "Groei met ons mee",
+      "text": "We zijn op zoek naar toegewijde professionals die er trots op zijn om evenementen veilig te houden. Van stadionbeveiliging tot crowd management, elke rol maakt echt een verschil. Sluit je aan bij een team dat jouw groei waardeert en investeert in jouw toekomst.",
+      "cta": "Bekijk openstaande rollen"
+    }
+  }
+}

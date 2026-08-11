@@ -1,0 +1,62 @@
+{
+  "hero": {
+    "carousel_1": {
+      "title": "Security You Can Trust",
+      "subtitle": "Professional protection for your business, events, and assets.",
+      "cta": "Get Protected"
+    },
+    "carousel_2": {
+      "title": "24/7 Monitoring & Response",
+      "subtitle": "Real-time surveillance, instant action. Your safety never sleeps.",
+      "cta": "Get Protected"
+    },
+    "carousel_3": {
+      "title": "Elite Event Security",
+      "subtitle": "From corporate gatherings to large-scale public events.",
+      "cta": "Our Services"
+    },
+    "carousel_4": {
+      "title": "Tailored Security Solutions",
+      "subtitle": "Every client is unique. So is our approach.",
+      "cta": "Our Services"
+    }
+  },
+  "trusted": {
+    "title": "Trusted By",
+    "subtitle": "Events and organizations that trust Seguras"
+  },
+  "services": {
+    "title": "Safety Solutions for the World's Biggest Events",
+    "cta": "View All Services",
+    "card_1": {
+      "title": "Venue & Perimetre Security",
+      "description": "Access control, bag search operations, CCTV monitoring, and perimetre protection for stadiums and event sites."
+    },
+    "card_2": {
+      "title": "Crowd Management & Stewarding",
+      "description": "Licensed stewards for crowd flow, spectator safety, and ingress management at concerts, festivals, and sporting events."
+    },
+    "card_3": {
+      "title": "Event Safety Planning",
+      "description": "Pre-event risk assessments, site surveys, stewarding ratio calculations, and full regulatory compliance with local safety standards."
+    }
+  },
+  "jobs": {
+    "title": "Join Our Team",
+    "subtitle": "Be part of a growing team that keeps events safe and welcoming across the country.",
+    "cta": "View All Openings",
+    "card_1": {
+      "title": "Service Host",
+      "description": "The friendly face of every event. Welcome guests, check tickets, guide visitors, and ensure a smooth experience from the moment they arrive."
+    },
+    "card_2": {
+      "title": "Security Officer",
+      "description": "Protect people and venues with vigilance and professionalism. Access control, crowd monitoring, and rapid response at major events."
+    },
+    "banner": {
+      "title": "Grow With Us",
+      "text": "We're looking for dedicated professionals who take pride in keeping events safe. From stadium security to crowd management, every role makes a real impact. Join a team that values your growth and invests in your future.",
+      "cta": "See Open Roles"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Button, Heading, Separator, Text } from "@/components/ui";
 import type { HeroSlideType } from "../types";
@@ -16,6 +17,8 @@ const fadeIn = (active: boolean, delay?: string) =>
     : `opacity-100 translate-y-0 transition-all duration-500 ease-out${delay ? ` delay-[${delay}]` : ""}`;
 
 export function HeroSlide({ slide, isActive }: HeroSlideProps) {
+  const tHome = useTranslations("Home.hero");
+  const tCommon = useTranslations("Common");
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -58,7 +61,7 @@ export function HeroSlide({ slide, isActive }: HeroSlideProps) {
       <div className="relative z-10 flex h-full items-center justify-center p-4 sm:p-10 lg:p-36">
         <div className="text-center">
           <Heading bgScheme="black" className={fadeIn(isActive)}>
-            {slide.headline}
+            {tHome(`${slide.translationKey}.title`)}
           </Heading>
           <Separator className={`my-4 ${fadeIn(isActive, "0.1s")}`} />
           <Text
@@ -66,16 +69,16 @@ export function HeroSlide({ slide, isActive }: HeroSlideProps) {
             bgScheme="black"
             className={`mt-2 mx-auto max-w-lg ${fadeIn(isActive, "0.15s")}`}
           >
-            {slide.subtitle}
+            {tHome(`${slide.translationKey}.subtitle`)}
           </Text>
           <div
             className={`mt-4 flex flex-wrap justify-center gap-3 sm:mt-6 sm:gap-4 ${fadeIn(isActive, "0.3s")}`}
           >
             <Button href={slide.ctaHref} variant="primary" bgScheme="red">
-              {slide.cta}
+              {tHome(`${slide.translationKey}.cta`)}
             </Button>
             <Button href={slide.ctaHref} variant="outline" bgScheme="red">
-              Learn More
+              {tCommon("card_cta")}
             </Button>
           </div>
         </div>
