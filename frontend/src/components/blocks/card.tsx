@@ -1,5 +1,6 @@
 import { ArrowRight, type LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button, Heading, Text } from "@/components/ui";
 import { buttonVariantStyles, type ColorScheme, schemes } from "@/lib/colours";
 
@@ -48,6 +49,7 @@ export function Card({
 }: CardProps) {
   const isListing = variant === "listing";
   const s = schemes[bgScheme];
+  const t = useTranslations("Common");
 
   const cardClasses = `group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}${clickable ? " cursor-pointer" : ""}${ctaCentered ? " text-center" : ""}`;
 
@@ -100,7 +102,7 @@ export function Card({
           iconRight={<ArrowRight />}
           className="mt-4"
         >
-          {buttonLabel ?? "Learn more"}
+          {buttonLabel ?? t("card_cta")}
         </Button>
       )}
       {(href || onClick) &&
@@ -109,14 +111,14 @@ export function Card({
           <span
             className={`mt-4 inline-flex items-center gap-1 rounded-md px-5 py-2.5 text-xs font-semibold shadow-sm transition-colors sm:px-6 sm:py-3 sm:text-sm ${buttonVariantStyles.primary[s.buttonScheme]}`}
           >
-            {buttonLabel ?? "Learn more"}
+            {buttonLabel ?? t("card_cta")}
             <ArrowRight className="h-4 w-4" />
           </span>
         ) : (
           <span
             className={`inline-flex items-center gap-1 text-sm font-semibold transition-colors ${buttonVariantStyles.link[bgScheme]} mt-4`}
           >
-            {buttonLabel ?? "Learn more"}
+            {buttonLabel ?? t("card_cta")}
             <ArrowRight className="h-4 w-4" />
           </span>
         ))}

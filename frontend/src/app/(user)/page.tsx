@@ -1,5 +1,6 @@
 import { TrendingUp } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Card, Carousel, Section } from "@/components/blocks";
 import { Grid, WaveDivider } from "@/components/ui";
 import { HeroCarousel } from "@/features/hero/_components/HeroCarousel";
@@ -9,13 +10,15 @@ import { services } from "@/features/services/data";
 import { trustedCompanies } from "@/features/trusted-companies/data";
 
 export default function Home() {
+  const t = useTranslations("Home");
+
   return (
     <>
       <HeroCarousel slides={heroSlides} />
       <WaveDivider fillScheme="red" />
       <Section
-        title="Trusted By"
-        subtitle="Events and organizations that trust Seguras"
+        title={t("trusted.title")}
+        subtitle={t("trusted.subtitle")}
         bgScheme="red"
         animation="slideUp"
       >
@@ -42,16 +45,23 @@ export default function Home() {
         />
       </Section>
       <Section
-        title="Safety Solutions for the World's Biggest Events"
-        subtitle="From sold-out football stadiums to major festivals - professional crowd management and safety for every event."
+        title={t("services.title")}
+        subtitle={t("services.subtitle")}
         bgScheme="white"
-        ctaLabel="View All Services"
+        ctaLabel={t("services.cta")}
         ctaHref="/services"
         animation="zoomIn"
       >
         <Grid cols={3}>
           {services.map((s) => (
-            <Card key={s.title} {...s} variant="icon" bgScheme="white" />
+            <Card
+              key={s.titleKey}
+              title={t(s.titleKey)}
+              description={t(s.descriptionKey)}
+              {...s}
+              variant="icon"
+              bgScheme="white"
+            />
           ))}
         </Grid>
       </Section>
