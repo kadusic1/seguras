@@ -2,8 +2,8 @@ import type { LucideIcon } from "lucide-react";
 
 export interface Job {
   icon?: LucideIcon;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
   href: string;
   badge?: string;
   meta?: { label: string; value: string }[];

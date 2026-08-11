@@ -66,20 +66,20 @@ export default function Home() {
         </Grid>
       </Section>
       <Section
-        title="Join Our Team"
-        subtitle="Be part of a growing team that keeps events safe and welcoming across the country."
+        title={t("jobs.title")}
+        subtitle={t("jobs.subtitle")}
         bgScheme="black"
-        ctaLabel="View All Openings"
+        ctaLabel={t("jobs.cta")}
         ctaHref="/jobs"
         animation="slideUp"
         image={{
           src: "/hero/hero-1.webp",
           alt: "Seguras security team member",
           caption: {
-            heading: "Grow With Us",
+            heading: t("jobs.banner.title"),
             icon: TrendingUp,
-            text: "We're looking for dedicated professionals who take pride in keeping events safe. From stadium security to crowd management, every role makes a real impact. Join a team that values your growth and invests in your future.",
-            ctaLabel: "See Open Roles",
+            text: t("jobs.banner.text"),
+            ctaLabel: t("jobs.banner.cta"),
             ctaHref: "/jobs",
           },
         }}
@@ -87,7 +87,14 @@ export default function Home() {
       >
         <Grid cols={1}>
           {jobs.map((j) => (
-            <Card key={j.title} {...j} variant="listing" bgScheme="black" />
+            <Card
+              key={j.titleKey}
+              title={t(j.titleKey)}
+              description={t(j.descriptionKey)}
+              {...j}
+              variant="listing"
+              bgScheme="black"
+            />
           ))}
         </Grid>
       </Section>

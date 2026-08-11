@@ -1,9 +1,12 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Card, Hero, Section } from "@/components/blocks";
 import { Grid, WaveDivider } from "@/components/ui";
 import { services } from "@/features/services/data";
 
 export default function ServicesPage() {
+  const tHome = useTranslations("Home");
+
   return (
     <>
       <Hero
@@ -35,7 +38,14 @@ export default function ServicesPage() {
       >
         <Grid cols={1}>
           {services.map((s) => (
-            <Card key={s.title} {...s} variant="icon" bgScheme="white" />
+            <Card
+              key={s.titleKey}
+              title={tHome(s.titleKey)}
+              description={tHome(s.descriptionKey)}
+              {...s}
+              variant="icon"
+              bgScheme="white"
+            />
           ))}
         </Grid>
       </Section>

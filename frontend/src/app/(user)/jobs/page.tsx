@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Card, Hero, Section } from "@/components/blocks";
 import {
@@ -40,6 +41,7 @@ interface JobApplicationForm {
 }
 
 export default function JobsPage() {
+  const tHome = useTranslations("Home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<"security" | "service">(
     "security",
@@ -173,10 +175,10 @@ export default function JobsPage() {
         <Grid cols={2}>
           {jobs.map((j) => (
             <Card
-              key={j.title}
+              key={j.titleKey}
               icon={j.icon}
-              title={j.title}
-              description={j.description}
+              title={tHome(j.titleKey)}
+              description={tHome(j.descriptionKey)}
               badge={j.badge}
               variant="listing"
               bgScheme="black"
