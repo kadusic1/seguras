@@ -22,8 +22,8 @@ export const heroSlides: HeroSlideType[] = [
     ctaHref: "/services",
   },
   {
-    image: "/hero/hero-4.webp",
-    mobileImage: "/hero/hero-4-mobile.webp",
+    image: "/services/hero-services.webp",
+    mobileImage: "/services/hero-services.webp",
     translationKey: "carousel_4",
     ctaHref: "/services",
   },
