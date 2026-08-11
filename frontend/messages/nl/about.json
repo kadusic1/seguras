@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "headline": "Over Seguras",
+    "subtitle": "Professionele event beveiliging gebouwd op vertrouwen, expertise en passie voor veiligheid.",
+    "ctaLabel": "Neem contact op"
+  },
+  "mission": {
+    "title": "Missie & Waarden",
+    "subtitle": "Zes uitgangspunten die de basis vormen voor onze beslissingen en elk event dat we beschermen.",
+    "cards": {
+      "card_1": {
+        "title": "Veiligheid op 1",
+        "description": "Professionele beveiliging is de basis van elk event. Proactief, zichtbaar en betrouwbaar."
+      },
+      "card_2": {
+        "title": "Kennis & Training",
+        "description": "Gediplomeerde stewards en beveiligers die publiek lezen en snel en scherp handelen."
+      },
+      "card_3": {
+        "title": "Maatwerk",
+        "description": "Elke locatie, doelgroep en event is anders. Wij stemmen de beveiliging precies af op wat nodig is."
+      },
+      "card_4": {
+        "title": "Innovatie",
+        "description": "Slimme planning, moderne technologie en scherpe risicoanalyses die vooroplopen."
+      },
+      "card_5": {
+        "title": "Eerlijk & Transparant",
+        "description": "Eerlijke, open samenwerkingen met organisatoren die op ons vertrouwen."
+      },
+      "card_6": {
+        "title": "Lokaal Betrokken",
+        "description": "Wij beschermen events die mensen samenbrengen. Van lokale feesten tot grote landelijke locaties."
+      }
+    }
+  },
+  "meet": {
+    "title": "Maak kennis met Adis",
+    "heading": "Oprichter & CEO",
+    "caption": {
+      "heading": "Gebouwd op vertrouwen",
+      "text": "Maak het verschil bij elk event. Wij investeren in jouw groei met goede training en echte verantwoordelijkheid.",
+      "ctaLabel": "Bekijk vacatures"
+    }
+  },
+  "ceoMessage": "Ik heb Seguras opgericht vanuit één duidelijke overtuiging: veiligheid moet een vanzelfsprekend onderdeel zijn van de beleving. Elk event dat we beveiligen is een samenwerking gebouwd op vertrouwen, precisie en een harde toewijding om bezoekers veilig te houden. We nemen de tijd om elke locatie, het publiek en de uitdagingen te begrijpen, zodat veiligheid nooit als een bijzaak voelt.",
+  "trusted": {
+    "title": "Vertrouwd door",
+    "subtitle": "Events en organisaties die bouwen op Seguras. Met gediplomeerde professionals en jarenlange ervaring bewijzen we dagelijks onze meerwaarde.",
+    "ctaLabel": "Neem contact op"
+  }
+}

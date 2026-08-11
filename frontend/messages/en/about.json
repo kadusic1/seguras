@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "headline": "About Seguras",
+    "subtitle": "Professional event security built on trust, expertise, and a passion for keeping people safe.",
+    "ctaLabel": "Contact Us"
+  },
+  "mission": {
+    "title": "Our Mission & Values",
+    "subtitle": "Six principles that guide every decision we make and every event we protect.",
+    "cards": {
+      "card_1": {
+        "title": "Safety First",
+        "description": "Professional security is the foundation of every event we work on. Proactive, visible, and reliable."
+      },
+      "card_2": {
+        "title": "Expertise & Training",
+        "description": "Licensed stewards and certified security officers who know how to read a crowd and respond with precision."
+      },
+      "card_3": {
+        "title": "Tailored Solutions",
+        "description": "Every venue, crowd, and event is different. We design security around what you actually need."
+      },
+      "card_4": {
+        "title": "Innovation",
+        "description": "Smart planning, modern technology, and data-driven risk assessments that stay ahead of the curve."
+      },
+      "card_5": {
+        "title": "Integrity & Trust",
+        "description": "Honest, transparent partnerships with the organisers who put their faith in us."
+      },
+      "card_6": {
+        "title": "Community Focus",
+        "description": "We protect the events that bring people together. From local festivals to national landmarks."
+      }
+    }
+  },
+  "meet": {
+    "title": "Meet Adis",
+    "heading": "Founder & CEO",
+    "caption": {
+      "heading": "Built on Trust",
+      "text": "Make an impact at every event. We invest in your growth with real training and real responsibility.",
+      "ctaLabel": "See Open Roles"
+    }
+  },
+  "ceoMessage": "I founded Seguras on a simple belief. Safety should be woven into the event experience itself. Every event we protect is a partnership built on trust, precision, and an unwavering commitment to keeping people safe. We take the time to understand each venue, each crowd, and each unique challenge so that safety never feels like an afterthought.",
+  "trusted": {
+    "title": "Trusted By",
+    "subtitle": "Events and organizations that trust Seguras. With certified professionals and years of experience, we earn trust through proven results.",
+    "ctaLabel": "Contact Us"
+  }
+}
