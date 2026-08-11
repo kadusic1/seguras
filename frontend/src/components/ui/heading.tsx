@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { type ColorScheme, schemes } from "@/lib/colours";
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-type HeadingSize = "xl" | "lg" | "md" | "sm";
+type HeadingSize = "xl" | "subxl" | "lg" | "md" | "sm";
 
 interface HeadingProps {
   as?: HeadingLevel;
@@ -20,6 +20,8 @@ interface HeadingProps {
 
 const sizeStyles: Record<HeadingSize, string> = {
   xl: "font-black italic leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl",
+  subxl:
+    "font-black italic leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl",
   lg: "text-2xl font-bold",
   md: "text-xl font-bold sm:text-2xl",
   sm: "text-lg font-semibold",

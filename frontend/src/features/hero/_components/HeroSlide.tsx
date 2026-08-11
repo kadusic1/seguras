@@ -60,14 +60,18 @@ export function HeroSlide({ slide, isActive }: HeroSlideProps) {
       />
       <div className="relative z-10 flex h-full items-center justify-center p-4 sm:p-10 lg:p-36">
         <div className="text-center">
-          <Heading bgScheme="black" className={fadeIn(isActive)}>
+          <Heading
+            size="subxl"
+            bgScheme="black"
+            className={`break-words text-balance ${fadeIn(isActive)}`}
+          >
             {tHome(`${slide.translationKey}.title`)}
           </Heading>
           <Separator className={`my-4 ${fadeIn(isActive, "0.1s")}`} />
           <Text
             variant="lg"
             bgScheme="black"
-            className={`mt-2 mx-auto max-w-lg ${fadeIn(isActive, "0.15s")}`}
+            className={`mt-2 mx-auto max-w-lg break-words ${fadeIn(isActive, "0.15s")}`}
           >
             {tHome(`${slide.translationKey}.subtitle`)}
           </Text>
