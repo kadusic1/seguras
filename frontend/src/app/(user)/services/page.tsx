@@ -1,7 +1,7 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Card, Hero, Section } from "@/components/blocks";
-import { Grid, WaveDivider } from "@/components/ui";
+import { Grid } from "@/components/ui";
 import { services } from "@/features/services/data";
 
 export default function ServicesPage() {
@@ -59,7 +59,7 @@ export default function ServicesPage() {
         ctaIconRight={<ArrowRight size={16} />}
         animation="zoomOut"
       />
-      <WaveDivider fillScheme="white" />
+      {/* <WaveDivider fillScheme="white" /> */}
       <Section
         title={tServices("news.title")}
         subtitle={tServices("news.subtitle")}

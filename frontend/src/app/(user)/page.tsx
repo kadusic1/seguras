@@ -2,7 +2,7 @@ import { TrendingUp } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Card, Carousel, Section } from "@/components/blocks";
-import { Grid, WaveDivider } from "@/components/ui";
+import { Grid } from "@/components/ui";
 import { HeroCarousel } from "@/features/hero/_components/HeroCarousel";
 import { heroSlides } from "@/features/hero/data";
 import { jobs } from "@/features/jobs/data";
@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <HeroCarousel slides={heroSlides} />
-      <WaveDivider fillScheme="red" />
+      {/* <WaveDivider fillScheme="red" /> */}
       <Section
         title={t("trusted.title")}
         subtitle={t("trusted.subtitle")}

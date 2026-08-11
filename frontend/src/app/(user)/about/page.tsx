@@ -2,7 +2,7 @@ import { ArrowRight, User } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Card, Hero, Section } from "@/components/blocks";
-import { Grid, Heading, Text, WaveDivider } from "@/components/ui";
+import { Grid, Heading, Text } from "@/components/ui";
 import { missionValues } from "@/features/mission-values/data";
 import { trustedCompanies } from "@/features/trusted-companies/data";
 
@@ -72,7 +72,7 @@ export default function AboutPage() {
           {t("ceoMessage")}
         </Text>
       </Section>
-      <WaveDivider fillScheme="red" />
+      {/* <WaveDivider fillScheme="red" /> */}
       <Section
         title={t("trusted.title")}
         subtitle={t("trusted.subtitle")}
