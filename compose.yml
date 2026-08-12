@@ -1,12 +1,41 @@
 services:
+  mariadb:
+    image: mariadb:lts
+    container_name: mariadb-container
+    restart: unless-stopped
+    networks:
+      - seguras-net
+    ports:
+      - "127.0.0.1:${DB_PORT:-3306}:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?database root password not set}
+      MARIADB_DATABASE: ${DB_NAME:-seguras_db}
+      MARIADB_USER: ${DB_APP_USER:-seguras_app}
+      MARIADB_PASSWORD: ${DB_APP_PASSWORD:?database app password not set}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   backend:
     build:
       context: ./backend
     image: backend
     container_name: backend-container
-    network_mode: host
+    networks:
+      - seguras-net
     env_file:
       - ./backend/.env
+    environment:
+      - DB_DSN=${DB_APP_USER}:${DB_APP_PASSWORD}@tcp(mariadb:3306)/${DB_NAME}
+    depends_on:
+      mariadb:
+        condition: service_healthy
     restart: unless-stopped
 
   frontend:
@@ -23,9 +52,16 @@ services:
       NODE_ENV: production
       PORT: "3000"
       AUTH_TRUST_HOST: "true"
-      API_URL: ${API_URL:-http://host.docker.internal:8080}
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      API_URL: http://backend:8080
+    networks:
+      - seguras-net
     ports:
       - "3000:3000"
     restart: unless-stopped
+
+volumes:
+  mariadb_data:
+
+networks:
+  seguras-net:
+    driver: bridge
