@@ -79,6 +79,13 @@ services:
       ofelia.job-run.sweeper-task.network: "seguras-net"
       ofelia.job-run.sweeper-task.volume: "${PWD}/backend/.env:/.env:ro"
       ofelia.job-run.sweeper-task.environment: '["DB_DSN=${DB_APP_USER}:${DB_APP_PASSWORD}@tcp(mariadb:3306)/${DB_NAME}"]'
+      ofelia.job-run.db-backup.schedule: "0 0 3 * * *"
+      ofelia.job-run.db-backup.image: "mariadb:lts"
+      ofelia.job-run.db-backup.network: "seguras-net"
+      ofelia.job-run.db-backup.command: "/bin/sh /backup/backup.sh"
+      ofelia.job-run.db-backup.no-overlap: "true"
+      ofelia.job-run.db-backup.volume: '["${PWD}/backend/scripts/backup.sh:/backup/backup.sh:ro", "${PWD}/backups:/backups:rw"]'
+      ofelia.job-run.db-backup.environment: '["MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}", "MARIADB_DATABASE=${DB_NAME:-seguras_db}", "BACKUP_RETENTION_DAYS=14"]'
     restart: unless-stopped
 
 volumes:
@@ -86,4 +93,5 @@ volumes:
 
 networks:
   seguras-net:
+    name: seguras-net
     driver: bridge
