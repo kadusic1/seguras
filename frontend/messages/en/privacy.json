@@ -1,0 +1,38 @@
+{
+  "title": "Privacy Policy",
+  "lastUpdated": "Last updated: August 2026",
+  "sections": {
+    "who": {
+      "title": "Who we are",
+      "body": "Seguras Security operates this website and is the controller responsible for the personal data described in this policy. If you have any questions about how we handle your data, you can reach us through the contact page on this website."
+    },
+    "collected": {
+      "title": "What information we collect",
+      "body": "When you use our contact form, we collect your first and last name, email address, phone number, company name (if provided), and your message. When you apply for a job through our jobs page, we additionally collect your date of birth, address, availability, clothing size, and, if you choose to provide one, your CV file."
+    },
+    "why": {
+      "title": "Why we process this information",
+      "body": "We use contact form details to respond to your enquiry, based on our legitimate interest in communicating with people who contact us. We use job application details to assess your application and take steps towards a possible employment contract, based on Article 6(1)(b) GDPR."
+    },
+    "retention": {
+      "title": "How long we keep it",
+      "body": "Contact messages are kept for 12 months after they are resolved. Job applications, including CVs, are kept for 12 months after the position is filled or the application is declined, unless you ask us to delete it sooner or agree that we may keep it longer for future vacancies."
+    },
+    "sharing": {
+      "title": "Who we share it with",
+      "body": "We share personal data only with service providers who help us run this website and process applications: our hosting provider, our file storage provider (for CV uploads), and our email provider (for notifications). These providers only process data on our instructions and under a data processing agreement. We do not sell personal data to anyone."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "body": "This website uses two cookies that are required for it to work: one that keeps you signed in if you are an administrator, and one that remembers your language preference. We do not use analytics, advertising, or tracking cookies."
+    },
+    "rights": {
+      "title": "Your rights",
+      "body": "Under the GDPR you have the right to access, correct, or delete your personal data, to object to or restrict our processing, and to receive a copy of your data. To exercise any of these rights, contact us through the contact page on this website. You also have the right to lodge a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens)."
+    },
+    "changes": {
+      "title": "Changes to this policy",
+      "body": "We may update this policy from time to time. The date above shows when it was last changed."
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Logo, Text } from "@/components/ui";
@@ -69,6 +70,12 @@ export function Footer() {
           >
             &copy; {new Date().getFullYear()} {t("copyright")}
           </Text>
+          <Link
+            href="/privacy"
+            className="text-sm text-white/70 underline-offset-4 hover:text-white hover:underline"
+          >
+            {t("privacyLink")}
+          </Link>
           <LanguageSwitcher />
         </div>
       </div>

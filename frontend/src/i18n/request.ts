@@ -21,6 +21,7 @@ export default getRequestConfig(async () => {
     applications,
     messages,
     login,
+    privacy,
   ] = await Promise.all([
     import(`../../messages/${locale}/navbar.json`),
     import(`../../messages/${locale}/common.json`),
@@ -35,6 +36,7 @@ export default getRequestConfig(async () => {
     import(`../../messages/${locale}/applications.json`),
     import(`../../messages/${locale}/messages.json`),
     import(`../../messages/${locale}/login.json`),
+    import(`../../messages/${locale}/privacy.json`),
   ]);
 
   return {
@@ -53,6 +55,7 @@ export default getRequestConfig(async () => {
       Applications: applications.default,
       Messages: messages.default,
       Login: login.default,
+      Privacy: privacy.default,
     },
   };
 });
