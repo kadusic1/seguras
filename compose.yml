@@ -1,0 +1,31 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    image: backend
+    container_name: backend-container
+    network_mode: host
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontend
+    container_name: frontend-container
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      AUTH_TRUST_HOST: "true"
+      API_URL: ${API_URL:-http://host.docker.internal:8080}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
