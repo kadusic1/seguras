@@ -55,9 +55,23 @@ services:
       API_URL: http://backend:8080
     networks:
       - seguras-net
-    ports:
-      - "3000:3000"
     restart: unless-stopped
+
+  caddy:
+    image: caddy:2
+    container_name: caddy-container
+    restart: unless-stopped
+    networks:
+      - seguras-net
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
 
   ofelia:
     image: mcuadros/ofelia:latest
@@ -90,6 +104,8 @@ services:
 
 volumes:
   mariadb_data:
+  caddy_data:
+  caddy_config:
 
 networks:
   seguras-net:
