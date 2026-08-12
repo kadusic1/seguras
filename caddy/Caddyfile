@@ -1,15 +1,19 @@
 {
-	# email you@yourdomain.com
-	# ^ uncomment and fill in once a real domain exists
+	email kadusicadi1@gmail.com
+	servers {
+		trusted_proxies cloudflare
+	}
 }
 
-localhost {
+segurassecurity.nl, www.segurassecurity.nl {
 	encode zstd gzip
 
 	header {
 		X-Content-Type-Options "nosniff"
 		X-Frame-Options "DENY"
 		Referrer-Policy "strict-origin-when-cross-origin"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
 	}
 
 	reverse_proxy frontend:3000
