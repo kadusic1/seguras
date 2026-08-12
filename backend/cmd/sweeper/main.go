@@ -21,9 +21,7 @@ func main() {
 		"list objects that would be deleted without deleting them")
 	flag.Parse()
 
-	if err := godotenv.Load(); err != nil {
-		log.Fatalf("failed to load .env file: %v", err)
-	}
+	_ = godotenv.Load()
 
 	grace := config.GetEnv("ORPHAN_GRACE", "24h")
 	orphanGrace, err := time.ParseDuration(grace)

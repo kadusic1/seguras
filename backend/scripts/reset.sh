@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd "$(dirname "$0")"
 
-# Load only plain scalar vars — DB_DSN (has parens/@/?) is deliberately excluded
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+
+# Reset the local native MariaDB (unix-socket root auth via sudo).
+# For the containerized MariaDB use reset-docker.sh instead.
+#
+# Load only plain scalar vars - DB_DSN (has parens/@/?) is deliberately
+# excluded so the seed below reads it from backend/.env via godotenv.
 set -a
-source <(grep -E '^(DB_NAME|DB_ROOT_USER|DB_ROOT_PASSWORD|DB_APP_USER|DB_APP_PASSWORD|SEED_NAME|SEED_LASTNAME|SEED_EMAIL|SEED_PASSWORD)=' .env)
+source <(grep -E '^(DB_NAME|DB_ROOT_USER|DB_ROOT_PASSWORD|DB_APP_USER|DB_APP_PASSWORD|SEED_NAME|SEED_LASTNAME|SEED_EMAIL|SEED_PASSWORD)=' "$ROOT/backend/.env")
 set +a
 
 # Root uses unix_socket auth -> must run as root OS user via sudo, no -h/-P.
@@ -25,14 +30,14 @@ FLUSH PRIVILEGES;
 SQL
 
 echo "==> Loading schema..."
-$MYSQL "${DB_NAME}" < database/schema.sql
+$MYSQL "${DB_NAME}" < "$ROOT/backend/database/schema.sql"
 
 echo "==> Seeding admin user..."
-go run cmd/seed/main.go \
+(cd "$ROOT/backend" && go run cmd/seed/main.go \
   -name "${SEED_NAME}" \
   -lastname "${SEED_LASTNAME}" \
   -email "${SEED_EMAIL}" \
-  -password "${SEED_PASSWORD}"
+  -password "${SEED_PASSWORD}")
 
 echo ""
 echo "Reset complete. Database ${DB_NAME} is ready."
