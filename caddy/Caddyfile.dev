@@ -1,11 +1,12 @@
 localhost {
-	encode zstd gzip
+    encode zstd gzip
 
-	header {
-		X-Content-Type-Options "nosniff"
-		X-Frame-Options "DENY"
-		Referrer-Policy "strict-origin-when-cross-origin"
-	}
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
 
-	reverse_proxy frontend:3000
+    reverse_proxy frontend:3000
 }

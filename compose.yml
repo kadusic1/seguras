@@ -63,9 +63,12 @@ services:
     restart: unless-stopped
     networks:
       - seguras-net
+    cap_add:
+      - NET_ADMIN # lets Caddy set socket buffer sizes for HTTP/3 (QUIC)
     ports:
       - "80:80"
       - "443:443"
+      - "443:443/udp" # HTTP/3
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
