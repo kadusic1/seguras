@@ -130,7 +130,7 @@ export function PreviousPageButton(props: IconButtonProps) {
     <button
       type="button"
       aria-label={t("pagination.previousPage")}
-      className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
+      className={`${iconButtonBase} bg-zinc-800 hover:bg-zinc-700`}
       {...props}
     >
       <ArrowLeft className="size-5" />
@@ -144,7 +144,7 @@ export function NextPageButton(props: IconButtonProps) {
     <button
       type="button"
       aria-label={t("pagination.nextPage")}
-      className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
+      className={`${iconButtonBase} bg-zinc-800 hover:bg-zinc-700`}
       {...props}
     >
       <ArrowRight className="size-5" />

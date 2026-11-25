@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { DeleteButton } from "@/components/ui";
 
 export const itemCardClassName =
-  "mx-auto w-full max-w-3xl rounded-2xl border-2 border-gray-400 bg-gray-200 p-6 sm:p-8";
+  "mx-auto w-full max-w-3xl rounded-2xl border border-black/10 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-8";
 
 interface ItemCommonProps {
   children: ReactNode;
