@@ -23,8 +23,8 @@ export function SuccessMessage({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg">
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm motion-safe:data-[state=open]:animate-[overlay-in_150ms_ease-out]" />
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6 shadow-2xl sm:p-8 motion-safe:data-[state=open]:animate-[dialog-in_200ms_ease-out]">
           <div className="flex flex-col items-center gap-4">
             <CheckCircle className="size-12 text-green-500" strokeWidth={1.5} />
             <Dialog.Title className="text-center text-lg font-bold text-black">

@@ -66,7 +66,7 @@ function FilePreview({
     <div className="relative h-20 w-20 shrink-0">
       <button
         type="button"
-        className={`relative h-full w-full cursor-pointer overflow-hidden rounded-md border ${s.card}`}
+        className={`relative h-full w-full cursor-pointer overflow-hidden rounded-lg border ${s.card}`}
         onClick={() =>
           fileUrl && window.open(fileUrl, "_blank", "noopener,noreferrer")
         }
@@ -91,7 +91,7 @@ function FilePreview({
         )}
       </button>
       {busyOp && (
-        <div className="absolute inset-0 flex items-center justify-center rounded-md bg-white/60">
+        <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-white/60">
           <Spinner
             size={16}
             label={
@@ -179,7 +179,7 @@ export function FileInputField({
       <label
         htmlFor={name}
         aria-busy={busy}
-        className={`flex cursor-pointer items-center justify-center rounded-md border border-dashed px-3 py-6 text-sm transition-colors hover:opacity-80 aria-invalid:border-red-500 ${s.input}${busy ? " pointer-events-none opacity-60" : ""}`}
+        className={`flex cursor-pointer items-center justify-center rounded-xl border-2 border-dashed px-3 py-6 text-sm transition-all duration-200 hover:border-red-500/60 hover:opacity-90 has-[:focus-visible]:border-red-500 has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-red-500/20 aria-invalid:border-red-500 ${s.input}${busy ? " pointer-events-none opacity-60" : ""}`}
       >
         {busy ? (
           <span className="flex items-center gap-2">

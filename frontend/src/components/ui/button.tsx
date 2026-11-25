@@ -28,7 +28,7 @@ type ButtonAsButton = ButtonShared &
 type ButtonProps = ButtonAsLink | ButtonAsButton;
 
 const pillBase =
-  "inline-flex cursor-pointer items-center justify-center rounded-md px-5 py-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-red-500 disabled:cursor-not-allowed disabled:opacity-60 sm:px-6 sm:py-3 sm:text-sm";
+  "inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-xs font-semibold tracking-wide transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100 sm:px-6 sm:py-3 sm:text-sm";
 
 const variantBaseClass: Record<ButtonVariant, string> = {
   primary: pillBase,
@@ -80,7 +80,7 @@ type IconButtonProps = Omit<
 >;
 
 const iconButtonBase =
-  "text-white shadow-sm inline-flex cursor-pointer items-center justify-center rounded-md p-2.5 transition-colors focus-visible:outline-2 focus-visible:outline-red-500 disabled:cursor-not-allowed disabled:opacity-60";
+  "text-white shadow-sm inline-flex cursor-pointer items-center justify-center rounded-lg p-2.5 transition-all duration-200 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-sm disabled:active:scale-100";
 
 export function AddButton(props: IconButtonProps) {
   const t = useTranslations("Common");
@@ -130,7 +130,7 @@ export function PreviousPageButton(props: IconButtonProps) {
     <button
       type="button"
       aria-label={t("pagination.previousPage")}
-      className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
+      className={`${iconButtonBase} bg-zinc-800 hover:bg-zinc-700`}
       {...props}
     >
       <ArrowLeft className="size-5" />
@@ -144,7 +144,7 @@ export function NextPageButton(props: IconButtonProps) {
     <button
       type="button"
       aria-label={t("pagination.nextPage")}
-      className={`${iconButtonBase} bg-gray-600 hover:bg-gray-700`}
+      className={`${iconButtonBase} bg-zinc-800 hover:bg-zinc-700`}
       {...props}
     >
       <ArrowRight className="size-5" />

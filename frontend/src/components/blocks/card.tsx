@@ -51,7 +51,7 @@ export function Card({
   const s = schemes[bgScheme];
   const t = useTranslations("Common");
 
-  const cardClasses = `group rounded-lg border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1"}${clickable ? " cursor-pointer" : ""}${ctaCentered ? " text-center" : ""}`;
+  const cardClasses = `group rounded-xl border p-6 sm:p-8 transition-all duration-300 ${s.card}${isListing ? ` ${listingBorder[bgScheme]} hover:border-l-[6px]` : " hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10"}${clickable ? " cursor-pointer" : ""}${ctaCentered ? " text-center" : ""}`;
 
   const content = (
     <>
@@ -109,17 +109,17 @@ export function Card({
         clickable &&
         (ctaVariant === "primary" ? (
           <span
-            className={`mt-4 inline-flex items-center gap-1 rounded-md px-5 py-2.5 text-xs font-semibold shadow-sm transition-colors sm:px-6 sm:py-3 sm:text-sm ${buttonVariantStyles.primary[s.buttonScheme]}`}
+            className={`mt-4 inline-flex items-center gap-1.5 rounded-lg px-5 py-2.5 text-xs font-semibold tracking-wide shadow-sm transition-all duration-200 sm:px-6 sm:py-3 sm:text-sm ${buttonVariantStyles.primary[s.buttonScheme]}`}
           >
             {buttonLabel ?? t("card_cta")}
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </span>
         ) : (
           <span
             className={`inline-flex items-center gap-1 text-sm font-semibold transition-colors ${buttonVariantStyles.link[bgScheme]} mt-4`}
           >
             {buttonLabel ?? t("card_cta")}
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </span>
         ))}
     </>

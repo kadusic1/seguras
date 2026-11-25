@@ -10,7 +10,7 @@ export async function Navbar() {
   const session = await auth();
   const t = await getTranslations("Navbar");
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black">
+    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/90 before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-10">
           {session ? <NavbarSignOut /> : <Logo href="/login" />}

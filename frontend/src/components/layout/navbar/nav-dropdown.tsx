@@ -36,7 +36,7 @@ export function NavDropdown({
           <Icon className="size-4 shrink-0" aria-hidden="true" />
           {label}
         </span>
-        <ul className="mt-2 flex flex-col gap-4 border-l-2 border-zinc-800 pl-4">
+        <ul className="mt-2 flex flex-col gap-4 border-l-2 border-white/10 pl-4">
           {links.map((link) => (
             <li key={link.href}>
               <Link
@@ -84,7 +84,7 @@ export function NavDropdown({
           isOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <ul className="w-52 space-y-1 border border-zinc-800 bg-zinc-950 p-2 shadow-2xl">
+        <ul className="w-52 space-y-1 rounded-xl border border-white/10 bg-zinc-950/95 p-2 shadow-2xl shadow-black/50 backdrop-blur-md">
           {links.map((link) => (
             <li key={link.href}>
               <Link
