@@ -64,7 +64,7 @@ export function RadioGroupField<T extends FieldValues>({
               id={`${name}-${opt.value}`}
               type="radio"
               value={opt.value}
-              className="h-4 w-4 border focus-visible:outline-2 focus-visible:outline-red-500"
+              className="h-4 w-4 cursor-pointer border accent-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
               {...register(name, rules)}
             />
             {opt.label}

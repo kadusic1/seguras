@@ -66,7 +66,7 @@ export function PasswordField<T extends FieldValues>({
           id={name}
           type={visible ? "text" : "password"}
           placeholder={placeholder}
-          className={`w-full rounded-md border px-3 py-2 pr-10 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-red-500 aria-invalid:border-red-500 ${s.input}`}
+          className={`w-full rounded-lg border px-3.5 py-2.5 pr-10 text-sm transition-[border-color,box-shadow] duration-200 outline-hidden focus-visible:border-red-500 focus-visible:ring-4 focus-visible:ring-red-500/20 aria-invalid:border-red-500 ${s.input}`}
           {...register(name, rules)}
         />
         <button

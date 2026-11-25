@@ -49,7 +49,7 @@ export function FieldChrome({
     <div>
       <label
         htmlFor={name}
-        className={`mb-1 block text-sm font-semibold ${s.text.primary}`}
+        className={`mb-1.5 block text-sm font-semibold ${s.text.primary}`}
       >
         {label}
         {required && (

@@ -113,7 +113,7 @@ export function Form<T extends FieldValues>({
               return onSubmit(data);
             })}
             noValidate
-            className={`rounded-lg p-6 sm:p-8 ${s.bg}${className ? ` ${className}` : ""}`}
+            className={`rounded-2xl p-6 sm:p-8 ${s.bg}${className ? ` ${className}` : ""}`}
           >
             <div className="space-y-6">
               <div className="space-y-2">
