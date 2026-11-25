@@ -77,7 +77,7 @@ export function MobileMenu({ isLoggedIn }: MobileMenuProps) {
       />
 
       <div
-        className={`fixed inset-y-0 right-0 z-40 flex w-72 flex-col overflow-y-auto bg-zinc-950 shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 right-0 z-40 flex w-72 flex-col overflow-y-auto border-l border-white/10 bg-zinc-950 shadow-2xl transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
