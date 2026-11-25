@@ -8,7 +8,7 @@ export function Footer() {
   const t = useTranslations("Footer");
 
   return (
-    <footer className="border-t-2 border-zinc-600 bg-black">
+    <footer className="border-t border-white/10 bg-black">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
           <div className="space-y-4">
@@ -60,7 +60,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t-2 border-zinc-800">
+      <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex flex-col items-center gap-4">
           <Text
             variant="base"

@@ -32,7 +32,7 @@ export function LanguageSwitcher() {
   return (
     <fieldset
       aria-label="Language"
-      className="inline-flex items-center gap-0.5 rounded-md border border-zinc-800 bg-zinc-950 p-0.5"
+      className="inline-flex items-center gap-0.5 rounded-lg border border-white/10 bg-zinc-950 p-0.5"
     >
       {locales.map((l) => {
         const isActive = l === activeLocale;
@@ -44,7 +44,7 @@ export function LanguageSwitcher() {
             disabled={isPending}
             aria-pressed={isActive}
             title={localeFullName[l]}
-            className={`cursor-pointer rounded px-2.5 py-1 text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
+            className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
               isActive
                 ? "bg-red-600 text-white"
                 : "text-zinc-400 hover:text-white"

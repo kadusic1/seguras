@@ -5,6 +5,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+::selection {
+  background-color: var(--color-red-600);
+  color: var(--color-white);
+}
+
 @keyframes overlay-in {
   from {
     opacity: 0;
