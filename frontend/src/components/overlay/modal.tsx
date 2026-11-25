@@ -34,11 +34,11 @@ export function Modal({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm motion-safe:data-[state=open]:animate-[overlay-in_150ms_ease-out]
         data-[state=closed]:opacity-0 data-[state=open]:opacity-100"
         >
           <Dialog.Content
-            className={`z-50 w-full max-w-lg rounded-lg p-6 shadow-lg
+            className={`z-50 w-full max-w-lg rounded-2xl p-6 shadow-2xl sm:p-8 motion-safe:data-[state=open]:animate-[dialog-in_200ms_ease-out]
           data-[state=closed]:scale-95 data-[state=closed]:opacity-0
           data-[state=open]:scale-100 data-[state=open]:opacity-100 ${s.bg}`}
           >

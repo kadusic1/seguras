@@ -37,8 +37,8 @@ export function ModalForm({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <Dialog.Content className="z-50 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-black/10 bg-white shadow-lg">
+        <Dialog.Overlay className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm motion-safe:data-[state=open]:animate-[overlay-in_150ms_ease-out]">
+          <Dialog.Content className="z-50 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-2xl motion-safe:data-[state=open]:animate-[dialog-in_200ms_ease-out]">
             <div className="shrink-0 flex justify-end px-6 pt-4 sm:px-10">
               <CloseButton onClick={() => onOpenChange(false)} />
             </div>
