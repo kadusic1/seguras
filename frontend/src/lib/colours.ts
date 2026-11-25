@@ -55,9 +55,9 @@ export const buttonVariantStyles: Record<
   Record<ColorScheme, string>
 > = {
   primary: {
-    red: "bg-red-600 text-white shadow-sm hover:bg-red-700",
-    black: "bg-black text-white shadow-sm hover:bg-gray-900",
-    white: "bg-white text-red-600 shadow-sm hover:bg-red-50",
+    red: "bg-red-600 text-white shadow-sm hover:bg-red-700 hover:shadow-md hover:shadow-red-600/25",
+    black: "bg-black text-white shadow-sm hover:bg-zinc-800 hover:shadow-md",
+    white: "bg-white text-red-600 shadow-sm hover:bg-red-50 hover:shadow-md",
   },
   outline: {
     red: "border border-red-600 text-red-500 hover:bg-red-600/10",
