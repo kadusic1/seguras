@@ -3,6 +3,8 @@
 
 Every user-corrected mistake must be recorded immediately in `LESSONS.md` for continuous learning.
 
+GitHub repository: https://github.com/kadusic1/seguras
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
